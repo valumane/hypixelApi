@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="main.js"></script>
+    <script src="Collection.js"></script>
+    <script src="profile.js"></script>
+    <script src="bestiary.js"></script>
+    <script src="levelcap.js"></script>
+
+    <link rel="stylesheet" href="styles.css"> <!-- Lien vers le fichier CSS -->
+</head>
+<body onload="
+
+apiGet()
+getCollection()
+getCollected()
+
+setTimeout(getAllFarming,1000)
+
+setTimeout(getmemberinfo,1000)
+
+setTimeout(setLevel,1000)
+
+setTimeout(getBankInfo,1000)
+
+setTimeout(getBestiary,1000)
+">
+
+
+<div id="profileInfo">
+  <div id="BankInfo">
+    <p id="bankValue"></p>
+  </div>
+</div>
+
+
+</div>
+
+<button id="toggleButtonskill" onclick="toggleVisibility('skill')"> affichez skill</button>
+
+<div id="skill" class="toggle hidden">
+
+<div id="farmingSkill"></div>
+<div id="miningSkill"></div>
+<div id="combatSkill"></div>
+<div id="tamingSkill"></div>
+<div id="enchantingSkill"></div>
+<div id="fishingSkill"></div>
+<div id="foragingSkill"></div>
+<div id="carpentrySkill"></div>
+<div id="alchemySkill"></div>
+<div id="socialSkill"></div>
+<div id="runecraftingSkill"></div>
+
+
+</div>
+
+
+<button id="toggleButtoncollection" onclick="toggleVisibility('collection') "> affichez Collection</button>
+
+<div id="collection" class="toggle hidden">
+  <div class="horizontal-container">
+    <img src="texture/items/farming.png" style="width: 50px;">
+    <p>farming</p>
+  </div>
+  <div id="farming" class="horizontal-container"> </div>
+  
+  <div class="horizontal-container">
+    <img src="texture/items/mining.png" style="width: 50px;">
+    <p>mining</p>
+  </div>
+  <div id="mining" class="horizontal-container"></div>
+  
+  <div class="horizontal-container">
+    <img src="texture/items/combat.png" style="width: 50px;">
+    <p>combat</p>
+  </div>
+  <div id="combat" class="horizontal-container"></div>
+  
+  <div class="horizontal-container">
+    <img src="texture/items/foraging.png" style="width: 50px;">
+    <p>foraging</p>
+  </div>
+  <div id="foraging" class="horizontal-container"></div>
+  
+  <div class="horizontal-container">
+    <img src="texture/items/fishing.png" style="width: 50px;">
+    <p>fishing</p>
+  </div>
+  <div id="fishing" class="horizontal-container"></div>
+  
+  <div class="horizontal-container">
+    <img src="texture/items/rift.gif" style="width: 50px;">
+    <p>rift</p>
+  </div>
+  <div id="rift" class="horizontal-container"></div>
+  
+</div>
+
+<button id="toggleButtonbestiary" onclick="toggleVisibility('bestiary') "> affichez bestiary</button>
+
+<div id="bestiary" class="toggle visible">
+  <div class="horizontal-container"> 
+      <img>
+      <p>privateIsland</p>
+  </div>
+  <div id="privateIsland" class="horizontal-container">
+<!--
+    <div class="mobsCategorie">
+      <img>
+      <p>creeper</p>
+      <p> kill count : 205/500 </p>
+    </div>
+  -->
+  </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>hub</p>
+  </div>
+  <div id="hub" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>farmingIsland</p>
+  </div>
+  <div id="farmingIsland" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>spiderDen</p>
+  </div>
+  <div id="spiderDen" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>theEnd</p>
+  </div>
+  <div id="theEnd" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>crimsonIsle</p>
+  </div>
+  <div id="cirmsonIsle" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>deepCavern</p>
+  </div>
+  <div id="deepCavern" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>crystalHollows</p>
+  </div>
+  <div id="crystalHollows" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>thePark</p>
+  </div>
+  <div id="thePark" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>spookyFestival</p>
+  </div>
+  <div id="mythologicalCreatures" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>jerry</p>
+  </div>
+  <div id="kuudra" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>fishing</p>
+  </div>
+  <div id="fishing" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>lava</p>
+  </div>
+  <div id="fishingFestival" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>winter</p>
+  </div>
+  <div id="winter" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>catacombs</p>
+  </div>
+  <div id="catacombs" class="horizontal-container"> </div>
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>garden</p>
+  </div>
+  <div id="garden" class="horizontal-container"> </div>
+
+</div>
+
+
+
+</body>
+</html>

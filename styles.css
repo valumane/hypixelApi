@@ -1,0 +1,76 @@
+/* Conteneur de la barre de progression */
+.progress-container {
+    width: 200px; /* Largeur totale de la barre */
+    background-color: #e0e0e0; /* Couleur du fond */
+    border-radius: 10px; /* Bords arrondis */
+    overflow: hidden; /* Pour éviter le débordement */
+    height: 20px; /* Hauteur de la barre */
+}
+
+/* Barre de progression (remplissage) */
+.progress-bar{
+    height: 100%; /* Remplit la hauteur du conteneur */
+    background-color: #4caf50; /* Couleur verte pour la progression */
+    width: 0; /* Début à 0 */
+    transition: width 0.3s; /* Transition pour un effet visuel */
+}
+
+/* Texte centré dans la barre de progression */
+.progress-text {
+    text-align: center; /* Centre le texte */
+    font-size: 14px; /* Taille de la police */
+    color: #020202; /* Couleur du texte blanche */
+    line-height: 20px; /* Pour aligner verticalement le texte */
+}
+.horizontal-container {
+    display: flex; /* Activer flexbox */
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.horizontal-container > div {
+    border: 1px solid #7a6363;
+    border-radius: 9px;
+
+    background-color: #f0f0f0;
+    margin: 5px;
+    text-align: center;
+
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+p{
+    font-weight: bold;
+    font-family: "icomoon","Montserrat",sans-serif;
+    margin-bottom: -0.5px;
+}
+.itemEtImage{
+    display: flex; /* Activer flexbox */
+    flex-direction: row; /* Aligner horizontalement */
+    justify-content: space-around; /* Espace entre les éléments */
+    align-items: center; /* Alignement vertical centré */
+}
+
+
+
+/* Classe de base avec transitions */
+.toggle {
+    transition: all 0.5s ease; /* Transition fluide sur toutes les propriétés */    
+}
+
+/* Classe pour rendre un élément invisible avec une transition fluide */
+.hidden {
+    opacity: 0; /* Transition d'opacité pour un fondu */
+    height: 0; /* Transition de hauteur pour un rétrécissement */
+    overflow: hidden; /* Empêcher le débordement visuel */
+}
+
+/* Classe pour l'élément visible (état initial) */
+.visible {
+    opacity: 1; /* Opacité totale */
+    height: auto; /* Hauteur auto pour s'adapter au contenu */
+}
+
+
