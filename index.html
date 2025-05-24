@@ -14,10 +14,12 @@
 <body onload="
 
 apiGet()
-getCollection()
-getCollected()
 
-setTimeout(getAllFarming,1000)
+setTimeout(getCollection,1000);
+
+setTimeout(getCollected,1000);
+
+setTimeout(getAllFarming,2000)
 
 setTimeout(getmemberinfo,1000)
 
@@ -101,7 +103,7 @@ setTimeout(getBestiary,1000)
 
 <button id="toggleButtonbestiary" onclick="toggleVisibility('bestiary') "> affichez bestiary</button>
 
-<div id="bestiary" class="toggle visible">
+<div id="bestiary" class="toggle hidden">
   <div class="horizontal-container"> 
       <img>
       <p>privateIsland</p>

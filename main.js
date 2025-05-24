@@ -1,7 +1,5 @@
 // Define the API URL
-const apikey = 'ee3192e7-902a-4bff-9bc1-2466ee0bd710'
 const uuid = 'aa3e247f-f9d2-418e-aadc-949c77aafc7d'
-const apiUrl = 'https://api.hypixel.net/v2/skyblock/profiles?key='+apikey+'&uuid='+uuid;
 const Collection = 'https://api.hypixel.net/resources/skyblock/collections';
 
 
@@ -42,13 +40,34 @@ function formatNumber(number) {
 }
 
 
-var allapi;
-function apiGet(){
-  fetch(apiUrl)
-  .then(response => response.json())
-  .then(data => {
-    allapi = data
-  })
+let allapi = null;
+let apiUrl = "";
+
+async function apiGet() {
+  try {
+    const api_key_response = await fetch('api_key.json');
+    const api_key_data = await api_key_response.json();
+    const apikey = api_key_data.key;
+    console.log(apikey);
+    
+    const apiUrl1 = 'https://api.hypixel.net/v2/skyblock/profiles?key=' + apikey + '&uuid=' + uuid;
+    apiUrl = apiUrl1;
+    console.log(apiUrl);
+
+    const response = await fetch(apiUrl);
+    if (!response.ok) throw new Error('API non disponible');
+
+    const data = await response.json();
+    allapi = data;
+    console.log('Données récupérées depuis l\'API', allapi);
+
+  } catch (err) {
+    console.warn('Erreur avec l\'API, chargement du fichier backup.json…', err);
+    const backupResponse = await fetch('backup_API.json');
+    const backupData = await backupResponse.json();
+    allapi = backupData;
+    console.log('Données chargées depuis backup.json', allapi);
+  }
 }
 
 
@@ -76,14 +95,17 @@ function getCollection(){
 }
 
 var allCollected;
-function getCollected(){
+function getCollected() {
   fetch(apiUrl)
-  .then(response => response.json())
-  .then(data => {
-    allCollected = data.profiles[0].members['aa3e247ff9d2418eaadc949c77aafc7d'].collection;
-  });
-
+    .then(response => response.json())
+    .then(data => {
+      allCollected = data.profiles[0].members['aa3e247ff9d2418eaadc949c77aafc7d'].collection;
+    })
+    .catch(error => {
+      console.error('Erreur dans getCollected :', error);
+    });
 }
+
 
 var bankinfo;
 function getBankInfo(){

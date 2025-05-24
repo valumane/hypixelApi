@@ -14,7 +14,7 @@ function setLevel(){
     levelAlchemy = membersInfo.player_data.experience.SKILL_ALCHEMY;
     levelSocial = membersInfo.player_data.experience.SKILL_SOCIAL;
     levelRunecrafting = membersInfo.player_data.experience.SKILL_RUNECRAFTING;
-    console.log("initié")
+    //console.log("initié")
     getAllLevel()
 }
 
@@ -41,10 +41,10 @@ function getlevel(catname,catlvl,cap){
     eta = Math.round((Math.floor(tmp)/cap[cpt])*100)+"%"
     progress = Math.floor(tmp)+"/"+cap[cpt]
 
-    console.log(catname+" "+"level:",cpt, " ", progress," ",eta )
+    //console.log(catname+" "+"level:",cpt, " ", progress," ",eta )
     createSkilldiv(catname+"Skill",eta,cpt)
     
-    console.log(catname+"Skill",eta)
+    //console.log(catname+"Skill",eta)
 }
 
 function getAllLevel(){
