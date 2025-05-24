@@ -149,6 +149,11 @@ function createFarmingdiv(categories, collname, eta, progress,rank) {
   if(eta == "100%"){
     paragraph.style.color = "#ffa500";
   }
+
+  if (progress.includes('undefined')) {
+    progress = "";
+  }
+
   
   // Créer le conteneur de la barre de progression
   const progressContainer = document.createElement("div");
@@ -224,29 +229,47 @@ function createSkilldiv(skillName,eta,rank){
 
 */
 
-function createBestiarydiv(categories,i,count){
+  function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
   const container = document.getElementById(categories);
-  
+  if (!container) {
+    console.warn(`Container introuvable pour l'ID : ${categories}`);
+    return;
+  }
 
-  const bestiaryCategorie = document.createElement("div")
-  bestiaryCategorie.className = "mobsCategorie"
+  // Conteneur principal
+  const bestiaryCategorie = document.createElement("div");
+  bestiaryCategorie.className = "bestiaryCategorie";
+
+  // Bloc image + nom
+  const mobEtImage = document.createElement("div");
+  mobEtImage.className = "mobEtImage";
+
+  const img = document.createElement("img");
+  img.src = imgSrc || "assets/mobs/default.png"; // mets une image par défaut si pas fournie
 
   const name = document.createElement("p");
-  name.innerText = categories.replace(" '' ","")[0]
+  name.innerText = nameMob;
 
-  const progress = document.createElement("p")
-  progress.innerText = count
+  mobEtImage.appendChild(img);
+  mobEtImage.appendChild(name);
 
-  //const img = document.createElement("img")
-  //img.src
+  // Bloc kill count
+  const countDiv = document.createElement("div");
+  countDiv.className = "count";
 
-  //bestiaryCategorie.appendChild(img);
-  bestiaryCategorie.appendChild(name)
-  bestiaryCategorie.appendChild(progress)
+  const progress = document.createElement("p");
+  progress.innerText = `kills : ${count}`;
 
+  countDiv.appendChild(progress);
+
+  // Ajout des deux blocs dans la tuile principale
+  bestiaryCategorie.appendChild(mobEtImage);
+  bestiaryCategorie.appendChild(countDiv);
+
+  // Ajout au container global
   container.appendChild(bestiaryCategorie);
+}
 
-  }
   
 
 

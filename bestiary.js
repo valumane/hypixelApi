@@ -5,7 +5,7 @@ function getBestiary(){
 
 
 var privateIsland = [
-    "zombie_1", "zombie_10", "zombie_13", "zombie_15", "zombie_2", "zombie_4", "zombie_5", "zombie_6", "zombie_7", "zombie_8", "zombie_9",
+    "zombie_1", "zombie_2", "zombie_4", "zombie_5", "zombie_6", "zombie_7", "zombie_8", "zombie_9", "zombie_10", "zombie_13", "zombie_15",
     "witch_5", "witch_6", "witch_7", "witch_8", "witch_9",
     "spider_1", "spider_10", "spider_13", "spider_15", "spider_2", "spider_3", "spider_4", "spider_5", "spider_66", "spider_7", "spider_8", "spider_9",
     "spider_jockey_3", "spider_jockey_42",
@@ -100,3 +100,20 @@ var catacombs = [
 var garden = [
     "pest_beetle_1", "pest_cricket_1", "pest_fly_1", "pest_locust_1", "pest_mite_1", "pest_mosquito_1", "pest_moth_1", "pest_rat_1", "pest_slug_1", "pest_worm_1"
 ];
+
+let locationList = [privateIsland, hub, farmingIsland, spiderDen, theEnd, crimsonIsle, deepCavern, dwarvenMine, crystalHollows, jerry, fishing, catacombs, garden];
+let locationName = ["privateIsland", "hub", "farmingIsland", "spiderDen", "theEnd", "crimsonIsle", "deepCavern", "dwarvenMine", "crystalHollows", "jerry", "fishing", "catacombs", "garden"];
+
+function showBestiary(location){
+
+    for( let j = 0; j<locationList.length;j++){
+        location = locationList[j];
+        console.log(locationName[j]);
+        
+        for(let i = 0; i<location.length-1;i++){
+            createBestiarydiv(locationName[j],location[i],bestiary[location[i]]);
+        }
+    }
+}
+
+
