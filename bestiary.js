@@ -104,7 +104,7 @@ var garden = [
 let locationList = [privateIsland, hub, farmingIsland, spiderDen, theEnd, crimsonIsle, deepCavern, dwarvenMine, crystalHollows, jerry, fishing, catacombs, garden];
 let locationName = ["privateIsland", "hub", "farmingIsland", "spiderDen", "theEnd", "crimsonIsle", "deepCavern", "dwarvenMine", "crystalHollows", "jerry", "fishing", "catacombs", "garden"];
 
-function showBestiary(location){
+function showBestiary(){
 
     for( let j = 0; j<locationList.length;j++){
         location = locationList[j];
