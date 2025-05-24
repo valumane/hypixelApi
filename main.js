@@ -45,7 +45,7 @@ let apiUrl = "";
 
 async function apiGet() {
   try {
-    const api_key_response = await fetch('api_key.json');
+    const api_key_response = await fetch('apri_key.json');
     const api_key_data = await api_key_response.json();
     const apikey = api_key_data.key;
     console.log(apikey);
@@ -96,14 +96,7 @@ function getCollection(){
 
 var allCollected;
 function getCollected() {
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      allCollected = data.profiles[0].members['aa3e247ff9d2418eaadc949c77aafc7d'].collection;
-    })
-    .catch(error => {
-      console.error('Erreur dans getCollected :', error);
-    });
+  allCollected = allapi.profiles[0].members['aa3e247ff9d2418eaadc949c77aafc7d'].collection;
 }
 
 
