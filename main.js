@@ -45,7 +45,7 @@ let apiUrl = "";
 
 async function apiGet() {
   try {
-    const api_key_response = await fetch('apri_key.json');
+    const api_key_response = await fetch('api_key.json');
     const api_key_data = await api_key_response.json();
     const apikey = api_key_data.key;
     console.log(apikey);
@@ -229,7 +229,7 @@ function createSkilldiv(skillName,eta,rank){
 
 */
 
-  function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
+function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
   const container = document.getElementById(categories);
   if (!container) {
     console.warn(`Container introuvable pour l'ID : ${categories}`);
@@ -245,7 +245,45 @@ function createSkilldiv(skillName,eta,rank){
   mobEtImage.className = "mobEtImage";
 
   const img = document.createElement("img");
-  img.src = imgSrc || "assets/mobs/default.png"; // mets une image par défaut si pas fournie
+  img.className = "mobhead";
+
+  // Gestion de l'image avec plusieurs extensions
+ function tryImage(img, basePath, extensions, index = 0) {
+  if (index >= extensions.length) {
+    console.warn(`Aucune image trouvée pour ${basePath}`);
+    img.onerror = null;
+    img.src = "texture/mobs/default.png"; // ou une image vide ou rien du tout
+    return;
+  }
+
+  const src = basePath + extensions[index];
+
+  // Temporairement désactiver les callbacks avant de changer src
+  img.onerror = null;
+  img.onload = null;
+
+  img.onerror = () => {
+    // ⚠️ Ne pas rappeler tryImage s'il est déjà à la fin
+    tryImage(img, basePath, extensions, index + 1);
+  };
+
+  img.onload = () => {
+    // Image trouvée : on désactive les gestionnaires
+    img.onerror = null;
+    img.onload = null;
+  };
+
+  img.src = src;
+}
+
+
+  if (imgSrc) {
+    img.src = imgSrc;
+  } else {
+    const basePath = `texture/mobs/${categories}/${nameMob}`;
+    const extensions = [".png", ".gif", ".webp"];
+    tryImage(img, basePath, extensions);
+  }
 
   const name = document.createElement("p");
   name.innerText = nameMob;
@@ -270,6 +308,7 @@ function createSkilldiv(skillName,eta,rank){
   container.appendChild(bestiaryCategorie);
 }
 
+
   
 
 
@@ -289,12 +328,9 @@ function createSkilldiv(skillName,eta,rank){
 
 function toggleVisibility(id) {
   const element = document.getElementById(id);
-  const button = document.getElementById("toggleButton"+id);
   if (element.classList.contains("visible")) {
     element.classList.replace("visible", "hidden"); // Passer à la classe "hidden"
-    button.innerText = "Afficher "+id;
   } else {
     element.classList.replace("hidden", "visible"); // Passer à la classe "visible"
-    button.innerText = "Masquer "+id;
   }
 }

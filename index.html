@@ -29,7 +29,7 @@ setTimeout(getBankInfo,1000)
 
 setTimeout(getBestiary,1000)
 
-setTimeout(showBestiary(),1000)
+setTimeout(showAllBestiary,1000)
 ">
 
 
@@ -61,8 +61,7 @@ setTimeout(showBestiary(),1000)
 
 </div>
 
-
-<button id="toggleButtoncollection" onclick="toggleVisibility('collection') "> affichez Collection</button>
+<button id="toggleButtoncollection" onclick="toggleVisibility('collection') "> affichez Collection </button>
 
 <div id="collection" class="toggle hidden">
   <div class="horizontal-container">
@@ -103,119 +102,117 @@ setTimeout(showBestiary(),1000)
   
 </div>
 
-<button id="toggleButtonbestiary" onclick="toggleVisibility('bestiary') "> affichez bestiary</button>
+<button id="toggleButtonbestiary" onclick="toggleVisibility('bestiary')"> affichez bestiary </button>
 
-<div id="bestiary" class="toggle visible">
-  <div class="horizontal-container"> 
-      <img>
-      <p>privateIsland</p>
-  </div>
-  <div id="privateIsland" class="horizontal-container">
-  </div>
-
-  <div class="horizontal-container"> 
-      <img>
-      <p>dwarvenMine</p>
-  </div>
-  <div id="dwarvenMine" class="horizontal-container">
-  </div>
+<div id="bestiary" class="toggle hidden">
+  
+<button id="toggleButtonPrivateIsland" onclick="toggleVisibility('privateIslandBestiary')"> privateIsland <br> <img src="./texture/island/Private Island.png"></img></button>
+<div id="privateIslandBestiary" class="toggle visible">
+  <div id="privateIsland" class="horizontal-container"></div>
+</div>
 
   <div class="horizontal-container"> 
       <img>
       <p>hub</p>
   </div>
-  <div id="hub" class="horizontal-container"> </div>
+  <div id="hub" class="horizontal-container" style="display:none;"> </div>
+ 
 
   <div class="horizontal-container"> 
       <img>
       <p>farmingIsland</p>
   </div>
-  <div id="farmingIsland" class="horizontal-container"> </div>
+  <div id="farmingIsland" class="horizontal-container" style="display:none;"> </div>
+
 
   <div class="horizontal-container"> 
       <img>
       <p>spiderDen</p>
   </div>
-  <div id="spiderDen" class="horizontal-container"> </div>
+  <div id="spiderDen" class="horizontal-container" style="display:none;"> </div>
+
 
   <div class="horizontal-container"> 
       <img>
       <p>theEnd</p>
   </div>
-  <div id="theEnd" class="horizontal-container"> </div>
+  <div id="theEnd" class="horizontal-container" style="display:none;"> </div>
+
 
   <div class="horizontal-container"> 
       <img>
       <p>crimsonIsle</p>
   </div>
-  <div id="crimsonIsle" class="horizontal-container"> </div>
+  <div id="crimsonIsle" class="horizontal-container" style="display:none;"> </div>
+
 
   <div class="horizontal-container"> 
       <img>
       <p>deepCavern</p>
   </div>
-  <div id="deepCavern" class="horizontal-container"> </div>
+  <div id="deepCavern" class="horizontal-container" style="display:none;"> </div>
+
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>dwarvenMine</p>
+  </div>
+  <div id="dwarvenMine" class="horizontal-container" style="display:none;">
+  </div>
+
 
   <div class="horizontal-container"> 
       <img>
       <p>crystalHollows</p>
   </div>
-  <div id="crystalHollows" class="horizontal-container"> </div>
+  <div id="crystalHollows" class="horizontal-container" style="display:none;"> </div>
 
-  <div class="horizontal-container"> 
-      <img>
-      <p>thePark</p>
-  </div>
-  <div id="thePark" class="horizontal-container"> </div>
-
-  <div class="horizontal-container"> 
-      <img>
-      <p>spookyFestival</p>
-  </div>
-  <div id="mythologicalCreatures" class="horizontal-container"> </div>
 
   <div class="horizontal-container"> 
       <img>
       <p>jerry</p>
   </div>
-  <div id="kuudra" class="horizontal-container"> </div>
+  <div id="jerry" class="horizontal-container" style="display:none;"> </div>
 
   <div class="horizontal-container"> 
       <img>
       <p>fishing</p>
   </div>
-  <div id="fishing" class="horizontal-container"> </div>
+  <div id="fishingBestiary" class="horizontal-container" style="display:none;"> </div>
 
-  <div class="horizontal-container"> 
-      <img>
-      <p>lava</p>
-  </div>
-  <div id="fishingFestival" class="horizontal-container"> </div>
 
-  <div class="horizontal-container"> 
-      <img>
-      <p>winter</p>
-  </div>
-  <div id="winter" class="horizontal-container"> </div>
-
-  <div class="horizontal-container"> 
+    <div class="horizontal-container"> 
       <img>
       <p>catacombs</p>
   </div>
-  <div id="catacombs" class="horizontal-container"> </div>
+  <div id="catacombs" class="horizontal-container" style="display:none;"> </div>
 
   <div class="horizontal-container"> 
       <img>
       <p>garden</p>
   </div>
-  <div id="garden" class="horizontal-container"> </div>
+  <div id="garden" class="horizontal-container" style="display:none;"> </div>
 
   <div class="horizontal-container"> 
       <img>
-      <p>jerry</p>
+      <p>thePark</p>
   </div>
-  <div id="jerry" class="horizontal-container">
+  <div id="thePark" class="horizontal-container" style="display:none;"> </div>
+
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>SpookyFestival</p>
   </div>
+  <div id="SpookyFestival" class="horizontal-container" style="display:none;"> </div>
+
+
+  <div class="horizontal-container"> 
+      <img>
+      <p>other</p>
+  </div>
+  <div id="other" class="horizontal-container"> </div>
+
 </div>
 
 

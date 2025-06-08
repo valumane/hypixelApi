@@ -74,3 +74,10 @@ p{
 }
 
 
+.mobhead {
+    width: 50px;
+}
+
+div#bestiary > button > img {
+  width: 100px;
+}
