@@ -1,3 +1,36 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    .background-blur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('./texture/background/background.jpg'); /* ← change cette ligne si besoin */
+      background-size: cover;
+      background-position: center;
+      filter: blur(10px);
+      opacity: 0.6;
+      z-index: -1;
+    }
+
+    .contenu-au-dessus {
+      position: relative;
+      z-index: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
 /* Conteneur de la barre de progression */
 .progress-container {
     width: 200px; /* Largeur totale de la barre */
@@ -83,17 +116,18 @@ div#bestiary > button > img {
 }
 
 
-#bestiary {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, auto));
-  grid-auto-rows: auto;
-  gap: 10px;
-}
-
 #bestiary > button {
-  grid-row: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-#bestiary > div {
-  grid-row: 2;
+
+#bestiary > button:hover {
+  background-color: rgba(0,0,0,0.05); /* léger fond */
+  box-shadow: 0 0 5px rgba(0,0,0,0.2); /* petite ombre */
 }

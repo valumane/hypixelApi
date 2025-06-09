@@ -31,6 +31,8 @@ setTimeout(getBestiary,1000)
 
 setTimeout(showAllBestiary,1000)
 ">
+<div class="background-blur"></div>
+<div class="contenu-au-dessus">
 
 
 <div id="profileInfo">
@@ -101,11 +103,7 @@ setTimeout(showAllBestiary,1000)
 <button id="toggleButtonbestiary" onclick="toggleVisibility('bestiary')"> affichez bestiary </button>
 <div id="bestiary" class="toggle visible">
   
-<button id="toggleButtonPrivateIsland" onclick="toggleVisibility('privateIslandBestiary')"> privateIsland <br> <img src="./texture/island/Private Island.png"></img></button>
-<div id="privateIslandBestiary" class="toggle hidden">
-  <div id="privateIsland" class="horizontal-container"></div>
-</div>
-
+<button onclick="toggleVisibility('privateIslandBestiary')"> privateIsland <br> <img src="./texture/island/Private Island.png"></img></button>
 <button onclick="toggleVisibility('hubBestiary')">hub <br> <img src="./texture/island/Hub.png"></img></button>
 <button onclick="toggleVisibility('barnBestiary')">The Barn <br> <img src="./texture/island/Barn.png"></img></button>
 <button onclick="toggleVisibility('spiderDenBestiary')">spider den <br> <img src="./texture/island/Spider's Den.png"></img></button>
@@ -122,7 +120,7 @@ setTimeout(showAllBestiary,1000)
 <button onclick="toggleVisibility('SpookyFestivalBestiary')">SpookyFestiva <br> <img src="./texture/island/spookyFestival.png"></img></button>
 
 
-
+<div id="privateIslandBestiary" class="toggle hidden"> <div id="privateIsland" class="horizontal-container"></div> </div>
 <div id="hubBestiary" class="toggle hidden"> <div id="hub" class="horizontal-container"> </div> </div>  
 <div id="barnBestiary" class="toggle hidden"> <div id="barn" class="horizontal-container"> </div> </div>
 <div id="spiderDenBestiary" class="toggle hidden"> <div id="spiderDen" class="horizontal-container"> </div> </div>
@@ -140,7 +138,6 @@ setTimeout(showAllBestiary,1000)
 
 </div>
 
-
-
+</div>
 </body>
 </html>
