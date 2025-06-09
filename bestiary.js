@@ -266,7 +266,6 @@ function addKill(moblist){ //["zombie1","zombie2"] -> 55
 
 function regroupPerMob(l){
     data=l.data
-    
     for(let i = 0; i<data.length;i++){
         let name = data[i][0]
         let kill=0;
@@ -288,7 +287,7 @@ function testbestiary(l){
 }
 
 function showAllBestiary(){
-    for(let i=0;i<16;i++){
+    for(let i=0;i<zones.length;i++){
         regroupPerMob(zones[i])
     }
 }

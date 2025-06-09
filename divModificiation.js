@@ -125,23 +125,10 @@ function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
   const img = document.createElement("img");
   img.className = "mobhead";
 
-  function tryImage(img, basePath, extensions, index = 0) {
-    if (index >= extensions.length) {
-      img.src = "texture/mobs/default.png";
-      return;
-    }
-
-    const src = basePath + extensions[index];
-    img.onerror = () => tryImage(img, basePath, extensions, index + 1);
-    img.src = src;
-  }
-
   if (imgSrc) {
     img.src = imgSrc;
   } else {
-    const basePath = `texture/mobs/${categories}/${nameMob}`;
-    const extensions = [".png", ".gif", ".webp"];
-    tryImage(img, basePath, extensions);
+    img.src = `texture/mobs/${categories}/${nameMob}.webp`;
   }
 
   const name = document.createElement("p");
@@ -162,6 +149,7 @@ function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
 
   container.appendChild(bestiaryCategorie);
 }
+
 
 function toggleVisibility(id) {
   const element = document.getElementById(id);
