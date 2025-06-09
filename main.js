@@ -117,6 +117,31 @@ function sumAllTiers(coll ){
 }
 
 
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+async function main() {
+  
+
+apiGet()
+setTimeout(getCollection,1000);
+setTimeout(getCollected,1500);
+setTimeout(getAllFarming,2000)
+setTimeout(getmemberinfo,1000)
+setTimeout(setLevel,1000)
+setTimeout(getBankInfo,1000)
+setTimeout(getBestiary,1000)
+setTimeout(showAllBestiary,1000)
+setTimeout(divDetection,1000)
+
+
+}
+
+
+
+
 
 function createFarmingdiv(categories, collname, eta, progress,rank) {
   const container = document.getElementById(categories); // Conteneur cible
@@ -357,7 +382,6 @@ function putAfterButton(nomButton) {
       break;
     }
   }
-  console.log(divButton,divToMove)
   // Si les deux sont trouvés, on bouge la div juste après le bouton
   if (divButton && divToMove) {
     divButton.after(divToMove);
