@@ -34,7 +34,7 @@ var hub = [
     "old_wolf_50",
 ];
 
-var farmingIsland = [
+var barn = [
     "sheep_1", "cow_1", "chicken_1", "pig_1", "rabbit_1","mushroom_cow_1",
 ];
 
@@ -222,12 +222,10 @@ var other = [
     "spirit_wolf_1",
 ]
 */
-let locationList = [privateIsland, hub, farmingIsland, spiderDen, theEnd, crimsonIsle, 
-                    deepCavern, dwarvenMine, crystalHollows, jerry, fishingBestiary, catacombs, 
-                    garden, thePark, SpookyFestival/*, other*/];
-let locationName = ["privateIsland", "hub", "farmingIsland", "spiderDen", "theEnd", "crimsonIsle", 
-                    "deepCavern", "dwarvenMine", "crystalHollows", "jerry", "fishingBestiary", "catacombs", 
-                    "garden", "thePark", "SpookyFestival"/*, "other"*/];
+let locationList = [privateIsland, hub, barn, spiderDen, theEnd, crimsonIsle, deepCavern, dwarvenMine, crystalHollows, jerry, fishingBestiary, catacombs, 
+                    garden, thePark, SpookyFestival];
+let locationName = ["privateIsland", "hub", "barn", "spiderDen", "theEnd", "crimsonIsle", 
+                    "deepCavern", "dwarvenMine", "crystalHollows", "jerry", "fishingBestiary", "catacombs", "garden", "thePark", "SpookyFestival"];
 
 const zones = locationName.map((name, i) => {
   return {

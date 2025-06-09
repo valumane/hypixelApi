@@ -81,3 +81,19 @@ p{
 div#bestiary > button > img {
   width: 100px;
 }
+
+
+#bestiary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, auto));
+  grid-auto-rows: auto;
+  gap: 10px;
+}
+
+#bestiary > button {
+  grid-row: 1;
+}
+
+#bestiary > div {
+  grid-row: 2;
+}
