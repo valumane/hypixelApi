@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <script src="main.js"></script>
-    <script src="Collection.js"></script>
-    <script src="profile.js"></script>
-    <script src="bestiary.js"></script>
-    <script src="levelcap.js"></script>
 
-    <link rel="stylesheet" href="styles.css"> <!-- Lien vers le fichier CSS -->
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="main.js"></script>
+  <script src="Collection.js"></script>
+  <script src="profile.js"></script>
+  <script src="bestiary.js"></script>
+  <script src="levelcap.js"></script>
+
+  <link rel="stylesheet" href="styles.css"> <!-- Lien vers le fichier CSS -->
 </head>
+
 <body onload="
 
 apiGet()
@@ -30,114 +32,126 @@ setTimeout(getBankInfo,1000)
 setTimeout(getBestiary,1000)
 
 setTimeout(showAllBestiary,1000)
+setTimeout(divDetection,1000)
+
 ">
-<div class="background-blur"></div>
-<div class="contenu-au-dessus">
+  <div class="background-blur"></div>
+  <div class="contenu-au-dessus">
 
 
-<div id="profileInfo">
-  <div id="BankInfo">
-    <p id="bankValue"></p>
+    <div id="profileInfo">
+      <div id="BankInfo">
+        <p id="bankValue"></p>
+      </div>
+    </div>
+
+
   </div>
-</div>
 
+  <button id="toggleButtonskill" onclick="toggleVisibility('skill')"> affichez skill</button>
 
-</div>
-
-<button id="toggleButtonskill" onclick="toggleVisibility('skill')"> affichez skill</button>
-
-<div id="skill" class="toggle hidden">
-  <div id="farmingSkill"></div>
-  <div id="miningSkill"></div>
-  <div id="combatSkill"></div>
-  <div id="tamingSkill"></div>
-  <div id="enchantingSkill"></div>
-  <div id="fishingSkill"></div>
-  <div id="foragingSkill"></div>
-  <div id="carpentrySkill"></div>
-  <div id="alchemySkill"></div>
-  <div id="socialSkill"></div>
-  <div id="runecraftingSkill"></div>
-</div>
-
-<button id="toggleButtoncollection" onclick="toggleVisibility('collection') "> affichez Collection </button>
-<div id="collection" class="toggle hidden">
-  <div class="horizontal-container">
-    <img src="texture/items/farming.png" style="width: 50px;">
-    <p>farming</p>
+  <div id="skill" class="toggle hidden">
+    <div id="farmingSkill"></div>
+    <div id="miningSkill"></div>
+    <div id="combatSkill"></div>
+    <div id="tamingSkill"></div>
+    <div id="enchantingSkill"></div>
+    <div id="fishingSkill"></div>
+    <div id="foragingSkill"></div>
+    <div id="carpentrySkill"></div>
+    <div id="alchemySkill"></div>
+    <div id="socialSkill"></div>
+    <div id="runecraftingSkill"></div>
   </div>
-  <div id="farming" class="horizontal-container"> </div>
-  
-  <div class="horizontal-container">
-    <img src="texture/items/mining.png" style="width: 50px;">
-    <p>mining</p>
-  </div>
-  <div id="mining" class="horizontal-container"></div>
-  
-  <div class="horizontal-container">
-    <img src="texture/items/combat.png" style="width: 50px;">
-    <p>combat</p>
-  </div>
-  <div id="combat" class="horizontal-container"></div>
-  
-  <div class="horizontal-container">
-    <img src="texture/items/foraging.png" style="width: 50px;">
-    <p>foraging</p>
-  </div>
-  <div id="foraging" class="horizontal-container"></div>
-  
-  <div class="horizontal-container">
-    <img src="texture/items/fishing.png" style="width: 50px;">
-    <p>fishing</p>
-  </div>
-  <div id="fishing" class="horizontal-container"></div>
-  
-  <div class="horizontal-container">
-    <img src="texture/items/rift.gif" style="width: 50px;">
-    <p>rift</p>
-  </div>
-  <div id="rift" class="horizontal-container"></div>
-  
-</div>
 
-<button id="toggleButtonbestiary" onclick="toggleVisibility('bestiary')"> affichez bestiary </button>
-<div id="bestiary" class="toggle visible">
-  
-<button onclick="toggleVisibility('privateIslandBestiary')"> privateIsland <br> <img src="./texture/island/Private Island.png"></img></button>
-<button onclick="toggleVisibility('hubBestiary')">hub <br> <img src="./texture/island/Hub.png"></img></button>
-<button onclick="toggleVisibility('barnBestiary')">The Barn <br> <img src="./texture/island/Barn.png"></img></button>
-<button onclick="toggleVisibility('spiderDenBestiary')">spider den <br> <img src="./texture/island/Spider's Den.png"></img></button>
-<button onclick="toggleVisibility('theEndBestiary')">the end <br> <img src="./texture/island/End.png"></img></button>
-<button onclick="toggleVisibility('crimsonIsleBestiary')">crimsonIsle <br> <img src="./texture/island/Crimson Isle.png"></img></button>
-<button onclick="toggleVisibility('deepCavernBestiary')">deepCavern <br> <img src="./texture/island/Deep Caverns.png"></img></button>
-<button onclick="toggleVisibility('dwarvenMineBestiary')">dwarvenMine <br> <img src="./texture/island/Dwarven_Mines.webp"></img></button>
-<button onclick="toggleVisibility('crystalHollowsBestiary')">crystalHollows <br> <img src="./texture/island/crystal_hollows.png"></img></button>
-<button onclick="toggleVisibility('jerryBestiary')">jerry <br> <img src="./texture/island/jerry.webp"></img></button>
-<button onclick="toggleVisibility('fishingBestiaryBestiary')">fishing <br> <img src="./texture/island/fishing.webp"></img></button>
-<button onclick="toggleVisibility('catacombsBestiary')">catacombs <br> <img src="./texture/island/Dungeon Hub.png"></img></button>
-<button onclick="toggleVisibility('gardenBestiary')">garden <br> <img src="./texture/island/Garden.png"></img></button>
-<button onclick="toggleVisibility('theParkBestiary')">thePark <br> <img src="./texture/island/Park.png"></img></button>
-<button onclick="toggleVisibility('SpookyFestivalBestiary')">SpookyFestival <br> <img src="./texture/island/spookyFestival.png"></img></button>
+  <button id="toggleButtoncollection" onclick="toggleVisibility('collection') "> affichez Collection </button>
+  <div id="collection" class="toggle hidden">
+    <div class="horizontal-container">
+      <img src="texture/items/farming.png" style="width: 50px;">
+      <p>farming</p>
+    </div>
+    <div id="farming" class="horizontal-container"> </div>
 
+    <div class="horizontal-container">
+      <img src="texture/items/mining.png" style="width: 50px;">
+      <p>mining</p>
+    </div>
+    <div id="mining" class="horizontal-container"></div>
 
-<div id="privateIslandBestiary" class="toggle hidden"> <div id="privateIsland" class="horizontal-container"></div> </div>
-<div id="hubBestiary" class="toggle hidden"> <div id="hub" class="horizontal-container"> </div> </div>  
-<div id="barnBestiary" class="toggle hidden"> <div id="barn" class="horizontal-container"> </div> </div>
-<div id="spiderDenBestiary" class="toggle hidden"> <div id="spiderDen" class="horizontal-container"> </div> </div>
-<div id="theEndBestiary" class="toggle hidden"> <div id="theEnd" class="horizontal-container"> </div> </div>
-<div id="deepCavernBestiary" class="toggle hidden"> <div id="deepCavern" class="horizontal-container"> </div> </div>
-<div id="dwarvenMineBestiary" class="toggle hidden"> <div id="dwarvenMine" class="horizontal-container"> </div> </div>
-<div id="crimsonIsleBestiary" class="toggle hidden"> <div id="crimsonIsle" class="horizontal-container"> </div> </div>
-<div id="crystalHollowsBestiary" class="toggle hidden"> <div id="crystalHollows" class="horizontal-container"> </div> </div>
-<div id="jerryBestiary" class="toggle hidden"> <div id="jerry" class="horizontal-container"> </div> </div>
-<div id="fishingBestiaryBestiary" class="toggle hidden"> <div id="fishingBestiary" class="horizontal-container"> </div> </div>
-<div id="catacombsBestiary" class="toggle hidden"> <div id="catacombs" class="horizontal-container"> </div> </div>
-<div id="gardenBestiary" class="toggle hidden"> <div id="garden" class="horizontal-container"> </div> </div>
-<div id="theParkBestiary" class="toggle hidden"> <div id="thePark" class="horizontal-container"> </div> </div>
-<div id="SpookyFestivalBestiary" class="toggle hidden"> <div id="SpookyFestival" class="horizontal-container"> </div> </div>
+    <div class="horizontal-container">
+      <img src="texture/items/combat.png" style="width: 50px;">
+      <p>combat</p>
+    </div>
+    <div id="combat" class="horizontal-container"></div>
 
-</div>
+    <div class="horizontal-container">
+      <img src="texture/items/foraging.png" style="width: 50px;">
+      <p>foraging</p>
+    </div>
+    <div id="foraging" class="horizontal-container"></div>
 
-</div>
+    <div class="horizontal-container">
+      <img src="texture/items/fishing.png" style="width: 50px;">
+      <p>fishing</p>
+    </div>
+    <div id="fishing" class="horizontal-container"></div>
+
+    <div class="horizontal-container">
+      <img src="texture/items/rift.gif" style="width: 50px;">
+      <p>rift</p>
+    </div>
+    <div id="rift" class="horizontal-container"></div>
+
+  </div>
+
+  <button id="toggleButtonbestiary" onclick="toggleVisibility('bestiary')"> affichez bestiary </button>
+  <div id="bestiary" class="toggle visible">
+
+    <button onclick="toggleVisibility('privateIslandBestiary')"> privateIsland <br> <img
+        src="./texture/island/Private Island.png"></img></button><button onclick="toggleVisibility('hubBestiary')">hub
+      <br> <img src="./texture/island/Hub.png"></img></button><button onclick="toggleVisibility('barnBestiary')">The
+      Barn <br> <img src="./texture/island/Barn.png"></img></button><button
+      onclick="toggleVisibility('spiderDenBestiary')">spider den <br> <img
+        src="./texture/island/Spider's Den.png"></img></button><button onclick="toggleVisibility('theEndBestiary')">the
+      end <br> <img src="./texture/island/End.png"></img></button><button
+      onclick="toggleVisibility('crimsonIsleBestiary')">crimsonIsle <br> <img
+        src="./texture/island/Crimson Isle.png"></img></button><button
+      onclick="toggleVisibility('deepCavernBestiary')">deepCavern <br> <img
+        src="./texture/island/Deep Caverns.png"></img></button><button
+      onclick="toggleVisibility('dwarvenMineBestiary')">dwarvenMine <br> <img
+        src="./texture/island/Dwarven_Mines.webp"></img></button><button
+      onclick="toggleVisibility('crystalHollowsBestiary')">crystalHollows <br> <img
+        src="./texture/island/crystal_hollows.png"></img></button><button
+      onclick="toggleVisibility('jerryBestiary')">jerry <br> <img
+        src="./texture/island/jerry.webp"></img></button><button
+      onclick="toggleVisibility('fishingBestiaryBestiary')">fishing <br> <img
+        src="./texture/island/fishing.webp"></img></button><button
+      onclick="toggleVisibility('catacombsBestiary')">catacombs <br> <img
+        src="./texture/island/Dungeon Hub.png"></img></button><button
+      onclick="toggleVisibility('gardenBestiary')">garden <br> <img
+        src="./texture/island/Garden.png"></img></button><button onclick="toggleVisibility('theParkBestiary')">thePark
+      <br> <img src="./texture/island/Park.png"></img></button><button
+      onclick="toggleVisibility('SpookyFestivalBestiary')">SpookyFestival <br> <img
+        src="./texture/island/spookyFestival.png"></img></button>
+    <div id="privateIslandBestiary" class="toggle hidden">
+      <div id="privateIsland" class="horizontal-container"></div>
+    </div>
+    <div id="hubBestiary" class="toggle hidden"> <div id="hub" class="horizontal-container"></div></div>
+    <div id="barnBestiary" class="toggle hidden"> <div id="barn" class="horizontal-container"> </div></div>
+    <div id="spiderDenBestiary" class="toggle hidden"> <div id="spiderDen" class="horizontal-container"> </div></div> 
+    <div id="theEndBestiary" class="toggle hidden"> <div id="theEnd" class="horizontal-container"> </div></div>
+    <div id="deepCavernBestiary" class="toggle hidden">  <div id="deepCavern" class="horizontal-container"> </div></div>
+    <div id="dwarvenMineBestiary" class="toggle hidden"> <div id="dwarvenMine" class="horizontal-container"> </div></div>
+    <div id="crimsonIsleBestiary" class="toggle hidden"> <div id="crimsonIsle" class="horizontal-container"> </div> </div>
+    <div id="crystalHollowsBestiary" class="toggle hidden"><div id="crystalHollows" class="horizontal-container"> </div> </div>
+    <div id="jerryBestiary" class="toggle hidden"><div id="jerry" class="horizontal-container"> </div></div>
+    <div id="fishingBestiaryBestiary" class="toggle hidden"> <div id="fishingBestiary" class="horizontal-container"> </div></div>
+    <div id="catacombsBestiary" class="toggle hidden"><div id="catacombs" class="horizontal-container"> </div></div>
+    <div id="gardenBestiary" class="toggle hidden"> <div id="garden" class="horizontal-container"> </div></div>
+    <div id="theParkBestiary" class="toggle hidden"><div id="thePark" class="horizontal-container"> </div></div>
+    <div id="SpookyFestivalBestiary" class="toggle hidden"> <div id="SpookyFestival" class="horizontal-container"> </div></div>
+  </div>
+  </div>
 </body>
+
 </html>

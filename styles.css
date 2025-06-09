@@ -115,6 +115,11 @@ div#bestiary > button > img {
   width: 100px;
 }
 
+.horizontal-container {
+  border: 2px solid #671f1f;
+  width: fit-content;     /* ✅ adapte à la taille du contenu */
+  max-width: 100%;        /* évite de déborder */
+}
 
 #bestiary > button {
   background: none;

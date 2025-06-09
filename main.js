@@ -228,7 +228,6 @@ function createSkilldiv(skillName,eta,rank){
 </div>
 
 */
-
 function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
   const container = document.getElementById(categories);
   if (!container) {
@@ -236,46 +235,25 @@ function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
     return;
   }
 
-  // Conteneur principal
   const bestiaryCategorie = document.createElement("div");
   bestiaryCategorie.className = "bestiaryCategorie";
 
-  // Bloc image + nom
   const mobEtImage = document.createElement("div");
   mobEtImage.className = "mobEtImage";
 
   const img = document.createElement("img");
   img.className = "mobhead";
 
-  // Gestion de l'image avec plusieurs extensions
- function tryImage(img, basePath, extensions, index = 0) {
-  if (index >= extensions.length) {
-    console.warn(`Aucune image trouvée pour ${basePath}`);
-    img.onerror = null;
-    img.src = "texture/mobs/default.png"; // ou une image vide ou rien du tout
-    return;
+  function tryImage(img, basePath, extensions, index = 0) {
+    if (index >= extensions.length) {
+      img.src = "texture/mobs/default.png";
+      return;
+    }
+
+    const src = basePath + extensions[index];
+    img.onerror = () => tryImage(img, basePath, extensions, index + 1);
+    img.src = src;
   }
-
-  const src = basePath + extensions[index];
-
-  // Temporairement désactiver les callbacks avant de changer src
-  img.onerror = null;
-  img.onload = null;
-
-  img.onerror = () => {
-    // ⚠️ Ne pas rappeler tryImage s'il est déjà à la fin
-    tryImage(img, basePath, extensions, index + 1);
-  };
-
-  img.onload = () => {
-    // Image trouvée : on désactive les gestionnaires
-    img.onerror = null;
-    img.onload = null;
-  };
-
-  img.src = src;
-}
-
 
   if (imgSrc) {
     img.src = imgSrc;
@@ -291,46 +269,142 @@ function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
   mobEtImage.appendChild(img);
   mobEtImage.appendChild(name);
 
-  // Bloc kill count
   const countDiv = document.createElement("div");
   countDiv.className = "count";
 
   const progress = document.createElement("p");
   progress.innerText = `kills : ${count}`;
-
   countDiv.appendChild(progress);
 
-  // Ajout des deux blocs dans la tuile principale
   bestiaryCategorie.appendChild(mobEtImage);
   bestiaryCategorie.appendChild(countDiv);
 
-  // Ajout au container global
   container.appendChild(bestiaryCategorie);
 }
-
-
-  
-
-
-/*
-<div class=bestiaryCategorie>
-  <div class=mobEtImage>
-    <img>
-    <p> nom mob : niveau </p> 
-  </div>
-  <div class="count">
-    <p> kills : </p>
-  </div>
-</div>
-
-*/
-
 
 function toggleVisibility(id) {
   const element = document.getElementById(id);
   if (element.classList.contains("visible")) {
     element.classList.replace("visible", "hidden"); // Passer à la classe "hidden"
+    putAtOriginalPosition(id)
   } else {
     element.classList.replace("hidden", "visible"); // Passer à la classe "visible"
+    putAfterButton(id)
   }
 }
+
+function t(){
+  let all = document.getElementById('bestiary').childNodes;
+  return all;
+}
+
+
+function removeNth(nodeList, n) {
+  const node = nodeList[n];
+  if (node && node.parentNode) {
+    node.parentNode.removeChild(node);
+  }
+}
+
+function insertBeforeNth(nodeList, newElement, n) {
+  const refNode = nodeList[n];
+  if (refNode && refNode.parentNode) {
+    refNode.parentNode.insertBefore(newElement, refNode);
+  } else if (nodeList.length > 0) {
+    nodeList[0].parentNode.appendChild(newElement);
+  }
+}
+
+
+let originalPos;
+function divDetection() {
+  let res = [];
+  const nodes = t();
+  for (let i = 1; i < nodes.length; i++) {
+    const child = nodes[i];
+    if (child instanceof HTMLElement) {
+      if (child.getAttributeNames().includes('onclick')==false) {
+        res.push([i,child]); // ou res.push(i), si tu veux l'index
+      }
+    }
+  }
+
+  originalPos = res;
+}
+
+
+function putAfterButton(nomButton) {
+  let divButton = null;
+  let divToMove = null;
+
+  // Cherche le bouton avec onclick="toggleVisibility('nomButton')"
+  for (let i = 0; i < t().length; i++) {
+    const button = t()[i];
+    if (
+      button instanceof HTMLElement && button.getAttribute('onclick') &&
+      button.getAttribute('onclick').includes(`'${nomButton}'`)
+    ) {
+      divButton = button;
+      break;
+    }
+  }
+  // Cherche la div correspondante dans divDetection()
+  const original = originalPos;
+  for (let i = 0; i < original.length; i++) {
+    const div = original[i][1];
+    if (div.id === nomButton) {
+      divToMove = div;
+      break;
+    }
+  }
+  console.log(divButton,divToMove)
+  // Si les deux sont trouvés, on bouge la div juste après le bouton
+  if (divButton && divToMove) {
+    divButton.after(divToMove);
+  } else {
+    console.warn("Bouton ou div introuvable pour :", nomButton);
+    console.log("div :",div)
+    console.log("button :",divButton)
+  }
+}
+
+
+function putAtOriginalPosition(nomDiv) {
+  let div = null;
+  const dom = t(); // liste des enfants de #bestiary
+
+  // Trouver la div dans le DOM
+  for (let i = 0; i < dom.length; i++) {
+    if (dom[i].id === nomDiv) {
+      div = dom[i];
+      break;
+    }
+  }
+
+  // Trouver la position originale dans divDetection
+  let originalIndex = -1;
+  for (let i = 0; i < originalPos.length; i++) {
+    const [index, element] = originalPos[i];
+    if (element.id === nomDiv) {
+      originalIndex = index;
+      break;
+    }
+  }
+
+  // Réinsère la div à sa position d'origine
+  if (div && originalIndex !== -1) {
+    const parent = div.parentNode;
+    const refNode = dom[originalIndex];
+    
+    if (refNode) {
+      parent.insertBefore(div, refNode);
+    } else {
+      parent.appendChild(div); // fallback si l'index original est out of range
+    }
+  } else {
+    console.warn("Impossible de remettre la div :", nomDiv);
+  }
+}
+
+
+
