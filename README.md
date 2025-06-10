@@ -36,7 +36,8 @@ Ce dépôt a pour but de centraliser différents outils autour de l'API Hypixel,
 - statistique dungeon
 - statistique slayer 
 - statistique dimension rift
-
+- information jacob contest
+- 
 ---
 © 2025 Lucas — Projet open-source utilisant l'api Hypixel.
 Ce projet n’est ni affilié ni approuvé par Hypixel Inc.
