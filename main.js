@@ -135,7 +135,7 @@ setTimeout(getBankInfo,1000)
 setTimeout(getBestiary,1000)
 setTimeout(showAllBestiary,1000)
 setTimeout(divDetection,1000)
-
+setTimeout(loadhotm,1000)
 
 }
 
