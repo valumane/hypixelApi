@@ -151,14 +151,14 @@ function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
 }
 
 
-function toggleVisibility(id) {
+function toggleVisibility(id,n) {
   const element = document.getElementById(id);
   if (element.classList.contains("visible")) {
     element.classList.replace("visible", "hidden"); // Passer à la classe "hidden"
-    putAtOriginalPosition(id)
+    if(n==1){putAtOriginalPosition(id)}
   } else {
     element.classList.replace("hidden", "visible"); // Passer à la classe "visible"
-    putAfterButton(id)
+    if(n==1){putAfterButton(id)}
   }
 }
 
@@ -186,7 +186,7 @@ function insertBeforeNth(nodeList, newElement, n) {
 
 
 let originalPos;
-function divDetection() {
+async function divDetection() {
   let res = [];
   const nodes = t();
   for (let i = 1; i < nodes.length; i++) {

@@ -27,7 +27,7 @@ function convertirTempsUnix(tempsUnix) {
   return date.toLocaleString('fr-FR', options);
 }
 
-function formatNumber(number) {
+function roundNumber(number) {
   if (number >= 1_000_000_000) {
       return (number / 1_000_000_000).toFixed(2) + 'b';
   } else if (number >= 1_000_000) {
@@ -40,6 +40,11 @@ function formatNumber(number) {
 }
 
 
+function formatNombre(n) {
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
+
 let allapi = null;
 let apiUrl = "";
 
@@ -48,7 +53,7 @@ async function apiGet() {
     const api_key_response = await fetch('api_key.json');
     const api_key_data = await api_key_response.json();
     const apikey = api_key_data.key;
-    console.log(apikey);
+    //console.log(apikey);
     
     const apiUrl1 = 'https://api.hypixel.net/v2/skyblock/profiles?key=' + apikey + '&uuid=' + uuid;
     apiUrl = apiUrl1;
@@ -72,38 +77,36 @@ async function apiGet() {
 
 
 var membersInfo
-function getmemberinfo(){
+async function getmemberinfo(){
   membersInfo = allapi.profiles[0].members["aa3e247ff9d2418eaadc949c77aafc7d"]
 }
 
 
 var allCollection;
-function getCollection(){
+async function getCollection() {
+  const response = await fetch(Collection);
+  const data = await response.json();
 
-  fetch(Collection)
-  .then(response => response.json())
-  .then(data => {
-    allCollection = data.collections;
-    farmingCollection = allCollection.FARMING.items;
-    miningCollection = allCollection.MINING.items;
-    combatCollection= allCollection.COMBAT.items;
-    foragingCollection= allCollection.FORAGING.items;
-    fishingCollection= allCollection.FISHING.items;
-    riftCollection= allCollection.RIFT.items;
-  });
-
+  allCollection = data.collections;
+  farmingCollection = allCollection.FARMING.items;
+  miningCollection = allCollection.MINING.items;
+  combatCollection = allCollection.COMBAT.items;
+  foragingCollection = allCollection.FORAGING.items;
+  fishingCollection = allCollection.FISHING.items;
+  riftCollection = allCollection.RIFT.items;
 }
 
+
 var allCollected;
-function getCollected() {
+async function getCollected() {
   allCollected = allapi.profiles[0].members['aa3e247ff9d2418eaadc949c77aafc7d'].collection;
 }
 
 
 var bankinfo;
-function getBankInfo(){
+async function getBankInfo(){
   bankinfo = allapi.profiles[0].banking;
-  document.getElementById("bankValue").innerText = "bank value : " + formatNumber(Math.round(bankinfo.balance))
+  document.getElementById("bankValue").innerText = "bank value : " + roundNumber(Math.round(bankinfo.balance))
 }
 
 
@@ -123,22 +126,37 @@ function wait(ms) {
 
 
 async function main() {
-  
+  await apiGet();
+  console.log("apiget fait");
 
-apiGet()
-setTimeout(getCollection,1000);
-setTimeout(getCollected,1500);
-setTimeout(getAllFarming,2000)
-setTimeout(getmemberinfo,1000)
-setTimeout(setLevel,1000)
-setTimeout(getBankInfo,1000)
-setTimeout(getBestiary,1000)
-setTimeout(showAllBestiary,1000)
-setTimeout(divDetection,1000)
-setTimeout(loadhotm,1000)
+  await getCollection();
+  console.log("getcollection fait")
 
+  await getCollected()
+  console.log("getcollected fait")
+
+  await getAllFarming()
+  console.log("getallfarming fait")
+
+  await getmemberinfo()
+  console.log("getmemberinfo fait")
+
+  await setLevel()
+  console.log("setlevel fait")
+
+  await getBankInfo()
+  console.log("getbankinfo fait")
+
+  await getBestiary()
+  console.log("getbestiary fait")  
+
+  await showAllBestiary()
+  console.log("showallbestiary fait")
+
+  await divDetection()
+  console.log("divDetection fait")
+
+  await mainhotm()
+  console.log("hotm fait")
+  console.log("chargement fini")
 }
-
-
-
-

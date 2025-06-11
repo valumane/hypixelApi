@@ -86,33 +86,33 @@
   </div>
 
   <button id="toggleButtonbestiary" onclick="toggleVisibility('bestiary')"> affichez bestiary </button>
-  <div id="bestiary" class="toggle visible">
+  <div id="bestiary" class="toggle hidden">
 
-    <button onclick="toggleVisibility('privateIslandBestiary')"> privateIsland <br> <img
-        src="./texture/island/Private Island.png"></img></button><button onclick="toggleVisibility('hubBestiary')">hub
-      <br> <img src="./texture/island/Hub.png"></img></button><button onclick="toggleVisibility('barnBestiary')">The
+    <button onclick="toggleVisibility('privateIslandBestiary',1)"> privateIsland <br> <img
+        src="./texture/island/Private Island.png"></img></button><button onclick="toggleVisibility('hubBestiary',1)">hub
+      <br> <img src="./texture/island/Hub.png"></img></button><button onclick="toggleVisibility('barnBestiary',1)">The
       Barn <br> <img src="./texture/island/Barn.png"></img></button><button
-      onclick="toggleVisibility('spiderDenBestiary')">spider den <br> <img
-        src="./texture/island/Spider's Den.png"></img></button><button onclick="toggleVisibility('theEndBestiary')">the
+      onclick="toggleVisibility('spiderDenBestiary',1)">spider den <br> <img
+        src="./texture/island/Spider's Den.png"></img></button><button onclick="toggleVisibility('theEndBestiary',1)">the
       end <br> <img src="./texture/island/End.png"></img></button><button
-      onclick="toggleVisibility('crimsonIsleBestiary')">crimsonIsle <br> <img
+      onclick="toggleVisibility('crimsonIsleBestiary',1)">crimsonIsle <br> <img
         src="./texture/island/Crimson Isle.png"></img></button><button
-      onclick="toggleVisibility('deepCavernBestiary')">deepCavern <br> <img
+      onclick="toggleVisibility('deepCavernBestiary',1)">deepCavern <br> <img
         src="./texture/island/Deep Caverns.png"></img></button><button
-      onclick="toggleVisibility('dwarvenMineBestiary')">dwarvenMine <br> <img
+      onclick="toggleVisibility('dwarvenMineBestiary',1)">dwarvenMine <br> <img
         src="./texture/island/Dwarven_Mines.webp"></img></button><button
-      onclick="toggleVisibility('crystalHollowsBestiary')">crystalHollows <br> <img
+      onclick="toggleVisibility('crystalHollowsBestiary',1)">crystalHollows <br> <img
         src="./texture/island/crystal_hollows.png"></img></button><button
-      onclick="toggleVisibility('jerryBestiary')">jerry <br> <img
+      onclick="toggleVisibility('jerryBestiary',1)">jerry <br> <img
         src="./texture/island/jerry.webp"></img></button><button
-      onclick="toggleVisibility('fishingBestiaryBestiary')">fishing <br> <img
+      onclick="toggleVisibility('fishingBestiaryBestiary',1)">fishing <br> <img
         src="./texture/island/fishing.webp"></img></button><button
-      onclick="toggleVisibility('catacombsBestiary')">catacombs <br> <img
+      onclick="toggleVisibility('catacombsBestiary',1)">catacombs <br> <img
         src="./texture/island/Dungeon Hub.png"></img></button><button
-      onclick="toggleVisibility('gardenBestiary')">garden <br> <img
-        src="./texture/island/Garden.png"></img></button><button onclick="toggleVisibility('theParkBestiary')">thePark
+      onclick="toggleVisibility('gardenBestiary',1)">garden <br> <img
+        src="./texture/island/Garden.png"></img></button><button onclick="toggleVisibility('theParkBestiary',1)">thePark
       <br> <img src="./texture/island/Park.png"></img></button><button
-      onclick="toggleVisibility('SpookyFestivalBestiary')">SpookyFestival <br> <img
+      onclick="toggleVisibility('SpookyFestivalBestiary',1)">SpookyFestival <br> <img
         src="./texture/island/spookyFestival.png"></img></button>
     <div id="privateIslandBestiary" class="toggle hidden">
       <div id="privateIsland" class="horizontal-container"></div>
@@ -131,6 +131,11 @@
     <div id="gardenBestiary" class="toggle hidden"> <div id="garden" class="horizontal-container"> </div></div>
     <div id="theParkBestiary" class="toggle hidden"><div id="thePark" class="horizontal-container"> </div></div>
     <div id="SpookyFestivalBestiary" class="toggle hidden"> <div id="SpookyFestival" class="horizontal-container"> </div></div>
+  </div>
+
+  <button id="toggleButtonHOTM" onclick="toggleVisibility('hotm')"> affichez hotm</button>
+  <div id="hotm" class="toggle visible">
+    <p id="powder_mithril"></p>
   </div>
   </div>
 </body>

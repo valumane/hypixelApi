@@ -1,5 +1,5 @@
 var bestiary;
-function getBestiary(){
+async function getBestiary(){
     bestiary = membersInfo.bestiary.kills;
 }
 
@@ -286,7 +286,7 @@ function testbestiary(l){
     }
 }
 
-function showAllBestiary(){
+async function showAllBestiary(){
     for(let i=0;i<zones.length;i++){
         regroupPerMob(zones[i])
     }

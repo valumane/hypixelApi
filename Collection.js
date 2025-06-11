@@ -33,7 +33,7 @@ function getItems(catname,name,catcat){
 } 
 
 var categories;
-function getAllFarming(){
+async function getAllFarming(){
     farmingcategories = Object.keys(farmingCollection);
     miningcategories = Object.keys(miningCollection);
     combatcategories = Object.keys(combatCollection);

@@ -1,7 +1,7 @@
 //skyblock level = Math.floor(membersInfo.leveling.experience/100)
 
 
-function setLevel(){
+async  function setLevel(){
 
     levelFarming = membersInfo.player_data.experience.SKILL_FARMING;
     levelMining = membersInfo.player_data.experience.SKILL_MINING;
