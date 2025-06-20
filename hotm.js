@@ -65,19 +65,63 @@ async function show_tier_exp() {
 
 let objectiv;
 async function loadCommision() {
-    objectiv = Object.values(allapi.profiles[0].members["aa3e247ff9d2418eaadc949c77aafc7d"].objectives)   
-    return objectiv
+    objectiv = allapi.profiles[0].members["aa3e247ff9d2418eaadc949c77aafc7d"].objectives
+    await transformerObjectivesEnTableau(objectiv)
+    await load_quest()
 }
 
 
-function filtrerComplete(tableau) {
-  const tabtmp = [];
+let objectivtab;
+async function transformerObjectivesEnTableau(objectives) {
+  objectivtab = Object.entries(objectives)
+    .filter(([_, val]) => typeof val === "object" && val !== null) // ignore les []
+    .map(([key, val]) => ({
+      name: key,
+      status: val.status || null,
+      progress: val.progress || null,
+      completed_at: val.completed_at || null
+    }));
+}
 
-  tableau.forEach(item => {
-    if (item.status === "COMPLETE") {
-      tabtmp.push(item);
+let tabcompleted = [];
+let othertab = [];
+function test() {
+  let tab = objectivtab;
+  for (let i = 0; i < tab.length; i++) {
+    if (tab[i].status === "COMPLETE") {
+      tabcompleted.push(tab[i]);
+    } else {
+      othertab.push(tab[i]);
     }
-  });
-
-  return tabtmp;
+  }
 }
+
+let completed_quest 
+let other_quest
+let riftquest
+let fetchur_quest
+let talk_quest
+let progress_valid
+let progress_invalid 
+async function load_quest(){
+  completed_quest = objectivtab.filter(obj => obj.status === "COMPLETE" && 
+                                              !obj.name.includes("talk") &&
+                                              !obj.name.includes("fetchur") &&
+                                              !obj.name.includes("rift"));
+
+  riftquest = objectivtab.filter(obj => obj.name.includes("rift"));
+
+  other_quest = objectivtab.filter(obj => obj.status !== "COMPLETE" && 
+                                        !obj.name.includes("rift") &&
+                                        !obj.name.includes("fetchur") &&
+                                        !obj.name.includes("talk"));
+                                        
+  fetchur_quest = objectivtab.filter(obj => obj.name.includes("fetchur"));
+  talk_quest = objectivtab.filter(obj => obj.name.includes("talk"));
+
+  progress_invalid = objectivtab.filter(obj => obj.progress === null);
+progress_valid = objectivtab.filter(obj => obj.progress !== null);
+
+
+}
+
