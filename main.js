@@ -4,38 +4,31 @@ const Collection = 'https://api.hypixel.net/resources/skyblock/collections';
 
 
 function convertirTempsUnix(tempsUnix) {
-  // Vérifiez si le temps Unix est donné en secondes ou en millisecondes
-  // Si c'est un temps en secondes, multipliez par 1000 pour obtenir des millisecondes
-  const timestamp = tempsUnix < 1e12 ? tempsUnix * 1000 : tempsUnix;
+  const date = new Date(tempsUnix);
 
-  // Créez un objet Date avec le temps Unix en millisecondes
-  const date = new Date(timestamp);
-
-  // Formatez la date pour un affichage lisible
   const options = {
-    weekday: 'long', // Nom du jour
-    year: 'numeric', // Année
-    month: 'long', // Nom du mois
-    day: 'numeric', // Jour du mois
-    hour: 'numeric', // Heure
-    minute: 'numeric', // Minute
-    second: 'numeric', // Seconde
-    timeZoneName: 'short' // Fuseau horaire
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    timeZoneName: 'short'
   };
 
-  // Retournez la date formatée en fonction des options définies
   return date.toLocaleString('fr-FR', options);
 }
 
 function roundNumber(number) {
   if (number >= 1_000_000_000) {
-      return (number / 1_000_000_000).toFixed(2) + 'b';
+    return (number / 1_000_000_000).toFixed(2) + 'b';
   } else if (number >= 1_000_000) {
-      return (number / 1_000_000).toFixed(1) + 'm';
+    return (number / 1_000_000).toFixed(1) + 'm';
   } else if (number >= 1_000) {
-      return (number / 1_000).toFixed(1) + 'k';
+    return (number / 1_000).toFixed(1) + 'k';
   } else {
-      return number.toString();
+    return number.toString();
   }
 }
 
@@ -54,7 +47,7 @@ async function apiGet() {
     const api_key_data = await api_key_response.json();
     const apikey = api_key_data.key;
     //console.log(apikey);
-    
+
     const apiUrl1 = 'https://api.hypixel.net/v2/skyblock/profiles?key=' + apikey + '&uuid=' + uuid;
     apiUrl = apiUrl1;
     console.log(apiUrl);
@@ -77,7 +70,7 @@ async function apiGet() {
 
 
 var membersInfo
-async function getmemberinfo(){
+async function getmemberinfo() {
   membersInfo = allapi.profiles[0].members["aa3e247ff9d2418eaadc949c77aafc7d"]
 }
 
@@ -104,16 +97,16 @@ async function getCollected() {
 
 
 var bankinfo;
-async function getBankInfo(){
+async function getBankInfo() {
   bankinfo = allapi.profiles[0].banking;
   document.getElementById("bankValue").innerText = "bank value : " + roundNumber(Math.round(bankinfo.balance))
 }
 
 
 
-function sumAllTiers(coll ){
-  var tmp=0;
-  for(i=0;i<coll.length;i++){
+function sumAllTiers(coll) {
+  var tmp = 0;
+  for (i = 0; i < coll.length; i++) {
     tmp += coll[i].amountRequired
   }
   return tmp;
@@ -148,7 +141,7 @@ async function main() {
   console.log("getbankinfo fait")
 
   await getBestiary()
-  console.log("getbestiary fait")  
+  console.log("getbestiary fait")
 
   await showAllBestiary()
   console.log("showallbestiary fait")

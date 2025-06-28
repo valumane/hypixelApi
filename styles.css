@@ -136,3 +136,10 @@ div#bestiary > button > img {
   background-color: rgba(0,0,0,0.05); /* léger fond */
   box-shadow: 0 0 5px rgba(0,0,0,0.2); /* petite ombre */
 }
+
+
+#tree >img{
+  width: 20px;
+  background-color: #020202;
+  src: local("texture/hotm/void");
+}

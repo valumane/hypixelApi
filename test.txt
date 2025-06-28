@@ -1,0 +1,76 @@
+��	��i
+���$���id�V���Count�
+��tag��	HideFlags����
+��display	��Lore�������§7Damage: §c+200��§7Farming Fortune: §a+20�� §8[§7☘§8]���)§7§7Helps rid the world of §2Pests§7.���*§6Ability: Vacuum  §e§lHOLD RIGHT CLICK�%§7Aim and hold in the direction of a�0§7nearby §2Pest §7within §e12.5 §7blocks to�+§7suck it in, dealing §c200 §7damage per�
+§7second.���*§6Ability: Pest Tracker  §e§lLEFT CLICK�$§7Leads you in the direction of the��§7nearest §2Pest§7.��§8Cooldown: §a1s����§7Vacuum Bag: §2101 Pests��� §7§8This item can be reforged!��§5§lEPIC VACUUM���Name��§5InfiniVacuum™�
+��ExtraAttributes���id�
+INFINI_VACUUM���uuid�$eb064bb2-ab91-43cd-9098-68e9a3921fee��	timestamp����Ub�o�����Damage��������id�$���Count�
+��tag	��ench��������Unbreakable���	HideFlags����
+��display	��Lore����'��§7Farming Fortune: §a+70.5��§7Farming Wisdom: §a+4��§7Sugar Cane Fortune: §a+78�� §8[§8☘§8] §8[§8☘§8]����§9Cultivating IV §884,504�/§7Gain §3+4☯ Farming Wisdom §7and §6+8☘��§6Farming Fortune§7.��§8100k crops to tier up!��§9Efficiency V�"§7Increases how quickly your tool��§7breaks blocks.��§9Harvesting V�-§7Grants §a+62.5 §6☘ Farming Fortune§7,�"§7which increases your chance for��§7multiple crops.��§9Turbo-Cane I�)§7Grants §6+5☘ Sugar Cane Fortune§7.���+§7Gain §6+25☘ Sugar Cane Fortune §7and�.§7§3+3☯ Farming Wisdom §7for sugar canes.���$§7Counter: §e2,172,135 Sugar Canes����§6Logarithmic Counter�+§7Gain §6+16☘ Sugar Cane Fortune §7per�"§7digits on the Counter, minus 4!�,§7You have §6+48☘ Sugar Cane Fortune§7.����§7§8Bonus sugar canes percent�!§8increases your Farmhand perk's��§8chances.���#§eReach 10M Counter for +1 Rarity!����§eRight-click to view recipes!��� §7§8This item can be reforged!��§9§lRARE HOE���Name��§9Turing Sugar Cane Hoe�
+��ExtraAttributes���farmed_cultivating��J����mined_crops�����!$����id��THEORETICAL_HOE_CANE_2
+��enchantments��
+efficiency������
+harvesting�������cultivating������
+turbo_cane��������uuid�$d725ca26-09d0-4e20-a943-22a82163ecb5��	timestamp����X�� �����Damage����������id�����Count�
+��tag��	HideFlags����
+��display	��Lore������&§7View all of your SkyBlock progress,�&§7including your Skills, Collections,��§7Recipes, and more!����§eClick to open!���Name��§aSkyBlock Menu §7(Click)�
+��ExtraAttributes���id�
+SKYBLOCK_MENU�����Damage������id�����Count�
+��tag	��ench�������	HideFlags����
+��display	��Lore����	�(§7Automatically turns certain materials��§7in your inventory into their��§7enchanted form.����§eRight-click to configure!����§8Does not grant Carpentry XP!����§6§lLEGENDARY ACCESSORY���Name��§6Personal Compactor 7000�
+��ExtraAttributes���uuid�$2ca148d2-e5c5-490c-bd0e-c160f4086ed7���personal_compact_0��ENCHANTED_POTATO���personal_compact_2��ENCHANTED_MELON���personal_compact_1�	HAY_BLOCK���personal_compact_8��ENCHANTED_GOLD���personal_compact_7��ENCHANTED_DIAMOND_BLOCK���id��PERSONAL_COMPACTOR_7000���personal_compact_9��ENCHANTED_HAY_BLOCK���personal_compact_10��ENCHANTED_CACTUS_GREEN���personal_compact_4��ENCHANTED_MITHRIL���personal_compact_11��ENCHANTED_PUMPKIN���personal_compact_3��ENCHANTED_SEEDS���personal_compact_6��ENCHANTED_BAKED_POTATO��	timestamp����
+�s����personal_compact_5��ENCHANTED_DIAMOND�����Damage�������id�����Count�
+��tag	��ench�������	HideFlags����
+��display	��Lore����	�(§7Automatically turns certain materials��§7in your inventory into their��§7enchanted form.����§eRight-click to configure!����§8Does not grant Carpentry XP!����§5§lEPIC ACCESSORY���Name��§5Personal Compactor 6000�
+��ExtraAttributes���personal_compact_0��FLAWED_JADE_GEM���personal_compact_2��FLAWED_TOPAZ_GEM���personal_compact_1��FLAWED_AMBER_GEM���id��PERSONAL_COMPACTOR_6000���personal_compact_4��FLAWED_AMETHYST_GEM���uuid�$c375722a-b7dd-49b8-b1fc-ae5754895432���personal_compact_3��FLAWED_SAPPHIRE_GEM��	timestamp�����������personal_compact_5��FLAWED_RUBY_GEM�����Damage������id�����Count�
+��tag	��ench�������	HideFlags����
+��display	��Lore����	�(§7Automatically turns certain materials��§7in your inventory into their��§7enchanted form.����§eRight-click to configure!����§8Does not grant Carpentry XP!����§5§lEPIC ACCESSORY���Name��§5Personal Compactor 6000�
+��ExtraAttributes���personal_compact_0�
+ENCHANTED_ICE���id��PERSONAL_COMPACTOR_6000���personal_compact_4��ENCHANTED_CACTUS_GREEN���uuid�$469bf5fd-cb7d-47c0-8e3a-91ed03c9c3d0��	timestamp�������������Damage������id�����Count�
+��tag	��ench�������	HideFlags����
+��display	��Lore����
+��§9Turbo-Mushrooms I�'§7Grants §6+5☘ Mushroom Fortune§7.����§7Applicable on: §9Hoe�"§7§7Apply Cost: §310 Exp Levels���%§7Use this on an item in an Anvil to��§7apply it!����§f§lCOMMON���Name��§fEnchanted Book�
+��ExtraAttributes���id��ENCHANTED_BOOK
+��enchantments���turbo_mushrooms��������uuid�$af36ea8d-373f-4254-988a-0ee8a7c5210b��	timestamp����_L�p�����Damage��������������������id�%���Count�
+��tag	��ench��������Unbreakable���	HideFlags����
+��display	��Lore����%��§7Speed: §a+20 §9(+20)�&§7Farming Fortune: §a+102.5 §9(+20)�!§7Farming Wisdom: §a+16 §9(+6)��§7Potato Fortune: §a+236�- §8[§8☘§8] §8[§8☘§8] §8[§8☘§8]����§9Cultivating X��§9Dedication III��§9Efficiency V��§9Harvesting V��§9Replenish I��§9Turbo-Potato V���1§7Gain §6+50☘ Potato Fortune §7and §3+12☯�"§3Farming Wisdom §7for potatoes.���#§7Counter: §e175,036,836 Potatoes����§6Logarithmic Counter�.§7Gain §6+16☘ Potato Fortune §7per digits��§7on the Counter, minus 4!�(§7You have §6+80☘ Potato Fortune§7.����§6Collection Analysis�0§7Gain §6+8☘ Potato Fortune §7per digits of��§7your collection, minus 4!�(§7You have §6+40☘ Potato Fortune§7.���&§7§8Bonus potatoes percent increases� §8your Farmhand perk's chances.����§9Blessed Bonus�*§7Grants §6+20☘ Farming Fortune §7and��§7§3+6☯ Farming Wisdom§7.���"§8§l* §8Co-op Soulbound §8§l*�)§d§l§ka§r §d§lMYTHIC HOE §d§l§ka���Name�!§dBlessed Pythagorean Potato Hoe�
+��ExtraAttributes���rarity_upgrades�������farmed_cultivating��ޞ���modifier��blessed���mined_crops����
+n٤���id��THEORETICAL_HOE_POTATO_3
+��enchantments��
+efficiency������
+harvesting�������turbo_potato������
+dedication�������cultivating���
+��	replenish��������uuid�$f1b0acec-d550-4641-8234-7d05cfbbb65c���donated_museum���	timestamp����쒩@�����Damage������id�$���Count�
+��tag	��ench��������Unbreakable���	HideFlags����
+��display	��Lore����#��§7Speed: §a+9 §9(+9)�$§7Farming Fortune: §a+83.5 §9(+9)� §7Farming Wisdom: §a+9 §9(+3)��§7Wheat Fortune: §a+123�� §8[§8☘§8] §8[§8☘§8]����§9Cultivating VI §8682,502��§9Dedication III��§9Efficiency V��§9Harvesting V��§9Replenish I��§9Turbo-Wheat V���/§7Gain §6+25☘ Wheat Fortune §7and §3+3☯��§3Farming Wisdom §7for wheat.����§7Counter: §e4,484,561 Wheat����§6Logarithmic Counter�-§7Gain §6+16☘ Wheat Fortune §7per digits��§7on the Counter, minus 4!�'§7You have §6+48☘ Wheat Fortune§7.���(§7§8Bonus wheat percent increases your��§8Farmhand perk's chances.���#§eReach 10M Counter for +1 Rarity!����§eRight-click to view recipes!����§9Blessed Bonus�)§7Grants §6+9☘ Farming Fortune §7and��§7§3+3☯ Farming Wisdom§7.����§9§lRARE HOE���Name��§9Blessed Euclid's Wheat Hoe�
+��ExtraAttributes���farmed_cultivating�
+j����mined_crops�����Dm����modifier��blessed���id��THEORETICAL_HOE_WHEAT_2
+��enchantments��
+efficiency������
+harvesting������
+dedication�������cultivating�������turbo_wheat������	replenish��������uuid�$79efbb34-0e79-4404-806f-6433338035ca��	timestamp����|��������Damage�������id�$���Count�
+��tag	��ench��������Unbreakable���	HideFlags����
+��display	��Lore�������§7Farming Fortune: §a+78.5��§7Farming Wisdom: §a+8��§7Nether Wart Fortune: §a+140�� §8[§8☘§8] §8[§8☘§8]���!§9Cultivating VIII §818,766,401��§9Dedication III��§9Efficiency V��§9Harvesting V��§9Replenish I��§9Turbo-Warts V���,§7Gain §6+25☘ Nether Wart Fortune §7and�(§7§3+5☯ Farming Wisdom §7for nether�	§7warts.���&§7Counter: §e21,018,089 Nether Warts����§6Logarithmic Counter�,§7Gain §6+16☘ Nether Wart Fortune §7per�"§7digits on the Counter, minus 4!�-§7You have §6+64☘ Nether Wart Fortune§7.��� §7§8Bonus nether warts percent�!§8increases your Farmhand perk's��§8chances.����§eRight-click to view recipes!��� §7§8This item can be reforged!��§5§lEPIC HOE���Name��§5Newton Nether Warts Hoe�
+��ExtraAttributes���farmed_cultivating��ZA���mined_crops�����@�����id��THEORETICAL_HOE_WARTS_2
+��enchantments��
+efficiency������
+harvesting�������cultivating������
+dedication������	replenish�������turbo_warts��������uuid�$d16602a7-9245-4cf0-832f-11438e4a5112��	timestamp����ɶK`�����Damage������id�����Count�
+��tag	��ench��������Unbreakable���	HideFlags����
+��display	��Lore����!��§7Farming Fortune: §a+62.5��§7Melon Fortune: §a+5�� §8[§8☘§8] §8[§8☘§8]���
+§9Delicate V�!§7Avoids breaking stems and baby�	§7crops.��§9Efficiency V�"§7Increases how quickly your tool��§7breaks blocks.��§9Sunder V�-§7Grants §a+62.5 §6☘ Farming Fortune§7,�"§7which increases your chance for��§7multiple crops.��§9Turbo-Melon I�$§7Grants §6+5☘ Melon Fortune§7.���-§7§7Gain §3+7.5☯ Farming Wisdom §7while��§7harvesting melons§7.����§6Ability: Roll em'+ �"§7Every melon you break, you make�$§7a wish to §dRNGesus §7which may�"§7grant you with a few or TONS of��§7extra melons!���'§7§oSame as the Melon Dicer 1.0, just�
+§7§obetter!����§eRight-click to view recipes!��� §7§8This item can be reforged!��§5§lEPIC AXE���Name��§5Melon Dicer 2.0�
+��ExtraAttributes���id�
+MELON_DICER_2
+��enchantments���delicate������
+efficiency�������sunder�������turbo_melon��������uuid�$9a60cbe9-31ef-4dc6-b35c-29ac0ff8eaed��	timestamp����S��������Damage������id�&���Count�
+��tag	��ench��������Unbreakable���	HideFlags����
+��display	��Lore�������§7Farming Fortune: §a+62.5�� §8[§8☘§8] §8[§8☘§8]����§9Efficiency V�"§7Increases how quickly your tool��§7breaks blocks.��§9Harvesting V�-§7Grants §a+62.5 §6☘ Farming Fortune§7,�"§7which increases your chance for��§7multiple crops.��§9Smelting Touch I�%§7Automatically smelts broken blocks��§7into their smelted form.���)§7Slices through §acactus§7 instantly!����§6Ability: Swift Slicer �"§7Increases your speed cap by 100��§7while in §aThe Garden§7.��� §7§8This item can be reforged!��§5§lEPIC HOE���Name��§5Cactus Knife�
+��ExtraAttributes���id��CACTUS_KNIFE
+��enchantments��
+efficiency�������smelting_touch������
+harvesting��������uuid�$4ef2ecaa-95f3-4fb9-8d44-1496e96e9559��	timestamp������@�����Damage������
+testdecode.html:33:11
+
+​
+
