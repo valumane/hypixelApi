@@ -54,15 +54,11 @@ async function load_forge() {
   let sub_div = document.createElement("p")
   sub_div.className = "sub_forge"
 
-
   if (Object.keys(forge).length === 0) {
-    console.log("truc")
-    document.getElementById("forge_label").innerText = "forge empty"
+    document.getElementById("forge_label").innerText = "forge : empty"
   } else {
     for (let i = 1; i < 6; i++) {
-      if (forge[i] == undefined) {
-
-      } else {
+      if (forge[i] !== undefined) {
         let name = forge[i].id
         let started_time = convertirTempsUnix(forge[i].startTime)
 

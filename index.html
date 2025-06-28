@@ -12,22 +12,20 @@
   <script src="divModificiation.js"></script>
   <script src="hotm.js"></script>
 
-  <link rel="stylesheet" href="styles.css"> <!-- Lien vers le fichier CSS -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body onload="main()">
   <div class="background-blur"></div>
-  <div class="contenu-au-dessus">
+  <div class="contenu-au-dessus"></div>
 
-
-    <div id="profileInfo">
-      <div id="BankInfo">
+  <button id="toggleButtonprofile" onclick="toggleVisibility('profil')"> affichez profil</button>
+    <div id="profil" class="toggle hidden">
         <p id="bankValue"></p>
-      </div>
     </div>
 
 
-  </div>
+  
 
   <button id="toggleButtonskill" onclick="toggleVisibility('skill')"> affichez skill</button>
 
@@ -163,7 +161,7 @@
   </div>
 
   <button id="toggleButtonHOTM" onclick="toggleVisibility('hotm')"> affichez hotm</button>
-  <div id="hotm" class="toggle visible">
+  <div id="hotm" class="toggle hidden">
     <p> heart of the mountain : </p>
     <p id="powder_mithril"></p>
     <p id="powder_gemstone"></p>

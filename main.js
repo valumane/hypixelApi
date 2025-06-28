@@ -1,5 +1,14 @@
+//pseudo to uuid
+const username = "valu66";
+let uuid
+fetch(`https://playerdb.co/api/player/minecraft/${username}`)
+  .then(res => res.json())
+  .then(data => {
+    uuid = data.data.player.id;
+    console.log(`UUID de ${username} :`, uuid);
+  });
+
 // Define the API URL
-const uuid = 'aa3e247f-f9d2-418e-aadc-949c77aafc7d'
 const Collection = 'https://api.hypixel.net/resources/skyblock/collections';
 
 
@@ -95,15 +104,6 @@ async function getCollected() {
   allCollected = allapi.profiles[0].members['aa3e247ff9d2418eaadc949c77aafc7d'].collection;
 }
 
-
-var bankinfo;
-async function getBankInfo() {
-  bankinfo = allapi.profiles[0].banking;
-  document.getElementById("bankValue").innerText = "bank value : " + roundNumber(Math.round(bankinfo.balance))
-}
-
-
-
 function sumAllTiers(coll) {
   var tmp = 0;
   for (i = 0; i < coll.length; i++) {
@@ -134,11 +134,8 @@ async function main() {
   await getmemberinfo()
   console.log("getmemberinfo fait")
 
-  await setLevel()
-  console.log("setlevel fait")
-
-  await getBankInfo()
-  console.log("getbankinfo fait")
+  await load_profies()
+  console.log("load_profies fait")
 
   await getBestiary()
   console.log("getbestiary fait")
