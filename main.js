@@ -148,5 +148,6 @@ async function main() {
 
   await mainhotm()
   console.log("hotm fait")
+  document.getElementById("load").innerText = "chargement fini"
   console.log("chargement fini")
 }
