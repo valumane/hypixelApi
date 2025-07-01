@@ -28,10 +28,9 @@ Ce dépôt a pour but de centraliser différents outils autour de l'API Hypixel,
 
 ## 🚧 À venir
 
-- affichage de l'hotm
 - niveau de bestiary
 - meilleur interface utilisateur
-- affichage des informations d'inventaire
+- affichage des informations d'inventaire ( commencé )
 - affchage des informatiosn de familié
 - statistique dungeon
 - statistique slayer 
