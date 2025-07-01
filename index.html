@@ -11,6 +11,7 @@
   <script src="levelcap.js"></script>
   <script src="divModificiation.js"></script>
   <script src="hotm.js"></script>
+  <script src="inventory.js"></script>
 
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -20,12 +21,12 @@
   <div class="contenu-au-dessus"></div>
 
   <button id="toggleButtonprofile" onclick="toggleVisibility('profil')"> affichez profil</button>
-    <div id="profil" class="toggle hidden">
-        <p id="bankValue"></p>
-    </div>
+  <div id="profil" class="toggle hidden">
+    <p id="bankValue"></p>
+  </div>
 
 
-  
+
 
   <button id="toggleButtonskill" onclick="toggleVisibility('skill')"> affichez skill</button>
 
@@ -172,9 +173,11 @@
     <div id="forge">
       <p id="forge_label"> forge </p>
     </div>
-  </div>  
-
+  </div>
+  <div id="inventory"></div>
   <p id="load">chargement en cours</p>
+
+
 </body>
 
 </html>

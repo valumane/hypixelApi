@@ -148,6 +148,10 @@ async function main() {
 
   await mainhotm()
   console.log("hotm fait")
+
+  await load_inventory()
+  console.log("inventory loaded")
+
   document.getElementById("load").innerText = "chargement fini"
   console.log("chargement fini")
 }

@@ -1,12 +1,11 @@
 async function load_profies() {
     await show_pseudo()
+    await get_purse()
     await getBankInfo()
     await get_first_join()
     await get_level()
     await get_skill_lvl()
 }
-
-
 //showpseudo 
 async function show_pseudo() {
     let pseudo_div = document.createElement("p")
@@ -14,6 +13,16 @@ async function show_pseudo() {
     pseudo_div.innerText = "pseudo : "+username
     main_div.before(pseudo_div)
 }
+//purse
+var purse
+async function get_purse() {
+    purse = roundNumber(membersInfo.currencies.coin_purse)
+    let main_div = document.getElementById("bankValue")
+    let sub_div = document.createElement("p")
+    sub_div.innerText = "purse : "+ purse
+    main_div.before(sub_div)
+}
+
 //bank
 var bankinfo;
 async function getBankInfo() {
