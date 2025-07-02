@@ -12,6 +12,66 @@ fetch(`https://playerdb.co/api/player/minecraft/${username}`)
 const Collection = 'https://api.hypixel.net/resources/skyblock/collections';
 
 
+function sanitizeDate(date) {
+    const pad = n => String(n).padStart(2, '0');
+
+    const day = pad(date.getDate());
+    const month = pad(date.getMonth() + 1); // les mois commencent à 0
+    const year = date.getFullYear();
+
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
+
+function formatMinecraftTextToHTML(text) {
+    const colorMap = {
+        '0': '#000000', '1': '#0000AA', '2': '#00AA00', '3': '#00AAAA',
+        '4': '#AA0000', '5': '#AA00AA', '6': '#FFAA00', '7': '#AAAAAA',
+        '8': '#555555', '9': '#5555FF', 'a': '#55FF55', 'b': '#55FFFF',
+        'c': '#FF5555', 'd': '#FF55FF', 'e': '#FFFF55', 'f': '#FFFFFF'
+    };
+
+    const formatMap = {
+        'l': 'font-weight: bold',
+        'm': 'text-decoration: line-through',
+        'n': 'text-decoration: underline',
+        'o': 'font-style: italic',
+        'r': 'reset'
+    };
+
+    let html = '';
+    let currentStyles = [];
+
+    const parts = text.split(/§([0-9a-frlomn])/gi);
+
+    for (let i = 0; i < parts.length; i++) {
+        if (i % 2 === 0) {
+            // Texte
+            if (parts[i]) {
+                let style = currentStyles.join('; ');
+                html += `<span style="${style}">${parts[i]}</span>`;
+            }
+        } else {
+            const code = parts[i].toLowerCase();
+
+            if (code === 'r') {
+                currentStyles = [];
+            } else if (colorMap[code]) {
+                // Ajout d'une couleur → on remplace toutes les couleurs précédentes
+                currentStyles = currentStyles.filter(s => !s.startsWith('color'));
+                currentStyles.push(`color: ${colorMap[code]}`);
+            } else if (formatMap[code]) {
+                currentStyles.push(formatMap[code]);
+            }
+        }
+    }
+
+    return html;
+}
+
+
 function convertirTempsUnix(tempsUnix) {
   const date = new Date(tempsUnix);
 

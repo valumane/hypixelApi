@@ -1,2 +1,13 @@
+# Node dependencies
+node_modules/
+
+# Secrets / keys
 api_key.json
-.gitignore
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System
+.DS_Store

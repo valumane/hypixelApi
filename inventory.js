@@ -1,12 +1,62 @@
 async function load_inventory() {
     await get_bag()
+    console.log("- get_bag loaded")
+
     await get_inv_contents()
+    console.log("- get_inv_contents loaded")
+    
     await get_ender_chest_contents()
+    console.log("- get_ender_chest_contents loaded")
+
     await get_inv_armor()
+    console.log("- get_inv_armor loaded")
+
     await get_equipment_contents()
+    console.log("- get_equipment_contents loaded")
+
     await get_personal_vault_contents()
+    console.log("- get_personal_vault_contents loaded")
+
     await get_wardrobe_contents()
+    console.log("- get_wardrobe_contents loaded")
+
+    await inv_armor_contents()
+    console.log("-- inv_armor_contents loaded")
+
+    
 }
+
+
+function cleanNameForWiki(name) {
+    return name.replace(/§./g, "").replace(/ /g, "_");
+}
+
+async function getItemImageUrl(itemName) {
+    const formattedName = cleanNameForWiki(itemName);
+    const wikiUrl = `https://wiki.hypixel.net/${formattedName}`;
+
+    try {
+        const response = await fetch(wikiUrl);
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const imgUrl = doc
+            .getElementsByTagName("tbody")[1]
+            ?.children[1]
+            ?.children[0]
+            ?.children[0]
+            ?.src;
+
+        return imgUrl || null;
+    } catch (error) {
+        console.warn(`Image not found for ${itemName}`, error);
+        return null;
+    }
+}
+
+
+
 
 async function parseNBTData(chaine) {
 
@@ -90,3 +140,39 @@ async function get_wardrobe_contents() {
     wardrobe_contents = await parseNBTData(membersInfo.inventory.wardrobe_contents.data)
     wardrobe_contents = wardrobe_contents.value.i.value.value
 }
+
+function timestampFromLongArray([hi, lo]) {
+    const ts = (BigInt(hi) << 32n) + BigInt(lo >>> 0);
+    return new Date(Number(ts));
+}
+
+
+async function inv_armor_contents() {
+    const main_div = document.getElementById("armor_label");
+
+    for (const armor of inv_armor) {
+        const count = armor.Count.value !== 1 ? `count : ${armor.Count.value}` : "";
+        const value = armor.tag.value;
+        const date = sanitizeDate(timestampFromLongArray(value.ExtraAttributes.value.timestamp.value));
+        const display = value.display.value;
+        const name = display.Name.value;
+        const lore = display.Lore.value.value;
+
+        const sub_div = document.createElement("pre"); // Utiliser <pre> pour respecter les sauts de ligne
+        sub_div.className = "armor_piece";
+        sub_div.innerText = 
+            `name : ${name} ${count}\n` +
+            `obtention date : ${date}\n` +
+            `lore :\n${lore.join("\n")}`; // Afficher chaque ligne de lore séparément
+
+        main_div.after(sub_div, document.createElement("br"));
+
+        console.log("count :", count);
+        console.log("obtention date :", date);
+        console.log("armor lore :", lore);
+        console.log("armor pieces name :", name);
+        console.log("---------");
+    }
+}
+
+

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>hypixel api gestionner</title>
   <script src="main.js"></script>
   <script src="Collection.js"></script>
   <script src="profile.js"></script>
@@ -12,6 +12,7 @@
   <script src="divModificiation.js"></script>
   <script src="hotm.js"></script>
   <script src="inventory.js"></script>
+
 
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -174,7 +175,14 @@
       <p id="forge_label"> forge </p>
     </div>
   </div>
-  <div id="inventory"></div>
+
+  <button id="toggleButtonINVENTORY" onclick="toggleVisibility('inventory')"> affichez inventory</button>
+  <div id="inventory" class="toggle visible">
+    <div id="armor_div">
+      <p id="armor_label"> armor </p>
+
+    </div>
+  </div>
   <p id="load">chargement en cours</p>
 
 
