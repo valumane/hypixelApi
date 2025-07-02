@@ -30,13 +30,16 @@ Ce dépôt a pour but de centraliser différents outils autour de l'API Hypixel,
 
 - niveau de bestiary
 - meilleur interface utilisateur
-- affichage des informations d'inventaire ( commencé )
+- affichage des informations d'inventaire 
+    - decodage information inventaire ( fait )
+    - scrapping image item en utilisant le wiki( en cours )
+    - ui design
+    
 - affchage des informatiosn de familié
 - statistique dungeon
 - statistique slayer 
 - statistique dimension rift
 - information jacob contest
-- 
 ---
 © 2025 Lucas — Projet open-source utilisant l'api Hypixel.
 Ce projet n’est ni affilié ni approuvé par Hypixel Inc.
