@@ -2,72 +2,77 @@ import fetch from 'node-fetch';
 import { JSDOM } from 'jsdom';
 import fs from 'fs';
 
-// fonction qui essaye d'extraire l'image d'une page
-async function getItemImageFromUrl(pageUrl) {
-  console.log(`🔎 Checking: ${pageUrl}`);
+// Conteneur pour tous les liens
+let allLinks = [];
+
+// Fonction principale de scraping
+async function scrapSiteMap(wikiUrl, nPage = 1) {
+  console.log(`📖 Scraping page ${nPage}: ${wikiUrl}`);
+
   try {
-    const response = await fetch(pageUrl, {
+    const response = await fetch(wikiUrl, {
       headers: {
-        "User-Agent": "Mozilla/5.0",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
         "Accept": "text/html",
       }
     });
 
     if (!response.ok) {
-      console.warn(`⚠️ HTTP error! status: ${response.status}`);
-      return null;
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const html = await response.text();
     const dom = new JSDOM(html);
     const doc = dom.window.document;
 
-    const tbody = doc.getElementsByTagName("tbody")[1];
-    const imgUrl = tbody?.children[1]?.children[0]?.children[0]?.src || null;
+    // Récupérer les liens de cette page
+    const ul = doc.getElementsByClassName("mw-allpages-chunk")[0];
+    if (ul) {
+      for (let i = 0; i < ul.children.length; i++) {
+        const href = ul.children[i]?.children[0]?.href;
+        if (!href) continue;
 
-    if (!imgUrl) return null;
+        const fullUrl = 'https://wiki.hypixel.net' + href;
+        allLinks.push(fullUrl);
+      }
+    }
 
-    return imgUrl.startsWith('http') ? imgUrl : 'https://wiki.hypixel.net' + imgUrl;
+    // Pagination
+    const nextdiv = doc.getElementsByClassName("mw-allpages-nav")[0];
+    if (!nextdiv) {
+      console.log(`✅ Pas de navigation trouvée. Fin du scraping.`);
+      return;
+    }
+
+    let nextbutton;
+    if (nextdiv.children.length === 1) {
+      if (nextdiv.children[0]?.textContent?.trim()[0] === "P") {
+        console.log(`Dernière page atteinte !`);
+        return;
+      }
+      nextbutton = nextdiv.children[0]?.href;
+    } else if (nextdiv.children.length > 1) {
+      nextbutton = nextdiv.children[1]?.href;
+    }
+
+    if (nextbutton) {
+      const nextUrl = "https://wiki.hypixel.net" + nextbutton;
+      await new Promise(res => setTimeout(res, 10));  // Petit delay
+      await scrapSiteMap(nextUrl, nPage + 1);
+    } else {
+      console.log(`Aucune page suivante trouvée. Fin du scraping.`);
+    }
+
   } catch (error) {
-    console.warn(`❌ Error fetching ${pageUrl}:`, error);
-    return null;
+    console.error(`Error on page ${nPage}:`, error);
   }
 }
 
-async function processAllItems() {
-  const sitemap = JSON.parse(fs.readFileSync('sitemap.json', 'utf8'));
+// Exécution du scraper
+(async () => {
+  await scrapSiteMap("https://wiki.hypixel.net/index.php?title=Special:AllPages");
 
-  const success = [];
-  const fail = [];
-
-  for (let i = 0; i < sitemap.length; i++) {
-  const pageUrl = sitemap[i];
-  const imgLink = await getItemImageFromUrl(pageUrl);
-
-  if (imgLink) {
-      console.log(`✅ FOUND: ${imgLink}`);
-      success.push({
-        url: pageUrl,
-        imglink: imgLink
-      });
-    } else {
-      console.log(`❌ No image found for: ${pageUrl}`);
-      fail.push(pageUrl);
-    }
-
-  //Progress log
-  const remaining = sitemap.length - (i + 1);
-  const estimatedTimeSec = (remaining * 0.3).toFixed(0);
-  console.log(`⏳ Progress: ${i + 1}/${sitemap.length} (~${estimatedTimeSec}s left)`);
-
-  //Anti-DDOS polite delay
-  await new Promise(res => setTimeout(res, 250));
-}
-
-  fs.writeFileSync('success.json', JSON.stringify(success, null, 2));
-  fs.writeFileSync('fail.json', JSON.stringify(fail, null, 2));
-
-  console.log(`\n✅ DONE! Saved ${success.length} successes and ${fail.length} fails.`);
-}
-
-processAllItems();
+  // Sauvegarde des résultats
+  fs.writeFileSync('./sitemap/sitemap.json', JSON.stringify(allLinks, null, 2));
+  console.log(`✅ Sitemap saved to sitemap.json with ${allLinks.length} entries.`);
+})();

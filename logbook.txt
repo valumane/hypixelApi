@@ -1,0 +1,28 @@
+ok j'ai les urls valid et ceux ou j'ai pas trouvé les img
+j'peut faire du cas par cas pour les sitemap_fail
+
+donc maintenant faut que je trie les sitemap
+mais avant de trié les sitemap sucess faut que je valid les sitemap_fail
+apres j'ai juste besoin des trucs de l'inventaire
+donc zone,mob, bz, ah, items admin, j'ai pas besoin
+
+soit je check manuellement
+apres ce serait pas automatique et je veut que tout soit automatique
+
+ok donc etape
+il faut que je sucess tout les sitemap_fail
+automatiquement
+donc script node.js
+je read
+je trie les categorie en plusieurs sous objets json
+genre {category:trophy_fish : { truc truc truc}, category:machin etc...}
+ce que je peut faire c object.key() comme sa j'ai un array, c bcp plus simple
+
+------------------
+
+ok donc j'ai fini de trié les 2/3 des failled 
+j'peut pas faire plus, je chercherait en brutfoce dans le other.json dans l'inventaire
+
+maintenant il faut recupéré les images 
+
+
