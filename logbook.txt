@@ -24,5 +24,51 @@ ok donc j'ai fini de trié les 2/3 des failled
 j'peut pas faire plus, je chercherait en brutfoce dans le other.json dans l'inventaire
 
 maintenant il faut recupéré les images 
+ENVRAIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+j'vais finir a la main, j'en est pas enormement je pense
+sa me fait chier a faire 800script pour des cas particulier la
+je veut juste un json qui regroupe les nom et img d'item
+enfait nan j'vais faire semi_automatiquement
 
+crystal c fait
+bon parcontre la fonction get_crystal_img est gigantesque donc si je veut faire sa avec tout j'vais devoir reduire mdr
+apres sa va vite donc sa vaaaaa
 
+----------------
+bon bah enfaite not enough update met a dispo une bdd d'item 
+le repo -> git clone https://github.com/NotEnoughUpdates-REPO
+
+ducoup j'ai tout delete du scrapper car j'en est pas besoin
+
+6/7/25 23:56 -----------------------------
+okkkkkkkkkkkk j'ai enormement avancé
+engros le fichier de neu contient la value en base64, sa me donne le skin, 
+avec le skin j'extrait les faces front top bottom du skin pour la head
+je rassemble tout en vue isometrique 30°/30°
+et ensuite je code tout en base64
+la base64 j'la fou d'en un json genre {name:<nomitem>,img:<base64>}
+et dans le js j'ai juste a appellé 
+mdr
+peut etre que le json sera plutot
+{ <nomitem>:<imgbase64> } 
+comme sa je peut faire json.<nomitem> pour avoir l'img
+parcontre le json va etre massif mdr
+rien qu'une img c 32kb j'ai 7500 donc 240mo 
+sa c du json mdr
+
+8sec par img pour la generation de la head -> 16h....
+apres toute ne sont pas des head
+ptit script pour voir combien sont des head
+
+7/7/25 04:02 ----------
+bon ducou on recap
+get url img : get_url.js -> me donne l'url de l'img du skin de l'item
+get img by url : get_img_by_url.js -> me donne l'img du skin de l'item
+create headplayer : render_head.py -> me genere la player head via l'img du skin de l'item
+encodage base64 : test_png_to_base64.py
+
+bon bah maintenant faut automatisé le tout
+grace a howmanyhead.js, j'ai mit les items player head appart des items non player head
+
+ok prochaine etape : simplifié render_head : pas exemple arreté la create des png de faces
+allez bonne nuit
