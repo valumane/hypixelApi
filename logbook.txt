@@ -72,3 +72,18 @@ grace a howmanyhead.js, j'ai mit les items player head appart des items non play
 
 ok prochaine etape : simplifié render_head : pas exemple arreté la create des png de faces
 allez bonne nuit
+
+
+7/7/25 19:45 ---------------------------------------
+okkkkkkkkkkkk
+alors
+donc render_head.py a etait modifié
+donc je peut l'appellé genre python render_head.py <img skin>
+et sa me donne le player head
+
+prochain etape
+automatisé json -> url -> skin -> player head -> base64
+8/7/25 17:41--------------------------------------------
+ok donc le script.ps1 <index> 
+fait bien : json->url-> skin->plaerhead->base64
+parcontre le symbole § est pas bien affiché

@@ -1,14 +1,18 @@
+import sys
+import os
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
 
 # ----------------------------------------------------------------------
-# ✅ 1️⃣ CONFIGURATION
-INPUT_PATH = "../headfile1.png"       # Ton fichier skin complet
-OUTPUT_PREFIX = "head_face"           # Prefix pour images extraites
-OUTPUT_RENDER = "head_render_overlay_partial.png"  # Image finale
+# ✅ 1️⃣ ARGUMENTS EN LIGNE DE COMMANDE
+if len(sys.argv) < 2:
+    print(f"❌ Usage: python {os.path.basename(__file__)} <skin.png>")
+    sys.exit(1)
 
-FACES_TO_KEEP = ["right", "top", "front"]   # Seulement celles qu'on veut
+INPUT_PATH = sys.argv[1]
+basename = os.path.splitext(os.path.basename(INPUT_PATH))[0]
+OUTPUT_RENDER = f"{basename}_render.png"
 
 # ----------------------------------------------------------------------
 # ✅ 2️⃣ UV MAPPING (pour skin Minecraft 64x64)
@@ -24,35 +28,6 @@ uv_faces_hat = {
     "right":  (32, 8, 40, 16),
 }
 
-# ----------------------------------------------------------------------
-# ✅ 3️⃣ EXTRACTION DES FACES
-print(f"✅ Chargement du skin : {INPUT_PATH}")
-skin = Image.open(INPUT_PATH)
-if skin.size != (64,64):
-    raise ValueError("Skin Minecraft attendu en 64x64")
-print(f"✅ Skin OK (64x64)")
-
-for face in FACES_TO_KEEP:
-    # Tête
-    box = uv_faces[face]
-    cropped = skin.crop(box)
-    cropped.save(f"{OUTPUT_PREFIX}_{face}.png")
-    print(f"✅ Saved: {OUTPUT_PREFIX}_{face}.png")
-
-    # Overlay
-    box_hat = uv_faces_hat[face]
-    cropped_hat = skin.crop(box_hat)
-    cropped_hat.save(f"{OUTPUT_PREFIX}_hat_{face}.png")
-    print(f"✅ Saved: {OUTPUT_PREFIX}_hat_{face}.png")
-
-print("✅ Extraction des faces terminée.")
-
-# ----------------------------------------------------------------------
-# ✅ 4️⃣ MAPPING 3D (Matplotlib)
-# Faces sélectionnées seulement
-face_files = {face: f"{OUTPUT_PREFIX}_{face}.png" for face in FACES_TO_KEEP}
-face_files_hat = {face: f"{OUTPUT_PREFIX}_hat_{face}.png" for face in FACES_TO_KEEP}
-
 # Angles et flips par face
 ROTATIONS = {
     "front": 180,
@@ -65,71 +40,89 @@ FLIPS = {
     "top": True
 }
 
-# Chargement et préparation des textures
-def load_rotate_upscale(filename, angle, flip=False, size=64):
-    img = Image.open(filename).convert("RGBA")
-    if flip:
-        img = img.transpose(Image.FLIP_LEFT_RIGHT)
-    if angle != 0:
-        img = img.rotate(angle, expand=True)
-    img = img.resize((size, size), Image.NEAREST)
+# ----------------------------------------------------------------------
+# ✅ 3️⃣ CHARGEMENT DU SKIN
+print(f"✅ Chargement du skin : {INPUT_PATH}")
+try:
+    skin = Image.open(INPUT_PATH)
+except FileNotFoundError:
+    print(f"❌ Fichier introuvable : {INPUT_PATH}")
+    sys.exit(1)
+
+if skin.size != (64,64):
+    raise ValueError("❌ Skin Minecraft attendu en 64x64")
+print(f"✅ Skin OK (64x64)\n")
+
+# ----------------------------------------------------------------------
+# ✅ 4️⃣ EXTRACTION DES FACES
+print("---- Extraction des faces ----")
+
+def extract_face(skin, uv_table, face, rotations, flips):
+    box = uv_table[face]
+    cropped = skin.crop(box)
+    img = cropped.transpose(Image.FLIP_LEFT_RIGHT) if flips.get(face, False) else cropped
+    img = img.resize(skin.size, Image.NEAREST)
+    if rotations.get(face, 0):
+        img = img.rotate(rotations[face], expand=True)
     return np.array(img) / 255.0
 
-def load_textures(files):
-    textures = {}
-    for face, path in files.items():
-        angle = ROTATIONS.get(face, 0)
-        flip = FLIPS.get(face, False)
-        textures[face] = load_rotate_upscale(path, angle, flip)
-        print(f"✅ Loaded {face} with rotation {angle}° flip={flip}")
-    return textures
+textures = {}
+textures_hat = {}
 
-textures = load_textures(face_files)
-textures_hat = load_textures(face_files_hat)
+print("-------- Head --------")
+for face in uv_faces:
+    textures[face] = extract_face(skin, uv_faces, face, ROTATIONS, FLIPS)
+    print(f"✅ {face}")
 
-print("✅ Toutes les textures (tête + overlay) prêtes.")
+print("------- Overlay -------")
+for face in uv_faces_hat:
+    textures_hat[face] = extract_face(skin, uv_faces_hat, face, ROTATIONS, FLIPS)
+    print(f"✅ {face} overlay")
+
+print("-- Extraction terminée --\n")
 
 # ----------------------------------------------------------------------
 # ✅ 5️⃣ RENDU 3D AVEC OVERLAY
-print("1")
+print("✅ Génération du rendu 3D")
+
 fig = plt.figure(figsize=(4,4))
 ax = fig.add_subplot(111, projection='3d')
-print("2")
+
 def grid(size, scale=1.0):
     lin = np.linspace(-0.5 * scale, 0.5 * scale, size)
     return np.meshgrid(lin, lin)
-print("3")
+
 resolution = 64
 X, Y = grid(resolution)
 X_overlay, Y_overlay = grid(resolution, scale=1.05)
-print("4")
+
 def draw_face(xs, ys, zs, tex):
     ax.plot_surface(xs, ys, zs, rstride=1, cstride=1, facecolors=tex, shade=False)
-print("5")
+
 # TÊTE
-if "top" in textures:
-    draw_face(X, Y, np.full_like(X, 0.5), textures["top"])
-if "front" in textures:
-    draw_face(X, np.full_like(X, 0.5), Y, textures["front"])
-if "right" in textures:
-    draw_face(np.full_like(X, 0.5), X, Y, textures["right"])
-print("6")
+for face in ["top", "front", "right"]:
+    if face in textures:
+        if face == "top":
+            draw_face(X, Y, np.full_like(X, 0.5), textures[face])
+        elif face == "front":
+            draw_face(X, np.full_like(X, 0.5), Y, textures[face])
+        elif face == "right":
+            draw_face(np.full_like(X, 0.5), X, Y, textures[face])
+
 # OVERLAY (casque)
-if "top" in textures_hat:
-    draw_face(X_overlay, Y_overlay, np.full_like(X_overlay, 0.5), textures_hat["top"])
-if "front" in textures_hat:
-    draw_face(X_overlay, np.full_like(X_overlay, 0.5), Y_overlay, textures_hat["front"])
-if "right" in textures_hat:
-    draw_face(np.full_like(X_overlay, 0.5), X_overlay, Y_overlay, textures_hat["right"])
-print("7")
-# Vue et rendu
+for face in ["top", "front", "right"]:
+    if face in textures_hat:
+        if face == "top":
+            draw_face(X_overlay, Y_overlay, np.full_like(X_overlay, 0.5), textures_hat[face])
+        elif face == "front":
+            draw_face(X_overlay, np.full_like(X_overlay, 0.5), Y_overlay, textures_hat[face])
+        elif face == "right":
+            draw_face(np.full_like(X_overlay, 0.5), X_overlay, Y_overlay, textures_hat[face])
+
 ax.view_init(elev=30, azim=45)
-print("8")
 ax.set_axis_off()
-print("9")
 ax.set_box_aspect([1,1,1])
-print("10")
 plt.tight_layout()
-print("11")
+
 plt.savefig(OUTPUT_RENDER, transparent=True, dpi=100)
-print(f"✅ Rendu isométrique (faces partiales) sauvegardé dans {OUTPUT_RENDER}")
+print(f"✅ Rendu sauvegardé dans {OUTPUT_RENDER}")
