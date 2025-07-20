@@ -51,7 +51,7 @@ except FileNotFoundError:
 
 if skin.size != (64,64):
     raise ValueError("❌ Skin Minecraft attendu en 64x64")
-print(f"✅ Skin OK (64x64)\n")
+# print(f"✅ Skin OK (64x64)\n")
 
 # ----------------------------------------------------------------------
 # ✅ 4️⃣ EXTRACTION DES FACES
@@ -72,18 +72,19 @@ textures_hat = {}
 print("-------- Head --------")
 for face in uv_faces:
     textures[face] = extract_face(skin, uv_faces, face, ROTATIONS, FLIPS)
-    print(f"✅ {face}")
+    print(f"✅ {face} overlay", end=" ")
+print("")
 
 print("------- Overlay -------")
 for face in uv_faces_hat:
     textures_hat[face] = extract_face(skin, uv_faces_hat, face, ROTATIONS, FLIPS)
-    print(f"✅ {face} overlay")
-
+    print(f"✅ {face} overlay", end=" ")
+print("")
 print("-- Extraction terminée --\n")
 
 # ----------------------------------------------------------------------
 # ✅ 5️⃣ RENDU 3D AVEC OVERLAY
-print("✅ Génération du rendu 3D")
+print("⏱️ Génération du rendu 3D")
 
 fig = plt.figure(figsize=(4,4))
 ax = fig.add_subplot(111, projection='3d')
