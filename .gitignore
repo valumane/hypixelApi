@@ -11,3 +11,7 @@ yarn-error.log*
 
 # System
 .DS_Store
+
+
+/item_gestion/head/
+/item_gestion/unhead/
