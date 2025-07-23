@@ -1,11 +1,16 @@
 import http from 'http'
+import https from 'https'
 import fs from 'fs'
 
-let url = "http://textures.minecraft.net/texture/185484498537f510f17da60558b0cff50e671a7d239b816bab63e82706736ea8"
+let url = process.argv[2]
 
-function get_img(url) {
+
+if (url[4] == ":") { //url[4] -> : mean http
     http.get(url, (res) => {
         res.pipe(fs.createWriteStream('texture.png'));
-    });
+    })
+} else { //url[4] -> s : mean https
+    https.get(url, (res) => {
+        res.pipe(fs.createWriteStream('texture.png'));
+    })
 }
-get_img(url)

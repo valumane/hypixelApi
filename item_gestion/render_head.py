@@ -49,9 +49,8 @@ except FileNotFoundError:
     print(f"❌ Fichier introuvable : {INPUT_PATH}")
     sys.exit(1)
 
-if skin.size != (64,64):
-    raise ValueError("❌ Skin Minecraft attendu en 64x64")
-# print(f"✅ Skin OK (64x64)\n")
+print(f"skin size : {skin.size}")
+print("")
 
 # ----------------------------------------------------------------------
 # ✅ 4️⃣ EXTRACTION DES FACES
@@ -86,7 +85,7 @@ print("-- Extraction terminée --\n")
 # ✅ 5️⃣ RENDU 3D AVEC OVERLAY
 print("⏱️ Génération du rendu 3D")
 
-fig = plt.figure(figsize=(4,4))
+fig = plt.figure(figsize=(3,3))
 ax = fig.add_subplot(111, projection='3d')
 
 def grid(size, scale=1.0):
@@ -120,10 +119,20 @@ for face in ["top", "front", "right"]:
         elif face == "right":
             draw_face(np.full_like(X_overlay, 0.5), X_overlay, Y_overlay, textures_hat[face])
 
+#SAVE
 ax.view_init(elev=30, azim=45)
 ax.set_axis_off()
+ax.axis('off')
 ax.set_box_aspect([1,1,1])
 plt.tight_layout()
+plt.savefig(OUTPUT_RENDER, transparent=True, dpi=60, bbox_inches='tight', pad_inches=0, metadata={})
 
-plt.savefig(OUTPUT_RENDER, transparent=True, dpi=100)
+
+#ROGNER
+img = Image.open(OUTPUT_RENDER)
+img = img.convert("RGBA")
+bbox = img.getbbox()
+cropped = img.crop(bbox)
+cropped.save(OUTPUT_RENDER)
+
 print(f"✅ Rendu sauvegardé dans {OUTPUT_RENDER}")
