@@ -128,3 +128,38 @@ et ensuite on pourra passé a la modelisation de l'inventaire
 oups enfaite probleme la base64 est identique a chaque fois
 jsp pourquoi
 je verrais demain
+
+24/07/2025 13:56 ------------------
+okkkk ya eu du gros mouvement 
+deja j'ai reussi a reglé le probleme des img 64x32 en juste les upscalant en 64x64 ( je rajoute juste duv ide et python est content car il le bon format)
+ensuit pour les img qui avait pas le bon paterne de json est qui bugué sur ma maniere de clean, envrai pas grave yen a genre 2-3 qui sont pas valide mais en SAH flemme de tout reiteré pour voir lesquels bug
+ptetre plus tard je ferai un scan pour les doublons de base64
+et encore envrai flemme
+5 sur 8800 img ca va comme marge d'erreur
+
+donc je vais avoir tout les json des player head, donc sa c cool
+
+
+j'ai trouvé une solution pour l'accecibilité des données
+engros le nom sera le displayname
+et je fetcherais un repo github avec mes img
+j'vais tout clean pour faire un repo appart mais voila voila
+je fetcherais le raw.githubusercontent
+pas trop de limitation
+rapide et efficace
+et dispo h24 car... bah c github.... c jamais down
+
+prochaine etape render les block ( unhead )
+ensuite
+clean le repo
+ensuite
+crée repo appart sur github
+ensuite
+commencé l'accecibilité
+
+
+24/07/2025 18:06 -----------------
+ok j'ai trié les item et les items
+item c bon j'ai getitemtexture.js
+
+maintenant faut que je telecharge a la main les 3d des blocks car flemme de faire un script render 
