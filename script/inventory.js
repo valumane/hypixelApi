@@ -4,7 +4,7 @@ async function load_inventory() {
 
     await get_inv_contents()
     console.log("- get_inv_contents loaded")
-    
+
     await get_ender_chest_contents()
     console.log("- get_ender_chest_contents loaded")
 
@@ -20,43 +20,11 @@ async function load_inventory() {
     await get_wardrobe_contents()
     console.log("- get_wardrobe_contents loaded")
 
-    await inv_armor_contents()
-    console.log("-- inv_armor_contents loaded")
+    //await inv_armor_contents()
+    //console.log("-- inv_armor_contents loaded")
 
-    
+
 }
-
-
-function cleanNameForWiki(name) {
-    return name.replace(/§./g, "").replace(/ /g, "_");
-}
-
-async function getItemImageUrl(itemName) {
-    const formattedName = cleanNameForWiki(itemName);
-    const wikiUrl = `https://wiki.hypixel.net/${formattedName}`;
-
-    try {
-        const response = await fetch(wikiUrl);
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-
-        const imgUrl = doc
-            .getElementsByTagName("tbody")[1]
-            ?.children[1]
-            ?.children[0]
-            ?.children[0]
-            ?.src;
-
-        return imgUrl || null;
-    } catch (error) {
-        console.warn(`Image not found for ${itemName}`, error);
-        return null;
-    }
-}
-
-
-
 
 async function parseNBTData(chaine) {
 
@@ -85,6 +53,7 @@ async function parseNBTData(chaine) {
     const result = await nbt.parse(Buffer.from(buffer));
     return result.parsed
 }
+
 
 //bag
 let potion_bag, talisman_bag, fishing_bag, sacks_bag, quiver
@@ -147,31 +116,87 @@ function timestampFromLongArray([hi, lo]) {
 }
 
 
-async function inv_armor_contents() {
+
+async function fetchimg(name) {
+    const url = "https://raw.githubusercontent.com/valumane/hypixel_texture/main/head/1" + name[0].toLowerCase() + "/" + name + ".json";
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error("Erreur réseau : " + response.statusText);
+        }
+        const data = await response.json();
+        return data.img;
+    } catch (error) {
+        console.error("Erreur :", error);
+        return null;
+    }
+}
+
+// Exemple d'appel :
+async function setImage(name) {
+    const imgname = name.replace(/§./g, "").replace(/ /g, "_").toUpperCase();
+    const img = await fetchimg(imgname);
+
+    if (img) {
+        const element = document.getElementById(imgname);
+        if (element) {
+            element.src = img; // ou .srcset = img selon le cas
+        } else {
+            console.warn("Élément introuvable :", imgname);
+        }
+    }
+}
+
+
+
+
+async function get_armor_piece_info(n) {
     const main_div = document.getElementById("armor_label");
 
-    for (const armor of inv_armor) {
-        const count = armor.Count.value !== 1 ? `count : ${armor.Count.value}` : "";
-        const value = armor.tag.value;
-        const date = sanitizeDate(timestampFromLongArray(value.ExtraAttributes.value.timestamp.value));
-        const display = value.display.value;
-        const name = display.Name.value;
-        const lore = display.Lore.value.value;
+    const armor = inv_armor[n];
+    const count = armor.Count.value !== 1 ? `count : ${armor.Count.value}` : "";
+    const value = armor.tag.value;
+    const date = sanitizeDate(timestampFromLongArray(value.ExtraAttributes.value.timestamp.value));
+    const display = value.display.value;
 
-        const sub_div = document.createElement("pre"); // Utiliser <pre> pour respecter les sauts de ligne
-        sub_div.className = "armor_piece";
-        sub_div.innerText = 
-            `name : ${name} ${count}\n` +
-            `obtention date : ${date}\n` +
-            `lore :\n${lore.join("\n")}`; // Afficher chaque ligne de lore séparément
+    const name = display.Name.value;
+    const imgname = name.replace(/§./g, "").replace(/ /g, "_").toUpperCase();
+    const img = await fetchimg(imgname);
 
-        main_div.after(sub_div, document.createElement("br"));
+    const lore = display.Lore.value.value;
 
-        console.log("count :", count);
-        console.log("obtention date :", date);
-        console.log("armor lore :", lore);
-        console.log("armor pieces name :", name);
-        console.log("---------");
+    const img_div = document.createElement("img");
+    img_div.id = imgname;
+    img_div.srcset = img;
+
+    const sub_div = document.createElement("pre"); // bloc texte avec sauts de ligne respectés
+    sub_div.className = "armor_piece";
+    sub_div.innerText =
+        `name : ${name} ${count}\n` +
+        `obtention date : ${date}\n` +
+        `lore :\n${lore.join("\n")}`;
+
+    // 👉 conteneur flex qui contient texte + image
+    const wrapper = document.createElement("div");
+    wrapper.className = "armor_wrapper";
+    wrapper.appendChild(sub_div);
+    wrapper.appendChild(img_div);
+
+    main_div.after(wrapper, document.createElement("br"));
+
+    console.log("count :", count);
+    console.log("obtention date :", date);
+    console.log("armor lore :", lore);
+    console.log("armor pieces name :", name);
+    console.log("imgname", imgname);
+    console.log("---------");
+}
+
+
+async function inv_armor_contents() {
+    for (let i = 0; i < inv_armor.length; i++) {
+        get_armor_piece_info(i)
     }
 }
 

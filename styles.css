@@ -150,3 +150,17 @@ div#bestiary > button > img {
     width: fit-content
 }
 
+
+.armor_wrapper {
+    display: flex;
+    align-items: flex-start; /* ou center selon préférence */
+    gap: 10px;
+}
+
+.armor_piece {
+    font-family: monospace;
+    padding: 5px;
+    border: 1px solid #500;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
