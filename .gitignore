@@ -1,19 +1,5 @@
-# Node dependencies
-node_modules/
-
 # Secrets / keys
 api_key.json
 
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
 # System
 .DS_Store
-
-
-/item_gestion/head/
-/item_gestion/unhead/
-/item_gestion/gestion_head/checkgoodformat/img/
-/item_gestion/item

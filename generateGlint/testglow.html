@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>✨ Enchanteur Minecraft</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2em;
+      background: #d16666;
+      color: #eee;
+    }
+
+    canvas {
+      display: none;
+    }
+
+    img {
+      image-rendering: pixelated;
+      border: 1px solid #555;
+      margin-top: 1em;
+    }
+
+    img,
+    canvas {
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    #result {
+      transform: scale(2);
+      /* Zoom ×2 */
+      transform-origin: top left;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>✨ Générateur d'enchantement Minecraft</h1>
+  <p><button id="generate">Générer l'effet enchanté</button></p>
+  <img id="result" alt="Résultat enchanté">
+
+  <!-- Scripts -->
+  <script src="gif.min.js"></script>
+  <canvas id="canvas"></canvas>
+  <script>
+    const FRAME_COUNT = 87;
+    const FRAME_DURATION = 80;
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const resultImg = document.getElementById("result");
+
+    // Applique le masque alpha de item.png sur le glow
+    function applyMask(itemImg, glowFrame) {
+      const w = itemImg.width, h = itemImg.height;
+      const tempCanvas = document.createElement("canvas");
+      tempCanvas.width = w;
+      tempCanvas.height = h;
+      const tempCtx = tempCanvas.getContext("2d");
+
+      // Récupérer alpha de item
+      tempCtx.clearRect(0, 0, w, h);
+      tempCtx.drawImage(itemImg, 0, 0);
+      const itemData = tempCtx.getImageData(0, 0, w, h);
+
+      // Récupérer pixels glow
+      tempCtx.clearRect(0, 0, w, h);
+      tempCtx.drawImage(glowFrame, 0, 0, w, h);
+      const glowData = tempCtx.getImageData(0, 0, w, h);
+
+      const itemPixels = itemData.data;
+      const glowPixels = glowData.data;
+
+      for (let i = 0; i < glowPixels.length; i += 4) {
+        const alpha = itemPixels[i + 3];
+        if (alpha === 0) {
+          glowPixels[i + 0] = 0;
+          glowPixels[i + 1] = 0;
+          glowPixels[i + 2] = 0;
+          glowPixels[i + 3] = 0;
+        }
+      }
+
+      tempCtx.putImageData(glowData, 0, 0);
+      return tempCanvas;
+    }
+
+    document.getElementById("generate").addEventListener("click", () => {
+      const itemImg = new Image();
+      itemImg.src = "item.png";
+
+      itemImg.onload = () => {
+        canvas.width = itemImg.width;
+        canvas.height = itemImg.height;
+
+        const glintFrames = [];
+        let loaded = 0;
+
+        for (let i = 1; i <= FRAME_COUNT; i++) {
+          const img = new Image();
+          img.src = `frames/Frame_${String(i).padStart(4, '0')}.png`;
+          img.onload = () => {
+            loaded++;
+            if (loaded === FRAME_COUNT) {
+              renderGIF(itemImg, glintFrames);
+            }
+          };
+          glintFrames.push(img);
+        }
+      };
+    });
+
+    function renderGIF(itemImg, glintFrames) {
+      const gif = new GIF({
+        workers: 2,
+        quality: 10,
+        width: canvas.width,
+        height: canvas.height,
+        workerScript: "gif.worker.js",
+        transparent: "rgba(0,0,0,0)" // <- ajoute ça
+      });
+
+
+      for (let i = 0; i < FRAME_COUNT; i++) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(itemImg, 0, 0);
+
+        const maskedGlow = applyMask(itemImg, glintFrames[i]);
+        ctx.globalCompositeOperation = "lighter";
+        ctx.drawImage(maskedGlow, 0, 0);
+        ctx.globalCompositeOperation = "source-over";
+
+        gif.addFrame(canvas, {
+          copy: true,
+          delay: FRAME_DURATION,
+          disposal: 2
+        });
+      }
+
+      gif.on('finished', blob => {
+        const url = URL.createObjectURL(blob);
+        resultImg.src = url;
+      });
+
+      gif.render();
+    }
+  </script>
+</body>
+
+</html>
