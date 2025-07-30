@@ -164,3 +164,12 @@ div#bestiary > button > img {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
+.inv{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.inv>p{
+    border: 2px solid #671f1f;
+}

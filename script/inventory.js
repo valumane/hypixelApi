@@ -5,25 +5,19 @@ async function load_inventory() {
     await get_inv_contents()
     console.log("- get_inv_contents loaded")
 
-    await get_ender_chest_contents()
-    console.log("- get_ender_chest_contents loaded")
+    //await get_ender_chest_contents();  console.log("- get_ender_chest_contents loaded")
 
-    await get_inv_armor()
-    console.log("- get_inv_armor loaded")
+    //await get_inv_armor(); console.log("- get_inv_armor loaded")
 
-    await get_equipment_contents()
-    console.log("- get_equipment_contents loaded")
+    //await get_equipment_contents(); console.log("- get_equipment_contents loaded")
 
-    await get_personal_vault_contents()
-    console.log("- get_personal_vault_contents loaded")
+    //await get_personal_vault_contents(); console.log("- get_personal_vault_contents loaded")
 
-    await get_wardrobe_contents()
-    console.log("- get_wardrobe_contents loaded")
+    //await get_wardrobe_contents(); console.log("- get_wardrobe_contents loaded")
 
-    //await inv_armor_contents()
-    //console.log("-- inv_armor_contents loaded")
+    //await inv_armor_contents(); console.log("-- inv_armor_contents loaded")
 
-
+    gestion_inv_contents()
 }
 
 async function parseNBTData(chaine) {
@@ -116,40 +110,37 @@ function timestampFromLongArray([hi, lo]) {
 }
 
 
-
+//armor pieces
 async function fetchimg(name) {
-    const url = "https://raw.githubusercontent.com/valumane/hypixel_texture/main/head/1" + name[0].toLowerCase() + "/" + name + ".json";
+    const base = "https://raw.githubusercontent.com/valumane/hypixel_texture/main/head/1" + name[0].toLowerCase() + "/" + name;
 
+    let jsonData = null;
+    let pngUrl = null;
+
+    //try json
     try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error("Erreur réseau : " + response.statusText);
+        const responseJson = await fetch(base + ".json");
+        if (responseJson.ok) {
+            const data = await responseJson.json();
+            jsonData = data.img;//base64
         }
-        const data = await response.json();
-        return data.img;
-    } catch (error) {
-        console.error("Erreur :", error);
-        return null;
+    } catch (err) {
+        console.warn("Erreur JSON:", err);
     }
-}
 
-// Exemple d'appel :
-async function setImage(name) {
-    const imgname = name.replace(/§./g, "").replace(/ /g, "_").toUpperCase();
-    const img = await fetchimg(imgname);
-
-    if (img) {
-        const element = document.getElementById(imgname);
-        if (element) {
-            element.src = img; // ou .srcset = img selon le cas
-        } else {
-            console.warn("Élément introuvable :", imgname);
+    //try png
+    try {
+        const responsePng = await fetch(base + ".png");
+        if (responsePng.ok) {
+            pngUrl = base + ".png";//url
         }
+    } catch (err) {
+        console.warn("Erreur PNG:", err);
     }
+
+
+    return jsonData || pngUrl || null;
 }
-
-
-
 
 async function get_armor_piece_info(n) {
     const main_div = document.getElementById("armor_label");
@@ -177,7 +168,7 @@ async function get_armor_piece_info(n) {
         `obtention date : ${date}\n` +
         `lore :\n${lore.join("\n")}`;
 
-    // 👉 conteneur flex qui contient texte + image
+    //conteneur flex : texte + image
     const wrapper = document.createElement("div");
     wrapper.className = "armor_wrapper";
     wrapper.appendChild(sub_div);
@@ -193,11 +184,101 @@ async function get_armor_piece_info(n) {
     console.log("---------");
 }
 
-
 async function inv_armor_contents() {
     for (let i = 0; i < inv_armor.length; i++) {
         get_armor_piece_info(i)
     }
+}
+
+
+//inventory 
+function lineupinv(line, number) {
+    let maindiv = document.getElementById("inv" + line)
+    let sub_div = document.createElement("p")
+    sub_div.id = number
+    sub_div.innerHTML = number
+    let img_div = document.createElement("img")
+    img_div.id = "img" + number
+
+    sub_div.appendChild(img_div)
+    maindiv.after(sub_div)
+
+}
+
+async function getiteminfo(i, list) {
+    let item = list[i]
+    let item_name = item.tag.value.display.value.Name.value
+    let img_name = item.tag.value.ExtraAttributes.value.id.value
+    let img = await fetchimg(img_name)
+
+    let item_lore = item.tag.value.display.value.Lore.value.value
+
+    let div = document.getElementById(i)
+    let item_name_div = document.createElement("p");
+    item_name_div.innerHTML = item_name;
+    div.appendChild(item_name_div)
+
+    console.log(item_lore)
+
+    document.getElementById("img" + i).srcset = img
+
+    let div_lore = document.createElement("div")
+    for(let i = 0;i<item_lore.length;i++){
+        console.log(item_lore[i])
+        let p = document.createElement("p")
+        p.innerHTML=item_lore[i]
+        div_lore.appendChild(p)
+    }
+
+    div.append(div_lore)
+
+    console.log(item_name)
+    console.log(img_name)
+    console.log(img)
+    console.log(item_lore)
+
+}
+
+
+function gestion_inv_contents() {
+    for (let i = 0; i < 9; i++) {
+        if (Object.keys(inv_contents[i]).length === 0) {
+            console.log(i, 0)
+        } else {
+            console.log(i, inv_contents[i].tag.value.display.value.Name.value)
+        }
+        lineupinv(1, i)
+        //getiteminfo(i,inv_contents)
+    }
+    /*
+        for (let i = 9; i < 18; i++) {
+            if (Object.keys(inv_contents[i]).length === 0) {
+                console.log(i, 0)
+            } else {
+                console.log(i, inv_contents[i].tag.value.display.value.Name.value)
+            }
+            lineupinv(2, i)
+        }
+    
+        for (let i = 18; i < 27; i++) {
+            if (Object.keys(inv_contents[i]).length === 0) {
+                console.log(i, 0)
+            } else {
+                console.log(i, inv_contents[i].tag.value.display.value.Name.value)
+            }
+            lineupinv(3, i)
+        }
+    
+        for (let i = 27; i < 36; i++) {
+            if (Object.keys(inv_contents[i]).length === 0) {
+                console.log(i, 0)
+            } else {
+                console.log(i, inv_contents[i].tag.value.display.value.Name.value)
+            }
+            lineupinv(4, i)
+        }
+    */
+
 }
 
 

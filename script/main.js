@@ -13,62 +13,62 @@ const Collection = 'https://api.hypixel.net/resources/skyblock/collections';
 
 
 function sanitizeDate(date) {
-    const pad = n => String(n).padStart(2, '0');
+  const pad = n => String(n).padStart(2, '0');
 
-    const day = pad(date.getDate());
-    const month = pad(date.getMonth() + 1); // les mois commencent à 0
-    const year = date.getFullYear();
+  const day = pad(date.getDate());
+  const month = pad(date.getMonth() + 1); // les mois commencent à 0
+  const year = date.getFullYear();
 
-    const hours = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
 
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
+  return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
 function formatMinecraftTextToHTML(text) {
-    const colorMap = {
-        '0': '#000000', '1': '#0000AA', '2': '#00AA00', '3': '#00AAAA',
-        '4': '#AA0000', '5': '#AA00AA', '6': '#FFAA00', '7': '#AAAAAA',
-        '8': '#555555', '9': '#5555FF', 'a': '#55FF55', 'b': '#55FFFF',
-        'c': '#FF5555', 'd': '#FF55FF', 'e': '#FFFF55', 'f': '#FFFFFF'
-    };
+  const colorMap = {
+    '0': '#000000', '1': '#0000AA', '2': '#00AA00', '3': '#00AAAA',
+    '4': '#AA0000', '5': '#AA00AA', '6': '#FFAA00', '7': '#AAAAAA',
+    '8': '#555555', '9': '#5555FF', 'a': '#55FF55', 'b': '#55FFFF',
+    'c': '#FF5555', 'd': '#FF55FF', 'e': '#FFFF55', 'f': '#FFFFFF'
+  };
 
-    const formatMap = {
-        'l': 'font-weight: bold',
-        'm': 'text-decoration: line-through',
-        'n': 'text-decoration: underline',
-        'o': 'font-style: italic',
-        'r': 'reset'
-    };
+  const formatMap = {
+    'l': 'font-weight: bold',
+    'm': 'text-decoration: line-through',
+    'n': 'text-decoration: underline',
+    'o': 'font-style: italic',
+    'r': 'reset'
+  };
 
-    let html = '';
-    let currentStyles = [];
+  let html = '';
+  let currentStyles = [];
 
-    const parts = text.split(/§([0-9a-frlomn])/gi);
+  const parts = text.split(/§([0-9a-frlomn])/gi);
 
-    for (let i = 0; i < parts.length; i++) {
-        if (i % 2 === 0) {
-            // Texte
-            if (parts[i]) {
-                let style = currentStyles.join('; ');
-                html += `<span style="${style}">${parts[i]}</span>`;
-            }
-        } else {
-            const code = parts[i].toLowerCase();
+  for (let i = 0; i < parts.length; i++) {
+    if (i % 2 === 0) {
+      // Texte
+      if (parts[i]) {
+        let style = currentStyles.join('; ');
+        html += `<span style="${style}">${parts[i]}</span>`;
+      }
+    } else {
+      const code = parts[i].toLowerCase();
 
-            if (code === 'r') {
-                currentStyles = [];
-            } else if (colorMap[code]) {
-                // Ajout d'une couleur → on remplace toutes les couleurs précédentes
-                currentStyles = currentStyles.filter(s => !s.startsWith('color'));
-                currentStyles.push(`color: ${colorMap[code]}`);
-            } else if (formatMap[code]) {
-                currentStyles.push(formatMap[code]);
-            }
-        }
+      if (code === 'r') {
+        currentStyles = [];
+      } else if (colorMap[code]) {
+        // Ajout d'une couleur → on remplace toutes les couleurs précédentes
+        currentStyles = currentStyles.filter(s => !s.startsWith('color'));
+        currentStyles.push(`color: ${colorMap[code]}`);
+      } else if (formatMap[code]) {
+        currentStyles.push(formatMap[code]);
+      }
     }
+  }
 
-    return html;
+  return html;
 }
 
 
@@ -209,9 +209,48 @@ async function main() {
   await mainhotm()
   console.log("hotm fait")
 
-  await load_inventory()
-  console.log("inventory loaded")
-
+  //await load_inventory(); console.log("inventory loaded")
   document.getElementById("load").innerText = "chargement fini"
   console.log("chargement fini")
+}
+
+async function test(name) {
+  try {
+    const urlHead = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/head/${name}.json`;
+    const resHead = await fetch(urlHead);
+    if (resHead.ok) {
+      const data = await resHead.json();
+      return data.img;
+    }
+
+    const urlNotSkull = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/notskull/${name}.json`;
+    const resNotSkull = await fetch(urlNotSkull);
+    if (resNotSkull.ok) {
+      const data = await resNotSkull.json();
+      return data.itemid;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+async function test2(param) {
+  const itemimg = await test(param);
+  let url = "../texture/background/default.png";
+
+  if (itemimg && itemimg.startsWith("minecraft:")) {
+    const id = itemimg.replace("minecraft:", "");
+    const testUrl = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/texturepack/${id}.png`;
+    const res = await fetch(testUrl);
+    if (res.ok) {
+      url = testUrl;
+    }
+  } else if (itemimg) {
+    url = itemimg; // déjà une image directe (cas skull)
+  }
+
+  document.getElementById("testimg").srcset = url;
+  return url;
 }
