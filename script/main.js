@@ -214,7 +214,7 @@ async function main() {
   console.log("chargement fini")
 }
 
-async function test(name) {
+async function fetchImageName(name) {
   try {
     const urlHead = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/head/${name}.json`;
     const resHead = await fetch(urlHead);
@@ -236,8 +236,8 @@ async function test(name) {
   }
 }
 
-async function test2(param) {
-  const itemimg = await test(param);
+async function fetchImage(param) {
+  const itemimg = await fetchImageName(param);
   let url = "../texture/background/default.png";
 
   if (itemimg && itemimg.startsWith("minecraft:")) {

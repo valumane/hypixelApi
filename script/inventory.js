@@ -5,19 +5,19 @@ async function load_inventory() {
     await get_inv_contents()
     console.log("- get_inv_contents loaded")
 
-    //await get_ender_chest_contents();  console.log("- get_ender_chest_contents loaded")
+    await get_ender_chest_contents(); console.log("- get_ender_chest_contents loaded")
 
-    //await get_inv_armor(); console.log("- get_inv_armor loaded")
+    await get_inv_armor(); console.log("- get_inv_armor loaded")
 
-    //await get_equipment_contents(); console.log("- get_equipment_contents loaded")
+    await get_equipment_contents(); console.log("- get_equipment_contents loaded")
 
-    //await get_personal_vault_contents(); console.log("- get_personal_vault_contents loaded")
+    await get_personal_vault_contents(); console.log("- get_personal_vault_contents loaded")
 
-    //await get_wardrobe_contents(); console.log("- get_wardrobe_contents loaded")
+    await get_wardrobe_contents(); console.log("- get_wardrobe_contents loaded")
 
     //await inv_armor_contents(); console.log("-- inv_armor_contents loaded")
 
-    gestion_inv_contents()
+    //gestion_inv_contents()
 }
 
 async function parseNBTData(chaine) {
@@ -110,88 +110,71 @@ function timestampFromLongArray([hi, lo]) {
 }
 
 
-//armor pieces
-async function fetchimg(name) {
-    const base = "https://raw.githubusercontent.com/valumane/hypixel_texture/main/head/1" + name[0].toLowerCase() + "/" + name;
-
-    let jsonData = null;
-    let pngUrl = null;
-
-    //try json
-    try {
-        const responseJson = await fetch(base + ".json");
-        if (responseJson.ok) {
-            const data = await responseJson.json();
-            jsonData = data.img;//base64
-        }
-    } catch (err) {
-        console.warn("Erreur JSON:", err);
-    }
-
-    //try png
-    try {
-        const responsePng = await fetch(base + ".png");
-        if (responsePng.ok) {
-            pngUrl = base + ".png";//url
-        }
-    } catch (err) {
-        console.warn("Erreur PNG:", err);
-    }
-
-
-    return jsonData || pngUrl || null;
-}
-
 async function get_armor_piece_info(n) {
     const main_div = document.getElementById("armor_label");
 
     const armor = inv_armor[n];
-    const count = armor.Count.value !== 1 ? `count : ${armor.Count.value}` : "";
     const value = armor.tag.value;
     const date = sanitizeDate(timestampFromLongArray(value.ExtraAttributes.value.timestamp.value));
     const display = value.display.value;
 
     const name = display.Name.value;
-    const imgname = name.replace(/§./g, "").replace(/ /g, "_").toUpperCase();
-    const img = await fetchimg(imgname);
-
     const lore = display.Lore.value.value;
 
+    const imgname = name.replace(/§./g, "").replace(/ /g, "_").toUpperCase().replace(" ", "_").replace("-", "").replace("'S", "");
+
+    const img = await fetchImage(imgname);
+
+    const slot = document.createElement("div");
+    slot.className = "armor_slot";
+    slot.onmouseover = () => overlay.style.display = "block";
+    slot.onmouseleave = () => overlay.style.display = "none";
+
     const img_div = document.createElement("img");
-    img_div.id = imgname;
+    img_div.className = "armor_img";
     img_div.srcset = img;
+    img_div.alt = name;
 
-    const sub_div = document.createElement("pre"); // bloc texte avec sauts de ligne respectés
-    sub_div.className = "armor_piece";
-    sub_div.innerText =
-        `name : ${name} ${count}\n` +
-        `obtention date : ${date}\n` +
-        `lore :\n${lore.join("\n")}`;
+    const overlay = document.createElement("div");
+    overlay.className = "armor_overlay";
 
-    //conteneur flex : texte + image
-    const wrapper = document.createElement("div");
-    wrapper.className = "armor_wrapper";
-    wrapper.appendChild(sub_div);
-    wrapper.appendChild(img_div);
+    const name_div = document.createElement("p");
+    name_div.innerHTML = formatMinecraftTextToHTML(name)
 
-    main_div.after(wrapper, document.createElement("br"));
+    overlay.appendChild(name_div);
+    overlay.appendChild(document.createElement("hr"));
 
-    console.log("count :", count);
-    console.log("obtention date :", date);
-    console.log("armor lore :", lore);
-    console.log("armor pieces name :", name);
-    console.log("imgname", imgname);
-    console.log("---------");
+    const date_div = document.createElement("p");
+    date_div.textContent = `Obtention: ${date}`;
+    overlay.appendChild(date_div);
+
+    lore.forEach(line => {
+        const p = document.createElement("p");
+        p.innerHTML = formatMinecraftTextToHTML(line);
+        overlay.appendChild(p);
+    });
+
+    slot.appendChild(img_div);
+    slot.appendChild(overlay);
+
+    main_div.after(slot);
 }
 
 async function inv_armor_contents() {
-    for (let i = 0; i < inv_armor.length; i++) {
-        get_armor_piece_info(i)
-    }
+    await get_armor_piece_info(0)
+    await get_armor_piece_info(1)
+    await get_armor_piece_info(2)
+    await get_armor_piece_info(3)
+
 }
 
 
+
 //inventory 
+function isVoid(t) {
+    return Object.keys(t).length === 0
+}
+
 function lineupinv(line, number) {
     console.log("enterlineupinv", line, number)
     let maindiv = document.getElementById("inv" + line)
@@ -200,7 +183,7 @@ function lineupinv(line, number) {
 
     let item_count = ""
 
-    if (Object.keys(inv_contents[number]).length !== 0) {
+    if (isVoid(inv_contents[number])) {
         if (inv_contents[number].Count) {
             let count_val = inv_contents[number].Count.value
             item_count = count_val === 1 ? "" : count_val
@@ -228,7 +211,7 @@ async function getiteminfo(i, list) {
     let item = list[i]
     let item_name = item.tag.value.display.value.Name.value
     let img_name = item.tag.value.ExtraAttributes.value.id.value
-    let img = await test2(img_name)
+    let img = await fetchImage(img_name)
 
     let item_lore = item.tag.value.display.value.Lore.value.value
 
@@ -264,48 +247,67 @@ async function getiteminfo(i, list) {
 }
 
 
+function do_get_inv_contents(line, a, b) {
+    for (let i = a; i > b; i--) {
+        if (isVoid(inv_contents[i])) {
+            console.log(i, 0)
+        } else {
+            console.log(i, inv_contents[i].tag.value.display.value.Name.value)
+        }
+        lineupinv(line, i)
+        getiteminfo(i, inv_contents)
+    }
+}
+
 function gestion_inv_contents() {
-    // Ligne 2 : i = 9 → 17
-    for (let i = 17; i > 8; i--) {
-        if (Object.keys(inv_contents[i]).length === 0) {
-            console.log(i, 0)
-        } else {
-            console.log(i, inv_contents[i].tag.value.display.value.Name.value)
+    // Ligne 1 (hotbar)
+    do_get_inv_contents(1, 8, -1)
+    do_get_inv_contents(4, 17, 8)
+    do_get_inv_contents(3, 26, 17)
+    do_get_inv_contents(2, 35, 26)
+
+}
+
+//ender_chest
+
+async function truc_end1(line, number) {
+    console.log("truc_end1",line,number)
+
+    let main_div = document.getElementById("ender-chest")
+    
+    let sub_div = document.createElement("div")
+    let br_div = document.createElement("br")
+    
+    sub_div.setAttribute("class","inv")
+
+    main_div.appendChild(sub_div)
+    main_div.appendChild(br_div)
+
+    let item = ender_chest_contents[number]
+    
+
+    /*
+    console.log("enterlineupinv", line, number)
+
+    let maindiv = document.getElementById("inv" + line)
+    let sub_div = document.createElement("p")
+    sub_div.id = number
+
+    let item_count = ""
+
+    if (isVoid(inv_contents[number])) {
+        if (inv_contents[number].Count) {
+            let count_val = inv_contents[number].Count.value
+            item_count = count_val === 1 ? "" : count_val
         }
-        lineupinv(4, i)
-        getiteminfo(i, inv_contents)
     }
 
-    // Ligne 3 : i = 18 → 26
-    for (let i = 26; i > 17; i--) {
-        if (Object.keys(inv_contents[i]).length === 0) {
-            console.log(i, 0)
-        } else {
-            console.log(i, inv_contents[i].tag.value.display.value.Name.value)
-        }
-        lineupinv(3, i)
-        getiteminfo(i, inv_contents)
-    }
+    sub_div.innerHTML = item_count
 
-    // Ligne 4 : i = 27 → 35
-    for (let i = 35; i > 26; i--) {
-        if (Object.keys(inv_contents[i]).length === 0) {
-            console.log(i, 0)
-        } else {
-            console.log(i, inv_contents[i].tag.value.display.value.Name.value)
-        }
-        lineupinv(2, i)
-        getiteminfo(i, inv_contents)
-    }
+    let img_div = document.createElement("img")
+    img_div.id = "img" + number
 
-    // Ligne 1 (hotbar) : i = 9 → 0 (ordre inverse)
-    for (let i = 8; i > -1; i--) {
-        if (Object.keys(inv_contents[i]).length === 0) {
-            console.log(i, 0)
-        } else {
-            console.log(i, inv_contents[i].tag.value.display.value.Name.value)
-        }
-        lineupinv(1, i)
-        getiteminfo(i, inv_contents)
-    }
+    sub_div.appendChild(img_div)
+    maindiv.after(sub_div)
+    */
 }
