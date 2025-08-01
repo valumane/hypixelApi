@@ -209,7 +209,7 @@ async function main() {
   await mainhotm()
   console.log("hotm fait")
 
-  //await load_inventory(); console.log("inventory loaded")
+  await load_inventory(); console.log("inventory loaded")
   document.getElementById("load").innerText = "chargement fini"
   console.log("chargement fini")
 }
@@ -242,7 +242,7 @@ async function test2(param) {
 
   if (itemimg && itemimg.startsWith("minecraft:")) {
     const id = itemimg.replace("minecraft:", "");
-    const testUrl = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/texturepack/${id}.png`;
+    const testUrl = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/block/images/${id}.png`;
     const res = await fetch(testUrl);
     if (res.ok) {
       url = testUrl;
@@ -250,7 +250,5 @@ async function test2(param) {
   } else if (itemimg) {
     url = itemimg; // déjà une image directe (cas skull)
   }
-
-  document.getElementById("testimg").srcset = url;
   return url;
 }

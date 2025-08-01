@@ -193,43 +193,67 @@ async function inv_armor_contents() {
 
 //inventory 
 function lineupinv(line, number) {
+    console.log("enterlineupinv", line, number)
     let maindiv = document.getElementById("inv" + line)
     let sub_div = document.createElement("p")
     sub_div.id = number
-    sub_div.innerHTML = number
+
+    let item_count = ""
+
+    if (Object.keys(inv_contents[number]).length !== 0) {
+        if (inv_contents[number].Count) {
+            let count_val = inv_contents[number].Count.value
+            item_count = count_val === 1 ? "" : count_val
+        }
+    }
+
+    sub_div.innerHTML = item_count
+
     let img_div = document.createElement("img")
     img_div.id = "img" + number
 
     sub_div.appendChild(img_div)
     maindiv.after(sub_div)
+}
 
+
+function show_lore(i) {
+    document.getElementById(i).children[1].style.display = "block"
+}
+function hide_lore(i) {
+    document.getElementById(i).children[1].style.display = "none"
 }
 
 async function getiteminfo(i, list) {
     let item = list[i]
     let item_name = item.tag.value.display.value.Name.value
     let img_name = item.tag.value.ExtraAttributes.value.id.value
-    let img = await fetchimg(img_name)
+    let img = await test2(img_name)
 
     let item_lore = item.tag.value.display.value.Lore.value.value
 
     let div = document.getElementById(i)
+    div.onmouseover = function () {
+        show_lore(i);
+    }
+    div.onmouseleave = function () {
+        hide_lore(i);
+    }
+
     let item_name_div = document.createElement("p");
-    item_name_div.innerHTML = item_name;
-    div.appendChild(item_name_div)
+    item_name_div.innerHTML = formatMinecraftTextToHTML(item_name);
 
     console.log(item_lore)
 
     document.getElementById("img" + i).srcset = img
 
     let div_lore = document.createElement("div")
-    for(let i = 0;i<item_lore.length;i++){
-        console.log(item_lore[i])
+    div_lore.appendChild(item_name_div)
+    for (let i = 0; i < item_lore.length; i++) {
         let p = document.createElement("p")
-        p.innerHTML=item_lore[i]
+        p.innerHTML = formatMinecraftTextToHTML(item_lore[i])
         div_lore.appendChild(p)
     }
-
     div.append(div_lore)
 
     console.log(item_name)
@@ -241,44 +265,47 @@ async function getiteminfo(i, list) {
 
 
 function gestion_inv_contents() {
-    for (let i = 0; i < 9; i++) {
+    // Ligne 2 : i = 9 → 17
+    for (let i = 17; i > 8; i--) {
+        if (Object.keys(inv_contents[i]).length === 0) {
+            console.log(i, 0)
+        } else {
+            console.log(i, inv_contents[i].tag.value.display.value.Name.value)
+        }
+        lineupinv(4, i)
+        getiteminfo(i, inv_contents)
+    }
+
+    // Ligne 3 : i = 18 → 26
+    for (let i = 26; i > 17; i--) {
+        if (Object.keys(inv_contents[i]).length === 0) {
+            console.log(i, 0)
+        } else {
+            console.log(i, inv_contents[i].tag.value.display.value.Name.value)
+        }
+        lineupinv(3, i)
+        getiteminfo(i, inv_contents)
+    }
+
+    // Ligne 4 : i = 27 → 35
+    for (let i = 35; i > 26; i--) {
+        if (Object.keys(inv_contents[i]).length === 0) {
+            console.log(i, 0)
+        } else {
+            console.log(i, inv_contents[i].tag.value.display.value.Name.value)
+        }
+        lineupinv(2, i)
+        getiteminfo(i, inv_contents)
+    }
+
+    // Ligne 1 (hotbar) : i = 9 → 0 (ordre inverse)
+    for (let i = 8; i > -1; i--) {
         if (Object.keys(inv_contents[i]).length === 0) {
             console.log(i, 0)
         } else {
             console.log(i, inv_contents[i].tag.value.display.value.Name.value)
         }
         lineupinv(1, i)
-        //getiteminfo(i,inv_contents)
+        getiteminfo(i, inv_contents)
     }
-    /*
-        for (let i = 9; i < 18; i++) {
-            if (Object.keys(inv_contents[i]).length === 0) {
-                console.log(i, 0)
-            } else {
-                console.log(i, inv_contents[i].tag.value.display.value.Name.value)
-            }
-            lineupinv(2, i)
-        }
-    
-        for (let i = 18; i < 27; i++) {
-            if (Object.keys(inv_contents[i]).length === 0) {
-                console.log(i, 0)
-            } else {
-                console.log(i, inv_contents[i].tag.value.display.value.Name.value)
-            }
-            lineupinv(3, i)
-        }
-    
-        for (let i = 27; i < 36; i++) {
-            if (Object.keys(inv_contents[i]).length === 0) {
-                console.log(i, 0)
-            } else {
-                console.log(i, inv_contents[i].tag.value.display.value.Name.value)
-            }
-            lineupinv(4, i)
-        }
-    */
-
 }
-
-
