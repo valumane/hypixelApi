@@ -1,0 +1,76 @@
+.inv {
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+}
+
+.inv>p {
+    position: relative;
+    /* <-- Nécessaire pour que le overlay soit relatif à ce bloc */
+    width: 50px;
+    height: 50px;
+}
+
+.inv img {
+    width: 20px;
+    object-fit: cover;
+    image-rendering: pixelated;
+}
+
+/* Ta div overlay juste après l'image */
+.inv>p>div {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 200px;
+    /* + large que le p */
+    display: none;
+    background: #111;
+    color: white;
+    z-index: 99;
+    white-space: pre-wrap;
+    padding: 6px;
+}
+
+.line {
+    display: block;
+    line-height: 200px;
+    content: "";
+}
+
+#inv,.endpart {
+    background-color: rgb(41, 38, 38);
+    padding: 5px;
+    width: fit-content;
+    padding-bottom: 2px
+}
+
+.inv > p {
+  position: relative;
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;   /* verticalement */
+  justify-content: center; /* horizontalement */
+
+  background-color: grey
+
+}
+
+#ender-chest {
+  display: flex;
+  gap: 10px;
+}
+
+.endpart {
+  background-color: rgb(41, 38, 38);
+  padding: 5px;
+  width: fit-content;
+}
+.inv{
+    margin-bottom: 4px
+}
+#inventory{
+    margin-left: 10px;
+}

@@ -15,6 +15,8 @@
 
 
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="inventory.css">
+  <link rel="stylesheet" href="armor.css">
 </head>
 
 <body onload="main()">
@@ -177,22 +179,47 @@
   </div>
 
   <button id="toggleButtonINVENTORY" onclick="toggleVisibility('inventory')"> affichez inventory</button>
+
   <div id="inventory" class="toggle visible">
+    <p>armor</p>
     <div id="armor_div">
-      <p id="armor_label"> armor </p>
+      <p id="armor_label"></p>
     </div>
-    <div>
+    <p> inventaire </p>
+    <div id="inv">
       <div class="inv"><pre id="inv4"></p></div>
-        <br>
       <div class="inv"><pre id="inv3"></p></div>
-        <br>
       <div class="inv"><pre id="inv2"></p></div>
-        <br>
       <div class="inv"><pre id="inv1"></p></div>
     </div>
+
+    <p> ender chest</p>
     <div id="ender-chest">
-      
+      <div class="endpart">
+        <div class="inv"><pre id="end1"></p></div>
+        <div class="inv"><pre id="end2"></p></div>
+        <div class="inv"><pre id="end3"></p></div>
+        <div class="inv"><pre id="end4"></p></div>
+        <div class="inv"><pre id="end5"></p></div>
+      </div>
+      <br>
+      <div class="endpart">
+        <div class="inv"><pre id="end6"></p></div>
+        <div class="inv"><pre id="end7"></p></div>
+        <div class="inv"><pre id="end8"></p></div>
+        <div class="inv"><pre id="end9"></p></div>
+        <div class="inv"><pre id="end10"></p></div>
+      </div>
+      <br>
+      <div class="endpart">
+        <div class="inv"><pre id="end11"></p></div>
+        <div class="inv"><pre id="end12"></p></div>
+        <div class="inv"><pre id="end13"></p></div>
+        <div class="inv"><pre id="end14"></p></div>
+        
+      </div>
     </div>
+
   </div>
   <p id="load">chargement en cours</p>
   <img id="testimg" src="" style="width: 300px;image-rendering: pixelated;">

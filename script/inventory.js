@@ -15,9 +15,10 @@ async function load_inventory() {
 
     await get_wardrobe_contents(); console.log("- get_wardrobe_contents loaded")
 
-    //await inv_armor_contents(); console.log("-- inv_armor_contents loaded")
+    await inv_armor_contents(); console.log("-- inv_armor_contents loaded")
 
-    //gestion_inv_contents()
+    gestion_inv_contents()
+    show_ender_chest()
 }
 
 async function parseNBTData(chaine) {
@@ -47,6 +48,8 @@ async function parseNBTData(chaine) {
     const result = await nbt.parse(Buffer.from(buffer));
     return result.parsed
 }
+
+
 
 
 //bag
@@ -216,19 +219,15 @@ async function getiteminfo(i, list) {
     let item_lore = item.tag.value.display.value.Lore.value.value
 
     let div = document.getElementById(i)
-    div.onmouseover = function () {
-        show_lore(i);
-    }
-    div.onmouseleave = function () {
-        hide_lore(i);
-    }
+
 
     let item_name_div = document.createElement("p");
     item_name_div.innerHTML = formatMinecraftTextToHTML(item_name);
 
     console.log(item_lore)
 
-    document.getElementById("img" + i).srcset = img
+    let imgdiv = document.getElementById("img" + i)
+    imgdiv.srcset = img
 
     let div_lore = document.createElement("div")
     div_lore.appendChild(item_name_div)
@@ -238,7 +237,12 @@ async function getiteminfo(i, list) {
         div_lore.appendChild(p)
     }
     div.append(div_lore)
-
+    imgdiv.onmouseover = function () {
+        show_lore(i);
+    }
+    imgdiv.onmouseleave = function () {
+        hide_lore(i);
+    }
     console.log(item_name)
     console.log(img_name)
     console.log(img)
@@ -269,45 +273,97 @@ function gestion_inv_contents() {
 }
 
 //ender_chest
+function get_item_name(element) {
+    return element.tag.value.display.value.Name.value
+}
+function get_img_name(element) {
+    return element.tag.value.ExtraAttributes.value.id.value
+}
+async function get_img(element) {
+    let img_name = get_img_name(element)
+    let img = await fetchImage(img_name)
+    return img
+}
+function get_item_lore(element) {
+    return element.tag.value.display.value.Lore.value.value
+}
 
-async function truc_end1(line, number) {
-    console.log("truc_end1",line,number)
 
-    let main_div = document.getElementById("ender-chest")
-    
-    let sub_div = document.createElement("div")
-    let br_div = document.createElement("br")
-    
-    sub_div.setAttribute("class","inv")
 
-    main_div.appendChild(sub_div)
-    main_div.appendChild(br_div)
 
-    let item = ender_chest_contents[number]
-    
+async function show_ender_chest() {
+    show_ender_chest_aux(1, 8, -1)
+    show_ender_chest_aux(2, 17, 8)
+    show_ender_chest_aux(3, 26, 17)
+    show_ender_chest_aux(4, 35, 26)
+    show_ender_chest_aux(5, 44, 35)
+    show_ender_chest_aux(6, 53, 44)
+    show_ender_chest_aux(7, 62, 53)
+    show_ender_chest_aux(8, 71, 62)
+    show_ender_chest_aux(9, 80, 71)
+    show_ender_chest_aux(10, 89, 80)
+    show_ender_chest_aux(11, 98, 89)
+    show_ender_chest_aux(12, 107, 98)
+    show_ender_chest_aux(13, 116, 107)
+    show_ender_chest_aux(14, 125, 116)
+    show_ender_chest_aux(15, 134, 125)
+}
 
-    /*
-    console.log("enterlineupinv", line, number)
+async function show_ender_chest_aux(line, a, b) {
+    let main_div = document.getElementById("end" + line);
 
-    let maindiv = document.getElementById("inv" + line)
-    let sub_div = document.createElement("p")
-    sub_div.id = number
+    for (let i = a; i > b; i--) {
+        const index = i;
+        const item = ender_chest_contents[index];
 
-    let item_count = ""
-
-    if (isVoid(inv_contents[number])) {
-        if (inv_contents[number].Count) {
-            let count_val = inv_contents[number].Count.value
-            item_count = count_val === 1 ? "" : count_val
+        let imgdata, item_name, item_lore, img_name;
+        if (!isVoid(item)) {
+            item_name = get_item_name(item);
+            img_name = get_img_name(item);
+            imgdata = await fetchImage(img_name);
+            item_lore = get_item_lore(item);
+        } else {
+            item_name = "";
+            img_name = "";
+            imgdata = "";
+            item_lore = "";
         }
+
+        // Création du bloc principal
+        const p_slot = document.createElement("p");
+        p_slot.id = index;
+
+        // Image
+        const img = document.createElement("img");
+        img.id = "img" + index;
+        img.srcset = imgdata;
+        p_slot.appendChild(img);
+
+        // Overlay div (invisible par défaut)
+        const div_lore = document.createElement("div");
+
+        // Nom de l'item
+        const item_name_p = document.createElement("p");
+        item_name_p.innerHTML = formatMinecraftTextToHTML(item_name);
+        div_lore.appendChild(item_name_p);
+
+        // Lore
+        for (let j = 0; j < item_lore.length; j++) {
+            const lore_p = document.createElement("p");
+            lore_p.innerHTML = formatMinecraftTextToHTML(item_lore[j]);
+            div_lore.appendChild(lore_p);
+        }
+
+        // Ajout de la div de lore au slot
+        p_slot.appendChild(div_lore);
+        div_lore.setAttribute("id", "end" + i)
+        // Si slot non vide : activer le comportement de survol
+        if (!isVoid(item)) {
+            img.onmouseover = () => document.getElementById("end" + i).style.display = "block";
+            img.onmouseleave = () => document.getElementById("end" + i).style.display = "none";
+        }
+
+        // Ajout du slot dans la ligne
+        main_div.after(p_slot);
     }
-
-    sub_div.innerHTML = item_count
-
-    let img_div = document.createElement("img")
-    img_div.id = "img" + number
-
-    sub_div.appendChild(img_div)
-    maindiv.after(sub_div)
-    */
 }
