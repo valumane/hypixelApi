@@ -41,7 +41,7 @@ async function get_first_join() {
     const minutes = seconds / 60;
     const hours = minutes / 60;
     const days = hours / 24;
-    const months = days / 30.44; // moyenne
+    const months = days / 30.44;
     const years = days / 365.25;
 
     let res;

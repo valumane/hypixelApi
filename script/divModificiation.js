@@ -1,29 +1,25 @@
 
 function createFarmingdiv(categories, collname, eta, progress,rank) {
-  const container = document.getElementById(categories); // Conteneur cible
+  const container = document.getElementById(categories); //cible
   
-  // Créer le conteneur parent pour l'item collection
   const itemCollectionDiv = document.createElement("div");
-  itemCollectionDiv.className = "itemcollection"; // Classe pour le conteneur parent
+  itemCollectionDiv.className = "itemcollection"; 
   
-  // creer le conteneur parent pour p et image
   const itemEtImageDiv = document.createElement("div");
   itemEtImageDiv.className = "itemEtImage";
 
 
-  // créer l'image
   const image = document.createElement("img");
   if(collname=="Gemstone"){
-    image.src = "texture/collection/"+categories+"/"+collname+".gif"; // Chemin dynamique
+    image.src = "texture/collection/"+categories+"/"+collname+".gif";
   } else {
-    image.src = "texture/collection/"+categories+"/"+collname+".png"; // Chemin dynamique
+    image.src = "texture/collection/"+categories+"/"+collname+".png";
   }
-  image.alt = name; // Texte alternatif
-  image.width = 50; // Taille de l'image (modifiable selon besoin)
-  image.height = 50; // Taille de l'image (modifiable selon besoin)
+  image.alt = name;
+  image.width = 50; 
+  image.height = 50; 
 
 
-  // Créer le paragraphe avec le nom de la collection
   const paragraph = document.createElement("p");
   paragraph.innerText = collname+" "+ rank;
 
@@ -36,29 +32,28 @@ function createFarmingdiv(categories, collname, eta, progress,rank) {
   }
 
   
-  // Créer le conteneur de la barre de progression
   const progressContainer = document.createElement("div");
   progressContainer.className = "progress-container";
 
-  // Créer la barre de progression avec la largeur définie
+
+
   const progressBar = document.createElement("div");
   progressBar.className = "progress-bar";
-  progressBar.style.width = eta; // Largeur de la barre de progression
+  progressBar.style.width = eta;
 
-  // Créer le texte de progression
+
   const progressText = document.createElement("div");
   progressText.className = "progress-text";
   progressText.innerText = progress;
 
-  // Assembler les éléments
-  progressBar.appendChild(progressText); // Ajouter le texte à la barre
-  progressContainer.appendChild(progressBar); // Ajouter la barre au conteneur de progression
-  itemEtImageDiv.appendChild(image);
-  itemEtImageDiv.appendChild(paragraph); // Ajouter le paragraphe au conteneur parent
-  itemCollectionDiv.appendChild(itemEtImageDiv);
-  itemCollectionDiv.appendChild(progressContainer); // Ajouter le conteneur de progression au conteneur parent
+
+  progressBar.appendChild(progressText)
+  progressContainer.appendChild(progressBar)
+  itemEtImageDiv.appendChild(image)
+  itemEtImageDiv.appendChild(paragraph)
+  itemCollectionDiv.appendChild(itemEtImageDiv)
+  itemCollectionDiv.appendChild(progressContainer)
   
-  // Ajouter le conteneur parent au conteneur cible
   container.appendChild(itemCollectionDiv);
 }
 
@@ -154,10 +149,10 @@ function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
 function toggleVisibility(id,n) {
   const element = document.getElementById(id);
   if (element.classList.contains("visible")) {
-    element.classList.replace("visible", "hidden"); // Passer à la classe "hidden"
+    element.classList.replace("visible", "hidden");
     if(n==1){putAtOriginalPosition(id)}
   } else {
-    element.classList.replace("hidden", "visible"); // Passer à la classe "visible"
+    element.classList.replace("hidden", "visible");
     if(n==1){putAfterButton(id)}
   }
 }
@@ -193,7 +188,7 @@ async function divDetection() {
     const child = nodes[i];
     if (child instanceof HTMLElement) {
       if (child.getAttributeNames().includes('onclick')==false) {
-        res.push([i,child]); // ou res.push(i), si tu veux l'index
+        res.push([i,child]);
       }
     }
   }
@@ -206,7 +201,7 @@ function putAfterButton(nomButton) {
   let divButton = null;
   let divToMove = null;
 
-  // Cherche le bouton avec onclick="toggleVisibility('nomButton')"
+  // search onclick="toggleVisibility('nomButton')"
   for (let i = 0; i < t().length; i++) {
     const button = t()[i];
     if (
@@ -217,7 +212,7 @@ function putAfterButton(nomButton) {
       break;
     }
   }
-  // Cherche la div correspondante dans divDetection()
+  // search div correspondante dans divDetection()
   const original = originalPos;
   for (let i = 0; i < original.length; i++) {
     const div = original[i][1];
@@ -226,7 +221,6 @@ function putAfterButton(nomButton) {
       break;
     }
   }
-  // Si les deux sont trouvés, on bouge la div juste après le bouton
   if (divButton && divToMove) {
     divButton.after(divToMove);
   } else {
@@ -239,9 +233,9 @@ function putAfterButton(nomButton) {
 
 function putAtOriginalPosition(nomDiv) {
   let div = null;
-  const dom = t(); // liste des enfants de #bestiary
+  const dom = t(); // liste childre de #bestiary
 
-  // Trouver la div dans le DOM
+  // search la div dans le DOM
   for (let i = 0; i < dom.length; i++) {
     if (dom[i].id === nomDiv) {
       div = dom[i];
@@ -249,7 +243,7 @@ function putAtOriginalPosition(nomDiv) {
     }
   }
 
-  // Trouver la position originale dans divDetection
+  // find origin pos dans divDetection
   let originalIndex = -1;
   for (let i = 0; i < originalPos.length; i++) {
     const [index, element] = originalPos[i];
@@ -259,7 +253,7 @@ function putAtOriginalPosition(nomDiv) {
     }
   }
 
-  // Réinsère la div à sa position d'origine
+  // remet la div à sa originalpos
   if (div && originalIndex !== -1) {
     const parent = div.parentNode;
     const refNode = dom[originalIndex];

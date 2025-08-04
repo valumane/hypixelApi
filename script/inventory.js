@@ -329,7 +329,6 @@ async function show_ender_chest_aux(line, a, b) {
             item_lore = "";
         }
 
-        // Création du bloc principal
         const p_slot = document.createElement("p");
         p_slot.id = index;
 
@@ -339,7 +338,7 @@ async function show_ender_chest_aux(line, a, b) {
         img.srcset = imgdata;
         p_slot.appendChild(img);
 
-        // Overlay div (invisible par défaut)
+        // Overlay div
         const div_lore = document.createElement("div");
 
         // Nom de l'item
@@ -354,16 +353,14 @@ async function show_ender_chest_aux(line, a, b) {
             div_lore.appendChild(lore_p);
         }
 
-        // Ajout de la div de lore au slot
         p_slot.appendChild(div_lore);
         div_lore.setAttribute("id", "end" + i)
-        // Si slot non vide : activer le comportement de survol
+
         if (!isVoid(item)) {
             img.onmouseover = () => document.getElementById("end" + i).style.display = "block";
             img.onmouseleave = () => document.getElementById("end" + i).style.display = "none";
         }
 
-        // Ajout du slot dans la ligne
         main_div.after(p_slot);
     }
 }

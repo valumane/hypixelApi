@@ -17,7 +17,7 @@
     display: none;
     position: absolute;
     top: 0;
-    left: 64px; /* s'affiche à droite */
+    left: 64px;
     background-color: rgba(0, 0, 0, 0.9);
     color: white;
     font-family: 'Minecraftia', monospace;
@@ -27,7 +27,7 @@
     min-width: 200px;
     border: 1px solid #333;
     white-space: pre-wrap;
-    pointer-events: none; /* pour ne pas bloquer mouseleave */
+    pointer-events: none;
 }
 
 #armor_div {

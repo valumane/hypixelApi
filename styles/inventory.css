@@ -6,7 +6,6 @@
 
 .inv>p {
     position: relative;
-    /* <-- Nécessaire pour que le overlay soit relatif à ce bloc */
     width: 50px;
     height: 50px;
 }
@@ -17,13 +16,12 @@
     image-rendering: pixelated;
 }
 
-/* Ta div overlay juste après l'image */
+/* div overlay */
 .inv>p>div {
     position: absolute;
     left: 100%;
     top: 0;
     width: 200px;
-    /* + large que le p */
     display: none;
     background: #111;
     color: white;
@@ -51,8 +49,8 @@
   height: 25px;
 
   display: flex;
-  align-items: center;   /* verticalement */
-  justify-content: center; /* horizontalement */
+  align-items: center;
+  justify-content: center;
 
   background-color: grey
 

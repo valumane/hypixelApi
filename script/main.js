@@ -8,7 +8,6 @@ fetch(`https://playerdb.co/api/player/minecraft/${username}`)
     console.log(`UUID de ${username} :`, uuid);
   });
 
-// Define the API URL
 const Collection = 'https://api.hypixel.net/resources/skyblock/collections';
 
 
@@ -16,7 +15,7 @@ function sanitizeDate(date) {
   const pad = n => String(n).padStart(2, '0');
 
   const day = pad(date.getDate());
-  const month = pad(date.getMonth() + 1); // les mois commencent à 0
+  const month = pad(date.getMonth() + 1);
   const year = date.getFullYear();
 
   const hours = pad(date.getHours());
@@ -59,7 +58,6 @@ function formatMinecraftTextToHTML(text) {
       if (code === 'r') {
         currentStyles = [];
       } else if (colorMap[code]) {
-        // Ajout d'une couleur → on remplace toutes les couleurs précédentes
         currentStyles = currentStyles.filter(s => !s.startsWith('color'));
         currentStyles.push(`color: ${colorMap[code]}`);
       } else if (formatMap[code]) {
@@ -248,7 +246,7 @@ async function fetchImage(param) {
       url = testUrl;
     }
   } else if (itemimg) {
-    url = itemimg; // déjà une image directe (cas skull)
+    url = itemimg;//skull
   }
   return url;
 }

@@ -14,7 +14,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('./texture/background/background.jpg'); /* ← change cette ligne si besoin */
+      background-image: url('./texture/background/background.jpg');
       background-size: cover;
       background-position: center;
       filter: blur(10px);
@@ -31,32 +31,32 @@
       gap: 20px;
     }
 
-/* Conteneur de la barre de progression */
+/* progress bar */
 .progress-container {
-    width: 200px; /* Largeur totale de la barre */
-    background-color: #e0e0e0; /* Couleur du fond */
-    border-radius: 10px; /* Bords arrondis */
-    overflow: hidden; /* Pour éviter le débordement */
-    height: 20px; /* Hauteur de la barre */
+    width: 200px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 20px;
 }
 
-/* Barre de progression (remplissage) */
+/* progress bar filling */
 .progress-bar{
-    height: 100%; /* Remplit la hauteur du conteneur */
-    background-color: #4caf50; /* Couleur verte pour la progression */
-    width: 0; /* Début à 0 */
-    transition: width 0.3s; /* Transition pour un effet visuel */
+    height: 100%;
+    background-color: #4caf50;
+    width: 0;
+    transition: width 0.3s;
 }
 
-/* Texte centré dans la barre de progression */
+/* texte center in progress bar*/
 .progress-text {
-    text-align: center; /* Centre le texte */
-    font-size: 14px; /* Taille de la police */
-    color: #020202; /* Couleur du texte blanche */
-    line-height: 20px; /* Pour aligner verticalement le texte */
+    text-align: center;
+    font-size: 14px;
+    color: #020202;
+    line-height: 20px;
 }
 .horizontal-container {
-    display: flex; /* Activer flexbox */
+    display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
@@ -80,33 +80,28 @@ p{
     margin-bottom: -0.5px;
 }
 .itemEtImage{
-    display: flex; /* Activer flexbox */
-    flex-direction: row; /* Aligner horizontalement */
-    justify-content: space-around; /* Espace entre les éléments */
-    align-items: center; /* Alignement vertical centré */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 
 
-/* Classe de base avec transitions */
 .toggle {
-    transition: all 0.5s ease; /* Transition fluide sur toutes les propriétés */    
+    transition: all 0.5s ease;
 }
 
-/* Classe pour rendre un élément invisible avec une transition fluide */
 .hidden {
-    opacity: 0; /* Transition d'opacité pour un fondu */
-    height: 0; /* Transition de hauteur pour un rétrécissement */
-    overflow: hidden; /* Empêcher le débordement visuel */
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
 }
 
-/* Classe pour l'élément visible (état initial) */
 .visible {
-    opacity: 1; /* Opacité totale */
-    height: auto; /* Hauteur auto pour s'adapter au contenu */
-    /*! background-color: black; */
+    opacity: 1;
+    height: auto;
 }
-
 
 .mobhead {
     width: 50px;
@@ -118,8 +113,8 @@ div#bestiary > button > img {
 
 .horizontal-container {
   border: 2px solid #671f1f;
-  width: fit-content;     /* ✅ adapte à la taille du contenu */
-  max-width: 100%;        /* évite de déborder */
+  width: fit-content;    
+  max-width: 100%; 
 }
 
 #bestiary > button {
@@ -134,8 +129,8 @@ div#bestiary > button > img {
 
 
 #bestiary > button:hover {
-  background-color: rgba(0,0,0,0.05); /* léger fond */
-  box-shadow: 0 0 5px rgba(0,0,0,0.2); /* petite ombre */
+  background-color: rgba(0,0,0,0.05); 
+  box-shadow: 0 0 5px rgba(0,0,0,0.2); 
 }
 
 
@@ -144,5 +139,3 @@ div#bestiary > button > img {
   background-color: #020202;
   src: local("texture/hotm/void");
 }
-
-/* armor */
