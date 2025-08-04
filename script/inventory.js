@@ -52,6 +52,10 @@ async function parseNBTData(chaine) {
 
 
 
+
+
+
+
 //bag
 let potion_bag, talisman_bag, fishing_bag, sacks_bag, quiver
 async function get_bag() {
@@ -112,6 +116,22 @@ function timestampFromLongArray([hi, lo]) {
     return new Date(Number(ts));
 }
 
+//---------
+function get_item_name(element) {
+    return element.tag.value.display.value.Name.value
+}
+function get_img_name(element) {
+    return element.tag.value.ExtraAttributes.value.id.value
+}
+async function get_img(element) {
+    let img_name = get_img_name(element)
+    let img = await fetchImage(img_name)
+    return img
+}
+function get_item_lore(element) {
+    return element.tag.value.display.value.Lore.value.value
+}
+//----------
 
 async function get_armor_piece_info(n) {
     const main_div = document.getElementById("armor_label");
@@ -119,10 +139,9 @@ async function get_armor_piece_info(n) {
     const armor = inv_armor[n];
     const value = armor.tag.value;
     const date = sanitizeDate(timestampFromLongArray(value.ExtraAttributes.value.timestamp.value));
-    const display = value.display.value;
 
-    const name = display.Name.value;
-    const lore = display.Lore.value.value;
+    const name = get_item_name(armor)
+    const lore = get_item_lore(armor);
 
     const imgname = name.replace(/§./g, "").replace(/ /g, "_").toUpperCase().replace(" ", "_").replace("-", "").replace("'S", "");
 
@@ -203,18 +222,11 @@ function lineupinv(line, number) {
 }
 
 
-function show_lore(i) {
-    document.getElementById(i).children[1].style.display = "block"
-}
-function hide_lore(i) {
-    document.getElementById(i).children[1].style.display = "none"
-}
-
 async function getiteminfo(i, list) {
     let item = list[i]
-    let item_name = item.tag.value.display.value.Name.value
-    let img_name = item.tag.value.ExtraAttributes.value.id.value
-    let img = await fetchImage(img_name)
+    let item_name = get_item_name(item)
+    let img_name = get_img_name(item)
+    let img = await get_img(item)
 
     let item_lore = item.tag.value.display.value.Lore.value.value
 
@@ -237,12 +249,9 @@ async function getiteminfo(i, list) {
         div_lore.appendChild(p)
     }
     div.append(div_lore)
-    imgdiv.onmouseover = function () {
-        show_lore(i);
-    }
-    imgdiv.onmouseleave = function () {
-        hide_lore(i);
-    }
+    imgdiv.onmouseover = () => document.getElementById(i).children[1].style.display = "block"
+    imgdiv.onmouseleave = () => document.getElementById(i).children[1].style.display = "none"
+
     console.log(item_name)
     console.log(img_name)
     console.log(img)
@@ -273,23 +282,6 @@ function gestion_inv_contents() {
 }
 
 //ender_chest
-function get_item_name(element) {
-    return element.tag.value.display.value.Name.value
-}
-function get_img_name(element) {
-    return element.tag.value.ExtraAttributes.value.id.value
-}
-async function get_img(element) {
-    let img_name = get_img_name(element)
-    let img = await fetchImage(img_name)
-    return img
-}
-function get_item_lore(element) {
-    return element.tag.value.display.value.Lore.value.value
-}
-
-
-
 
 async function show_ender_chest() {
     show_ender_chest_aux(1, 8, -1)

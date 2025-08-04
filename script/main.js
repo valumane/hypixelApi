@@ -171,11 +171,6 @@ function sumAllTiers(coll) {
 }
 
 
-function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
 async function main() {
   await apiGet();
   console.log("apiget fait");

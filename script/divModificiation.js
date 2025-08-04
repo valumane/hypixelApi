@@ -157,33 +157,15 @@ function toggleVisibility(id,n) {
   }
 }
 
-function t(){
+function get_childnodes_bestiary(){
   let all = document.getElementById('bestiary').childNodes;
   return all;
 }
 
-
-function removeNth(nodeList, n) {
-  const node = nodeList[n];
-  if (node && node.parentNode) {
-    node.parentNode.removeChild(node);
-  }
-}
-
-function insertBeforeNth(nodeList, newElement, n) {
-  const refNode = nodeList[n];
-  if (refNode && refNode.parentNode) {
-    refNode.parentNode.insertBefore(newElement, refNode);
-  } else if (nodeList.length > 0) {
-    nodeList[0].parentNode.appendChild(newElement);
-  }
-}
-
-
 let originalPos;
 async function divDetection() {
   let res = [];
-  const nodes = t();
+  const nodes = get_childnodes_bestiary();
   for (let i = 1; i < nodes.length; i++) {
     const child = nodes[i];
     if (child instanceof HTMLElement) {
@@ -202,8 +184,8 @@ function putAfterButton(nomButton) {
   let divToMove = null;
 
   // search onclick="toggleVisibility('nomButton')"
-  for (let i = 0; i < t().length; i++) {
-    const button = t()[i];
+  for (let i = 0; i < get_childnodes_bestiary().length; i++) {
+    const button = get_childnodes_bestiary()[i];
     if (
       button instanceof HTMLElement && button.getAttribute('onclick') &&
       button.getAttribute('onclick').includes(`'${nomButton}'`)
@@ -233,7 +215,7 @@ function putAfterButton(nomButton) {
 
 function putAtOriginalPosition(nomDiv) {
   let div = null;
-  const dom = t(); // liste childre de #bestiary
+  const dom = get_childnodes_bestiary(); // liste childre de #bestiary
 
   // search la div dans le DOM
   for (let i = 0; i < dom.length; i++) {

@@ -1,0 +1,28 @@
+Convention de nommage la plus répandue en JavaScript (résumé)
+
+1. Fonctions → camelCase
+   Exemple : getMemberInfo(), loadInventory()
+
+2. Variables → camelCase
+   Exemple : itemCount, userName
+
+3. Booléens → camelCase avec préfixe is / has
+   Exemple : isVisible, hasItems
+
+4. Classes / Constructeurs → PascalCase
+   Exemple : UserProfile, InventoryManager
+
+5. Constantes globales → SCREAMING_SNAKE_CASE
+   Exemple : API_URL, MAX_RETRIES
+
+Sources :
+- Google JavaScript Style Guide
+- Airbnb JavaScript Style Guide
+- MDN (Mozilla)
+- medium.com, 30secondsofcode.org, news.ycombinator.com, reddit.com
+
+Recommandation pour ton projet :
+- Adopte **camelCase partout** pour les fonctions, variables et méthodes.
+- Garde **PascalCase** pour les classes si tu en ajoutes.
+- Utilise **SCREAMING_SNAKE_CASE** uniquement pour les constantes globales.
+- Appliquer une seule convention partout améliore lisibilité, maintenance, collaboration et professionnalisme.
