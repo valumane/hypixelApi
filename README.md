@@ -1,10 +1,10 @@
 # Projet Hypixel API Viewer
 
-Projet de collecte et d'affichage des données de l'API du serveur Minecraft Hypixel, inspiré du site [SkyCrypt](https://sky.shiiyu.moe/).
+Projet de collecte et d'affichage des données de l'API du serveur Minecraft Hypixel, inspiré du site [SkyCrypt](https://sky.shiiyu.moe/stats/valu66/Cucumber).
 
 ## Dépendances externes
 
-- Textures des têtes de joueurs récupérées et rendues dans le dépôt séparé `hypixel-texture`.
+- Textures des têtes de joueurs récupérées et rendues dans le dépôt séparé [hypixel-texture](https://github.com/valumane/hypixel_texture).
 
 ---
 
