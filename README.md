@@ -5,7 +5,7 @@ Projet de collecte et d'affichage des données de l'API du serveur Minecraft Hyp
 ## Dépendances externes
 
 - Textures des têtes de joueurs récupérées et rendues dans le dépôt séparé [hypixel-texture](https://github.com/valumane/hypixel_texture).
-
+- Textures des blocs et objets récupérées par scraping depuis le [wiki Minecraft francophone](https://fr.minecraft.wiki/).
 ---
 
 ## Fonctionnalités terminées
