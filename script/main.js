@@ -236,7 +236,8 @@ async function fetchImageName(name) {
 
 async function fetchImage(param) {
   const itemimg = await fetchImageName(param);
-  let url = "../texture/background/default.png";
+  let url = "texture/background/default.png"
+
 
   if (itemimg && itemimg.startsWith("minecraft:")) {
     const id = itemimg.replace("minecraft:", "");
