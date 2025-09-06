@@ -113,7 +113,7 @@ async function apiGet() {
     const api_key_response = await fetch('api_key.json');
     const api_key_data = await api_key_response.json();
     const apikey = api_key_data.key;
-    //console.log(apikey);
+
     console.log(uuid)
     const apiUrl1 = 'https://api.hypixel.net/v2/skyblock/profiles?key=' + apikey + '&uuid=' + uuid;
     apiUrl = apiUrl1;
@@ -173,7 +173,10 @@ function sumAllTiers(coll) {
 
 async function main() {
   await apiGet();
-  console.log("apiget fait");
+  console.log("apiget fait")
+
+  await loadManifest();
+  console.log("manifest loaded")
 
   await getCollection();
   console.log("getcollection fait")
@@ -202,20 +205,34 @@ async function main() {
   await mainhotm()
   console.log("hotm fait")
 
-  await load_inventory(); console.log("inventory loaded")
+  await load_inventory();
+  console.log("inventory loaded")
+
   document.getElementById("load").innerText = "chargement fini"
   console.log("chargement fini")
 }
 
+
+let manifest
+async function loadManifest() {
+  manifestPromise = fetch(
+    "https://raw.githubusercontent.com/valumane/hypixel_texture/main/manifest.json"
+  ).then(res => res.json())
+  manifest = await manifestPromise
+}
+
+
 async function fetchImageName(name) {
-  try {
+  if (manifest.head.includes(name)) {
     const urlHead = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/head/${name}.json`;
     const resHead = await fetch(urlHead);
     if (resHead.ok) {
       const data = await resHead.json();
       return data.img;
     }
+  }
 
+  if (manifest.notskull.includes(name)) {
     const urlNotSkull = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/notskull/${name}.json`;
     const resNotSkull = await fetch(urlNotSkull);
     if (resNotSkull.ok) {
@@ -224,25 +241,23 @@ async function fetchImageName(name) {
     }
 
     return null;
-  } catch {
-    return null;
   }
 }
 
 async function fetchImage(param) {
   const itemimg = await fetchImageName(param);
-  let url = "texture/background/default.png"
-
+  let url = "texture/background/default.png";
 
   if (itemimg && itemimg.startsWith("minecraft:")) {
     const id = itemimg.replace("minecraft:", "");
-    const testUrl = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/block/images/${id}.png`;
-    const res = await fetch(testUrl);
-    if (res.ok) {
-      url = testUrl;
+
+    if (manifest.block.includes(id)) {
+      url = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/block/images/${id}.png`;
     }
+
   } else if (itemimg) {
-    url = itemimg;//skull
+    url = itemimg; // skull
   }
+
   return url;
 }

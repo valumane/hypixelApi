@@ -8,12 +8,11 @@ async function load_inventory() {
     await get_ender_chest_contents(); console.log("- get_ender_chest_contents loaded")
 
     await get_inv_armor(); console.log("- get_inv_armor loaded")
-
     await get_equipment_contents(); console.log("- get_equipment_contents loaded")
 
     await get_personal_vault_contents(); console.log("- get_personal_vault_contents loaded")
 
-//    await get_wardrobe_contents(); console.log("- get_wardrobe_contents loaded")
+    await get_wardrobe_contents(); console.log("- get_wardrobe_contents loaded")
 
     await inv_armor_contents(); console.log("-- inv_armor_contents loaded")
 
@@ -59,14 +58,15 @@ async function parseNBTData(chaine) {
 //bag
 let potion_bag, talisman_bag, fishing_bag, sacks_bag, quiver
 async function get_bag() {
+    //console.log(membersInfo)
     potion_bag = await parseNBTData(membersInfo.inventory.bag_contents.potion_bag.data)
     potion_bag = potion_bag.value.i.value.value
 
     talisman_bag = await parseNBTData(membersInfo.inventory.bag_contents.talisman_bag.data)
     talisman_bag = talisman_bag.value.i.value.value
 
-    fishing_bag = await parseNBTData(membersInfo.inventory.bag_contents.fishing_bag.data)
-    fishing_bag = fishing_bag.value.i.value.value
+    //fishing_bag = await parseNBTData(membersInfo.inventory.bag_contents.fishing_bag.data)
+    //fishing_bag = fishing_bag.value.i.value.value
 
     sacks_bag = await parseNBTData(membersInfo.inventory.bag_contents.sacks_bag.data)
     sacks_bag = sacks_bag.value.i.value.value
@@ -106,8 +106,8 @@ async function get_personal_vault_contents() {
 }
 
 async function get_wardrobe_contents() {
-    wardrobe_contents = await parseNBTData(membersInfo.inventory.wardrobe_contents.data)
-    wardrobe_contents = wardrobe_contents.value.i.value.value
+    // wardrobe_contents = await parseNBTData(membersInfo.loadout.armor)
+    //wardrobe_contents = wardrobe_contents.value.i.value.value
 }
 
 function timestampFromLongArray([hi, lo]) {
@@ -118,9 +118,16 @@ function timestampFromLongArray([hi, lo]) {
 //---------
 function get_item_name(element) {
     return element.tag.value.display.value.Name.value
+
 }
+
+function get_item_lore(element) {
+    item.tag.value.display.value.Lore.value.value
+}
+
 function get_img_name(element) {
     return element.tag.value.ExtraAttributes.value.id.value
+
 }
 async function get_img(element) {
     let img_name = get_img_name(element)
@@ -197,7 +204,7 @@ function isVoid(t) {
 }
 
 function lineupinv(line, number) {
-    console.log("enterlineupinv", line, number)
+    //console.log("enterlineupinv", line, number)
     let maindiv = document.getElementById("inv" + line)
     let sub_div = document.createElement("p")
     sub_div.id = number
@@ -222,49 +229,47 @@ function lineupinv(line, number) {
 
 
 async function getiteminfo(i, list) {
+
     let item = list[i]
-    let item_name = get_item_name(item)
-    let img_name = get_img_name(item)
-    let img = await get_img(item)
 
-    let item_lore = item.tag.value.display.value.Lore.value.value
+    if (item.tag !== undefined) {
+        let item_name = get_item_name(item)
 
-    let div = document.getElementById(i)
+        let img_name = get_img_name(item)
+        let img = await get_img(item)
+        let item_lore = get_item_lore(item)
 
+        let div = document.getElementById(i)
 
-    let item_name_div = document.createElement("p");
-    item_name_div.innerHTML = formatMinecraftTextToHTML(item_name);
+        let item_name_div = document.createElement("p");
 
-    console.log(item_lore)
+        item_name_div.innerHTML = formatMinecraftTextToHTML(item_name);
 
-    let imgdiv = document.getElementById("img" + i)
-    imgdiv.srcset = img
+        //console.log(item_lore)
 
-    let div_lore = document.createElement("div")
-    div_lore.appendChild(item_name_div)
-    for (let i = 0; i < item_lore.length; i++) {
-        let p = document.createElement("p")
-        p.innerHTML = formatMinecraftTextToHTML(item_lore[i])
-        div_lore.appendChild(p)
+        let imgdiv = document.getElementById("img" + i)
+        imgdiv.srcset = img
+
+        let div_lore = document.createElement("div")
+        div_lore.appendChild(item_name_div)
+        for (let i = 0; i < item_lore.length; i++) {
+            let p = document.createElement("p")
+            p.innerHTML = formatMinecraftTextToHTML(item_lore[i])
+            div_lore.appendChild(p)
+        }
+        div.append(div_lore)
+        imgdiv.onmouseover = () => document.getElementById(i).children[1].style.display = "block"
+        imgdiv.onmouseleave = () => document.getElementById(i).children[1].style.display = "none"
     }
-    div.append(div_lore)
-    imgdiv.onmouseover = () => document.getElementById(i).children[1].style.display = "block"
-    imgdiv.onmouseleave = () => document.getElementById(i).children[1].style.display = "none"
-
-    console.log(item_name)
-    console.log(img_name)
-    console.log(img)
-    console.log(item_lore)
-
 }
 
 
 function do_get_inv_contents(line, a, b) {
     for (let i = a; i > b; i--) {
         if (isVoid(inv_contents[i])) {
-            console.log(i, 0)
+            //console.log(i, 0)
         } else {
-            console.log(i, inv_contents[i].tag.value.display.value.Name.value)
+            //console.log(i, inv_contents[i].tag.value.display.value.Name.value)
         }
         lineupinv(line, i)
         getiteminfo(i, inv_contents)
@@ -297,7 +302,7 @@ async function show_ender_chest() {
     show_ender_chest_aux(12, 107, 98)
     show_ender_chest_aux(13, 116, 107)
     show_ender_chest_aux(14, 125, 116)
-    show_ender_chest_aux(15, 134, 125)
+    //show_ender_chest_aux(15, 134, 125)
 }
 
 async function show_ender_chest_aux(line, a, b) {
