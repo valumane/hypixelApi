@@ -208,6 +208,10 @@ async function main() {
   await load_inventory();
   console.log("inventory loaded")
 
+  await load_sack();
+  console.log("sack loaded")
+
+
   document.getElementById("load").innerText = "chargement fini"
   console.log("chargement fini")
 }
@@ -244,20 +248,33 @@ async function fetchImageName(name) {
   }
 }
 
+
 async function fetchImage(param) {
-  const itemimg = await fetchImageName(param);
-  let url = "texture/background/default.png";
+    const itemimg = await fetchImageName(param);
+    let url = "texture/background/default.png";
 
-  if (itemimg && itemimg.startsWith("minecraft:")) {
-    const id = itemimg.replace("minecraft:", "");
+    if (itemimg && itemimg.startsWith("minecraft:")) {
+        const id = itemimg.replace("minecraft:", "");
 
-    if (manifest.block.includes(id)) {
-      url = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/block/images/${id}.png`;
+        if (manifest.block.includes(id)) {
+            url = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/block/images/${id}.png`;
+        }
+
+    } else if (itemimg) {
+        url = itemimg; // skull
     }
 
-  } else if (itemimg) {
-    url = itemimg; // skull
-  }
+    // Appliquer le glint sur les items ENCHANTED_
+    if (
+        param.startsWith("ENCHANTED_") &&
+        url !== "texture/background/default.png"
+    ) {
+        try {
+            return await getGlintGIF(url);
+        } catch (err) {
+            console.warn("Erreur glint :", param, err);
+        }
+    }
 
-  return url;
+    return url;
 }

@@ -12,6 +12,9 @@
   <script src="./script/divModificiation.js"></script>
   <script src="./script/hotm.js"></script>
   <script src="./script/inventory.js"></script>
+  <script src="./script/sack.js"></script>
+  <script src="./generateGlint/gif.min.js"></script>
+  <script src="./script/glint.js"></script>
 
 
   <link rel="stylesheet" href="./styles/armor.css">
@@ -23,15 +26,20 @@
   <div class="background-blur"></div>
   <div class="contenu-au-dessus"></div>
 
+
+
+
   <button id="toggleButtonprofile" onclick="toggleVisibility('profil')"> affichez profil</button>
+  <button id="toggleButtonskill" onclick="toggleVisibility('skill')"> affichez skill</button>
+  <button id="toggleButtoncollection" onclick="toggleVisibility('collection') "> affichez Collection </button>
+  <button id="toggleButtonbestiary" onclick="toggleVisibility('bestiary')"> affichez bestiary </button>
+  <button id="toggleButtonHOTM" onclick="toggleVisibility('hotm')"> affichez hotm</button>
+  <button id="toggleButtonINVENTORY" onclick="toggleVisibility('inventory')"> affichez inventory</button>
+  <button id="toggleButtonSACK" onclick="toggleVisibility('sack')"> affichez sack</button>
+
   <div id="profil" class="toggle hidden">
     <p id="bankValue"></p>
   </div>
-
-
-
-
-  <button id="toggleButtonskill" onclick="toggleVisibility('skill')"> affichez skill</button>
 
   <div id="skill" class="toggle hidden">
     <div id="farmingSkill"></div>
@@ -47,7 +55,6 @@
     <div id="runecraftingSkill"></div>
   </div>
 
-  <button id="toggleButtoncollection" onclick="toggleVisibility('collection') "> affichez Collection </button>
   <div id="collection" class="toggle hidden">
     <div class="horizontal-container">
       <img src="texture/items/farming.png" style="width: 50px;">
@@ -87,7 +94,8 @@
 
   </div>
 
-  <button id="toggleButtonbestiary" onclick="toggleVisibility('bestiary')"> affichez bestiary </button>
+
+
   <div id="bestiary" class="toggle hidden">
 
     <button onclick="toggleVisibility('privateIslandBestiary',1)"> privateIsland <br> <img
@@ -164,7 +172,6 @@
     </div>
   </div>
 
-  <button id="toggleButtonHOTM" onclick="toggleVisibility('hotm')"> affichez hotm</button>
   <div id="hotm" class="toggle hidden">
     <p> heart of the mountain : </p>
     <p id="powder_mithril"></p>
@@ -178,16 +185,16 @@
     </div>
   </div>
 
-  <button id="toggleButtonINVENTORY" onclick="toggleVisibility('inventory')"> affichez inventory</button>
 
-  <div id="inventory" class="toggle visible">
+  <div id="inventory" class="toggle hidden">
     <p>armor</p>
     <div id="armor_div">
       <p id="armor_label"></p>
     </div>
     <p> inventaire </p>
     <div id="inv">
-      <div class="inv"><pre id="inv4"></p></div>
+      <div class="inv">
+        <pre id="inv4"></p></div>
       <div class="inv"><pre id="inv3"></p></div>
       <div class="inv"><pre id="inv2"></p></div>
       <div class="inv"><pre id="inv1"></p></div>
@@ -221,6 +228,12 @@
     </div>
 
   </div>
+
+  
+  <div id="sack" class="toggle hidden">
+
+  </div>
+
   <p id="load">chargement en cours</p>
   <img id="testimg" src="" style="width: 300px;image-rendering: pixelated;">
 </body>

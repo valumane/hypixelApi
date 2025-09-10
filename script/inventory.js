@@ -211,7 +211,7 @@ function lineupinv(line, number) {
 
     let item_count = ""
 
-    if (isVoid(inv_contents[number])) {
+    if (!isVoid(inv_contents[number])) {
         if (inv_contents[number].Count) {
             let count_val = inv_contents[number].Count.value
             item_count = count_val === 1 ? "" : count_val

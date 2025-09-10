@@ -72,3 +72,99 @@
 #inventory{
     margin-left: 10px;
 }
+/* sack */
+#sack details {
+  margin-bottom: 12px;
+}
+
+#sack summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#sack ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 50px);
+  gap: 8px;
+}
+
+.sack_item_texture{
+    width: 32px ;
+    height: 32px;
+}
+
+
+
+
+.sack_item_card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.sack_item_sub_div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.sack_item_texture {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+/* Nom de l'item caché par défaut */
+.sack_item_name {
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: #222;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 12px;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 10;
+
+    transition: opacity 0.2s;
+}
+
+/* Afficher le nom au survol */
+.sack_item_card:hover .sack_item_name {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
+.sack-header-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+.sack-header-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.sack-categorie summary {
+    cursor: pointer;
+    padding: 10px;
+}
