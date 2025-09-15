@@ -148,14 +148,26 @@ function createBestiarydiv(categories, nameMob, count, imgSrc = "") {
 
 function toggleVisibility(id,n) {
   const element = document.getElementById(id);
-  if (element.classList.contains("visible")) {
+  const wasVisible = element.classList.contains("visible");
+
+  // Only close sibling sections, keeping the bestiary parent open.
+  const siblings = Array.from(element.parentElement.children);
+  for (const sibling of siblings) {
+    if (sibling !== element && sibling.classList.contains("toggle") && sibling.classList.contains("visible")) {
+      sibling.classList.replace("visible", "hidden");
+      if (n == 1) putAtOriginalPosition(sibling.id);
+    }
+  }
+
+  if (wasVisible) {
     element.classList.replace("visible", "hidden");
-    if(n==1){putAtOriginalPosition(id)}
+    if (n == 1) putAtOriginalPosition(id);
   } else {
     element.classList.replace("hidden", "visible");
-    if(n==1){putAfterButton(id)}
+    if (n == 1) putAfterButton(id);
   }
 }
+
 
 function get_childnodes_bestiary(){
   let all = document.getElementById('bestiary').childNodes;
