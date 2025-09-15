@@ -108,16 +108,20 @@ function formatNombre(n) {
 let allapi = null;
 let apiUrl = "";
 
+
+/*
+const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(allapi, null, 2)], {type: "application/json"})); a.download = "hypixel_api.json"; a.click();
+*/
 async function apiGet() {
   try {
     const api_key_response = await fetch('api_key.json');
     const api_key_data = await api_key_response.json();
     const apikey = api_key_data.key;
 
-    console.log(uuid)
+    //console.log(uuid)
     const apiUrl1 = 'https://api.hypixel.net/v2/skyblock/profiles?key=' + apikey + '&uuid=' + uuid;
     apiUrl = apiUrl1;
-    console.log(apiUrl);
+    //console.log(apiUrl);
 
     const response = await fetch(apiUrl);
     if (!response.ok) throw new Error('API non disponible');
