@@ -80,7 +80,7 @@ async function get_skill_lvl() {
         "foraging", "carpentry", "alchemy", "social", "runecrafting"
     ];
 
-    const experienceData = membersInfo.player_data.experience;
+    const experienceData = membersInfo.player_data?.experience ?? {};
 
     skillLevels = {};
 
@@ -93,15 +93,16 @@ async function get_skill_lvl() {
 }
 
 function getlevel(catname, catlvl, cap) {
-    let tmp = catlvl;
+    let tmp = Number.isFinite(catlvl) ? Math.max(0, catlvl) : 0;
     let cpt = 0;
 
-    while (tmp >= cap[cpt]) {
+    while (cpt < cap.length && tmp >= cap[cpt]) {
         tmp -= cap[cpt++];
     }
 
-    const eta = Math.round((tmp / cap[cpt]) * 100) + "%";
-    const progress = `${Math.floor(tmp)}/${cap[cpt]}`;
+    const eta = cpt === cap.length
+        ? "100%"
+        : Math.min(99, Math.round((tmp / cap[cpt]) * 100)) + "%";
 
     createSkilldiv(`${catname}Skill`, eta, cpt);
 }

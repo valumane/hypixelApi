@@ -8,23 +8,22 @@ var riftCollection;
 let collectionCol
 
 function getItems(catname, name, catcat) {
-    const items = catcat[name]
-    const Temp = sumAllTiers(items.tiers);
-    const itemsCollected = allCollected[name]
+    const items = catcat[name];
+    const collected = allCollected?.[name];
+    const itemsCollected = Number.isFinite(collected) ? Math.max(0, collected) : 0;
 
-    var cpt = 0;
-    for (i = 0; i < items.tiers.length; i++) {
-        if (itemsCollected > items.tiers[i].amountRequired) {
-            cpt++
-        }
+    let tier = 0;
+    while (tier < items.tiers.length && itemsCollected >= items.tiers[tier].amountRequired) {
+        tier++;
     }
-    var cptTemp = cpt;
 
-    if (cpt = items.tiers.length && itemsCollected > Temp || cptTemp == items.tiers.length) {
-        createFarmingdiv(catname, items.name, "100%", "collected:" + formatNombre(itemsCollected), cptTemp)
+    if (tier === items.tiers.length) {
+        createFarmingdiv(catname, items.name, "100%", "collected:" + formatNombre(itemsCollected), tier);
     } else {
-        var eta = Math.round((itemsCollected / items.tiers[cptTemp].amountRequired) * 100)
-        createFarmingdiv(catname, items.name, eta + "%", itemsCollected + "/" + items.tiers[cptTemp].amountRequired, cptTemp)
+        const target = items.tiers[tier].amountRequired;
+        // Reserve 100% for a completed collection, even just below a threshold.
+        const eta = Math.min(99, Math.round((itemsCollected / target) * 100));
+        createFarmingdiv(catname, items.name, eta + "%", itemsCollected + "/" + target, tier);
     }
 }
 
