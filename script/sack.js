@@ -234,38 +234,31 @@ function getSackType(itemId) {
 
 
 // Affiche les sacks possédés et leur contenu
+
 async function afficherSacks(sacksCounts) {
     const container = document.getElementById("sack");
     if (!container) return;
 
     const groupes = new Map();
 
-    // 1. Créer les catégories depuis les sacks possédés
+    // Récupérer les sacks possédés
     for (const sac of show_sack()) {
         if (!groupes.has(sac.type)) {
-            groupes.set(sac.type, {
-                sacs: [],
-                items: []
-            });
+            groupes.set(sac.type, { sacs: [], items: [] });
         }
 
         groupes.get(sac.type).sacs.push(sac);
     }
 
-    // 2. Répartir les items dans les catégories
+    // Répartir les items dans leurs sacks
     for (const [id, quantite] of Object.entries(sacksCounts ?? {})) {
         if (quantite <= 0) continue;
 
         const type = getSackType(id);
-
-        // Catégorie inconnue ou sack non possédé
         const destination = groupes.has(type) ? type : "Autres";
 
         if (!groupes.has(destination)) {
-            groupes.set(destination, {
-                sacs: [],
-                items: []
-            });
+            groupes.set(destination, { sacs: [], items: [] });
         }
 
         groupes.get(destination).items.push({ id, quantite });
@@ -273,59 +266,150 @@ async function afficherSacks(sacksCounts) {
 
     container.replaceChildren();
 
-    // 3. Générer l'affichage
-    for (const [type, groupe] of groupes) {
-        const details = document.createElement("details");
-        details.className = "sack-categorie";
-        details.open = true;
+    // Barre horizontale contenant les icônes des sacks
+    const barre = document.createElement("div");
+    barre.className = "sack-selector";
+    barre.setAttribute("role", "group");
+    barre.setAttribute("aria-label", "Sélectionner un sack");
 
-        const summary = document.createElement("summary");
+    // Panneau contenant les items du sack sélectionné
+    const panneau = document.createElement("section");
+    panneau.className = "sack-content";
 
-        // Afficher les icônes et noms des sacks
-        for (const sac of groupe.sacs) {
-            const header = document.createElement("span");
-            header.className = "sack-header-item";
+    const titre = document.createElement("h3");
+    titre.className = "sack-content-title";
 
-            const image = document.createElement("img");
-            image.className = "sack-header-icon";
-            image.src = sac.texture;
+    const liste = document.createElement("ul");
+    liste.className = "sack-content-list";
 
-            const name = document.createElement("span");
-            name.innerHTML = formatMinecraftTextToHTML(
-                sac.rawName.replaceAll("_", " ")
+    panneau.append(titre, liste);
+    container.append(barre, panneau);
+
+    const boutons = [];
+    const cartesEnCache = new Map();
+
+    let derniereSelection = 0;
+
+    // Changer le contenu lorsqu'on sélectionne un sack
+    async function selectionnerSack(type, bouton) {
+        const selection = ++derniereSelection;
+
+        for (const element of boutons) {
+            const actif = element === bouton;
+
+            element.classList.toggle("active", actif);
+            element.setAttribute("aria-pressed", String(actif));
+        }
+
+        const groupe = groupes.get(type);
+
+        titre.textContent = `${type} (${groupe.items.length} items)`;
+        liste.replaceChildren();
+
+        if (groupe.items.length === 0) {
+            const vide = document.createElement("li");
+            vide.className = "sack-message";
+            vide.textContent = "Ce sack est vide.";
+
+            liste.append(vide);
+            return;
+        }
+
+        const chargement = document.createElement("li");
+        chargement.className = "sack-message";
+        chargement.textContent = "Chargement des textures…";
+
+        liste.append(chargement);
+
+        // Générer les cartes une seule fois par catégorie
+        if (!cartesEnCache.has(type)) {
+            groupe.items.sort((a, b) => a.id.localeCompare(b.id));
+
+            cartesEnCache.set(
+                type,
+                Promise.all(
+                    groupe.items.map(item =>
+                        generate_card(item.id, item.quantite)
+                    )
+                )
             );
-
-            header.append(image, name);
-            summary.append(header);
         }
 
-        // Pour les items non classés
-        if (groupe.sacs.length === 0) {
-            summary.textContent = type;
+        try {
+            const cartes = await cartesEnCache.get(type);
+
+            // Éviter d'afficher une ancienne sélection
+            if (selection !== derniereSelection) return;
+
+            const fragment = document.createDocumentFragment();
+
+            for (const carte of cartes) {
+                const li = document.createElement("li");
+                li.append(carte);
+                fragment.append(li);
+            }
+
+            liste.replaceChildren(fragment);
+
+        } catch (erreur) {
+            cartesEnCache.delete(type);
+
+            if (selection !== derniereSelection) return;
+
+            console.warn("Impossible d'afficher le sack :", type, erreur);
+
+            const message = document.createElement("li");
+            message.className = "sack-message";
+            message.textContent = "Impossible de charger les items.";
+
+            liste.replaceChildren(message);
+        }
+    }
+
+    // Créer les boutons de sélection
+    for (const [type, groupe] of groupes) {
+        if (type === "Autres" && groupe.items.length === 0) {
+            continue;
         }
 
-        const compteur = document.createElement("span");
-        compteur.textContent = ` (${groupe.items.length} items)`;
-        summary.append(compteur);
+        for (const sac of groupe.sacs.length ? groupe.sacs : [null]) {
+            const bouton = document.createElement("button");
 
-        const liste = document.createElement("ul");
+            bouton.type = "button";
+            bouton.className = "sack-selector-button";
 
-        groupe.items.sort((a, b) => a.id.localeCompare(b.id));
+            const nom = sac
+                ? sac.rawName
+                    .replace(/§[0-9a-fk-or]/gi, "")
+                    .replaceAll("_", " ")
+                : type;
 
-        // Réutilise ta fonction generate_card()
-        const cards = await Promise.all(
-            groupe.items.map(item =>
-                generate_card(item.id, item.quantite)
-            )
-        );
+            bouton.title = nom;
+            bouton.setAttribute("aria-label", nom);
+            bouton.setAttribute("aria-pressed", "false");
 
-        for (const card of cards) {
-            const li = document.createElement("li");
-            li.append(card);
-            liste.append(li);
+            if (sac) {
+                const icone = document.createElement("img");
+
+                icone.src = sac.texture;
+                icone.alt = "";
+
+                bouton.append(icone);
+            } else {
+                bouton.textContent = "?";
+            }
+
+            bouton.addEventListener("click", () => {
+                selectionnerSack(type, bouton);
+            });
+
+            boutons.push(bouton);
+            barre.append(bouton);
         }
+    }
 
-        details.append(summary, liste);
-        container.append(details);
+    // Sélectionner automatiquement le premier sack
+    if (boutons.length > 0) {
+        boutons[0].click();
     }
 }

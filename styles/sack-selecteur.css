@@ -1,0 +1,110 @@
+/* SACKS — barre d'icônes + contenu compact sous la sélection.
+   Charger APRÈS skyblock-theme.css. */
+#sack .sack-selector {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 4px 3px 12px;
+    margin-bottom: 12px;
+}
+
+#sack .sack-selector-button {
+    flex: 0 0 74px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 74px;
+    height: 72px;
+    border: 1px solid #3b4c68;
+    border-radius: 11px;
+    background: linear-gradient(155deg, #233248, #172337);
+    box-shadow: inset 0 1px rgba(255,255,255,.04);
+    color: #f2c879;
+    font-size: 25px;
+    cursor: pointer;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+}
+#sack .sack-selector-button img {
+    display: block;
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+#sack .sack-selector-button:hover {
+    transform: translateY(-2px);
+    border-color: #65dfdb;
+}
+#sack .sack-selector-button.active {
+    border-color: #f2c879;
+    background: linear-gradient(155deg, #34405b, #202d46);
+    box-shadow: 0 0 0 1px rgba(242,200,121,.28), 0 0 17px rgba(242,200,121,.10);
+}
+#sack .sack-selector-button:focus-visible {
+    outline: 2px solid #65dfdb;
+    outline-offset: 3px;
+}
+
+/* Le panneau ne s'étale PAS sur toute la largeur de la page. */
+#sack .sack-content {
+    display: block;
+    width: fit-content;
+    max-width: min(100%, 1080px);
+    padding: 15px 18px 18px;
+    border: 1px solid rgba(101, 223, 219, .28);
+    border-radius: 13px;
+    background: rgba(12, 19, 32, .84);
+}
+#sack .sack-content-title {
+    margin: 0 0 14px;
+    color: #f2c879;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+/* Cases de taille constante, comme sur ta capture. */
+#sack .sack-content-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+#sack .sack-content-list > li {
+    flex: 0 0 82px;
+    width: 82px;
+    min-width: 0;
+    list-style: none;
+}
+#sack .sack-content-list .sack_item_card {
+    width: 82px;
+    min-height: 88px;
+    padding: 10px 6px;
+}
+#sack .sack-content-list .sack_item_texture {
+    width: 36px;
+    height: 36px;
+}
+#sack .sack-content-list .sack-message {
+    flex: 0 1 auto;
+    width: auto;
+    min-width: 170px;
+    color: #a6b6d0;
+    font-size: 13px;
+    padding: 12px 6px;
+}
+@media (max-width: 520px) {
+    #sack .sack-selector-button { flex-basis: 62px; width: 62px; height: 63px; }
+    #sack .sack-selector-button img { width: 43px; height: 43px; }
+    #sack .sack-content { padding: 12px; }
+    #sack .sack-content-list { gap: 8px; }
+    #sack .sack-content-list > li,
+    #sack .sack-content-list .sack_item_card { width: 76px; flex-basis: 76px; }
+}

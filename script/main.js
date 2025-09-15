@@ -251,7 +251,7 @@ async function fetchImageName(name) {
 
 async function fetchImage(param) {
     const itemimg = await fetchImageName(param);
-    let url = "texture/background/default.png";
+    let url = "texture/items/default.png";
 
     if (itemimg && itemimg.startsWith("minecraft:")) {
         const id = itemimg.replace("minecraft:", "");
@@ -267,7 +267,7 @@ async function fetchImage(param) {
     // Appliquer le glint sur les items ENCHANTED_
     if (
         param.startsWith("ENCHANTED_") &&
-        url !== "texture/background/default.png"
+        url !== "texture/items/default.png"
     ) {
         try {
             return await getGlintGIF(url);
