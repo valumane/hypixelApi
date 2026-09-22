@@ -114,7 +114,7 @@ async function apiGet() {
     const api_key_data = await api_key_response.json();
     const apikey = api_key_data.key;
     //console.log(apikey);
-
+    console.log(uuid)
     const apiUrl1 = 'https://api.hypixel.net/v2/skyblock/profiles?key=' + apikey + '&uuid=' + uuid;
     apiUrl = apiUrl1;
     console.log(apiUrl);

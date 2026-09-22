@@ -13,7 +13,7 @@ async function load_inventory() {
 
     await get_personal_vault_contents(); console.log("- get_personal_vault_contents loaded")
 
-    await get_wardrobe_contents(); console.log("- get_wardrobe_contents loaded")
+//    await get_wardrobe_contents(); console.log("- get_wardrobe_contents loaded")
 
     await inv_armor_contents(); console.log("-- inv_armor_contents loaded")
 
@@ -105,7 +105,6 @@ async function get_personal_vault_contents() {
     personal_vault_contents = personal_vault_contents.value.i.value.value
 }
 
-let wardrobe_contents
 async function get_wardrobe_contents() {
     wardrobe_contents = await parseNBTData(membersInfo.inventory.wardrobe_contents.data)
     wardrobe_contents = wardrobe_contents.value.i.value.value
