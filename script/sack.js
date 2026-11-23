@@ -56,7 +56,7 @@ function show_sack() {
 }
 
 
-async function generate_card(item_name, item_count) {
+function generate_card(item_name, item_count) {
     let div = document.createElement("div")
     div.setAttribute("class", "sack_item_card")
 
@@ -68,10 +68,31 @@ async function generate_card(item_name, item_count) {
     sub_div.setAttribute("class", "sack_item_sub_div")
 
     let texture = document.createElement("img")
-    texture.src = await fetchImage(item_name)
-    texture.setAttribute("class", "sack_item_texture")
+    texture.src = "texture/items/default.png";
+    texture.alt = item_name.replaceAll("_", " ");
+    texture.setAttribute("class", "sack_item_texture");
 
-    sub_div.append(texture)
+    const icon = document.createElement("span");
+    icon.className = "sack-item-icon";
+    icon.append(texture);
+
+    // Les quantités apparaissent immédiatement ; chaque texture arrive indépendamment.
+    fetchImage(item_name, { glint: false }).then(url => {
+        texture.src = url;
+        if (item_name.startsWith("ENCHANTED_") && url !== "texture/items/default.png") {
+            icon.style.setProperty("--sack-texture", `url(${JSON.stringify(url)})`);
+            icon.classList.add("sack-item-enchanted");
+        }
+    }).catch(error => {
+        console.warn("Texture indisponible :", item_name, error);
+    });
+    texture.onerror = () => {
+        texture.onerror = null;
+        texture.src = "texture/items/default.png";
+        icon.classList.remove("sack-item-enchanted");
+    };
+
+    sub_div.append(icon)
     sub_div.append(document.createTextNode(item_count))
 
     div.append(div_name)
@@ -327,11 +348,7 @@ async function afficherSacks(sacksCounts) {
 
             cartesEnCache.set(
                 type,
-                Promise.all(
-                    groupe.items.map(item =>
-                        generate_card(item.id, item.quantite)
-                    )
-                )
+                groupe.items.map(item => generate_card(item.id, item.quantite))
             );
         }
 

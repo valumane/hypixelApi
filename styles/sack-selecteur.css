@@ -92,6 +92,30 @@
     width: 36px;
     height: 36px;
 }
+#sack .sack-item-icon {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+}
+#sack .sack-item-enchanted::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(120deg, transparent 30%, rgba(192, 112, 255, .65) 45%, rgba(240, 210, 255, .8) 50%, transparent 65%);
+    background-size: 300% 300%;
+    -webkit-mask: var(--sack-texture) center / contain no-repeat;
+    mask: var(--sack-texture) center / contain no-repeat;
+    animation: sack-glint 3s linear infinite;
+}
+@keyframes sack-glint {
+    from { background-position: 100% 100%; }
+    to { background-position: 0% 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    #sack .sack-item-enchanted::after { animation: none; }
+}
 #sack .sack-content-list .sack-message {
     flex: 0 1 auto;
     width: auto;

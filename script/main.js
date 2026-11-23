@@ -209,11 +209,11 @@ async function main() {
   await mainhotm()
   console.log("hotm fait")
 
-  await load_inventory();
-  console.log("inventory loaded")
-
   await load_sack();
   console.log("sack loaded")
+
+  await load_inventory();
+  console.log("inventory loaded")
 
 
   document.getElementById("load").innerText = "chargement fini"
@@ -230,7 +230,19 @@ async function loadManifest() {
 }
 
 
-async function fetchImageName(name) {
+const imageNameCache = new Map();
+
+function fetchImageName(name) {
+  if (!imageNameCache.has(name)) {
+    imageNameCache.set(name, resolveImageName(name).catch(err => {
+      imageNameCache.delete(name);
+      throw err;
+    }));
+  }
+  return imageNameCache.get(name);
+}
+
+async function resolveImageName(name) {
   if (manifest.head.includes(name)) {
     const urlHead = `https://raw.githubusercontent.com/valumane/hypixel_texture/main/head/${name}.json`;
     const resHead = await fetch(urlHead);
@@ -253,7 +265,7 @@ async function fetchImageName(name) {
 }
 
 
-async function fetchImage(param) {
+async function fetchImage(param, { glint = true } = {}) {
     const itemimg = await fetchImageName(param);
     let url = "texture/items/default.png";
 
@@ -270,7 +282,7 @@ async function fetchImage(param) {
 
     // Appliquer le glint sur les items ENCHANTED_
     if (
-        param.startsWith("ENCHANTED_") &&
+        glint && param.startsWith("ENCHANTED_") &&
         url !== "texture/items/default.png"
     ) {
         try {
